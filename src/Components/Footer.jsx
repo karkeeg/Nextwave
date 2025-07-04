@@ -17,7 +17,6 @@ const Footer = () => {
         <div className="w-full max-w-[342px] bg-[#F4F6F8] text-black rounded-[8px] px-6 py-6 flex flex-col gap-6">
           <div className="flex items-center gap-3">
             <img src={logo} alt="" />
-            
           </div>
           <p className="text-sm leading-[20px]">
             Subscribe To Our NextWaveAI for exclusive deals, adventure tips and
@@ -42,10 +41,13 @@ const Footer = () => {
             <Link to="/services" className="hover:text-gray-300 transition">
               Services
             </Link>
-            <Link to="/testimonials" className="hover:text-gray-300 transition">
+            <Link to="/testimonial" className="hover:text-gray-300 transition">
               Testimonials
             </Link>
-            <Link to="/industries" className="hover:text-gray-300 transition">
+            <Link
+              to="/industry-served"
+              className="hover:text-gray-300 transition"
+            >
               Industries
             </Link>
             <Link to="/case-studies" className="hover:text-gray-300 transition">
@@ -59,7 +61,7 @@ const Footer = () => {
           {/* Customer Service */}
           <div className="flex flex-col gap-3 min-w-[140px]">
             <h3 className="font-semibold text-base">Customer Service</h3>
-            <Link to="/faq" className="hover:text-gray-300 transition">
+            <Link to="/FAQ" className="hover:text-gray-300 transition">
               FAQ
             </Link>
             <Link to="/privacy" className="hover:text-gray-300 transition">

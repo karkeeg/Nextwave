@@ -8,6 +8,7 @@ import FAQs from "../Components/FAQs";
 import Blog from "../Components/Blog";
 import Services from "../Components/Services";
 import IndustryServed from "../Components/IndustryServed";
+import Contact from "../Components/Contact";
 
 const MyRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const MyRoutes = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/services" element={<Services />} />
           <Route path="/industry-served" element={<IndustryServed />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>
     </BrowserRouter>

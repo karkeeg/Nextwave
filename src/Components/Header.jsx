@@ -42,16 +42,16 @@ const Header = () => {
             {dropdownOpen === 0 && (
               <div className="absolute top-full mt-2 bg-white border rounded shadow-md w-48 z-20">
                 <Link
-                  to="/services/design"
+                  to="/services"
                   className="block px-4 py-2 hover:bg-gray-100 text-[#232B36]"
                 >
-                  Design
+                  Service 1
                 </Link>
                 <Link
-                  to="/services/dev"
+                  to="/services"
                   className="block px-4 py-2 hover:bg-gray-100 text-[#232B36]"
                 >
-                  Development
+                  Service 2
                 </Link>
               </div>
             )}
@@ -68,16 +68,16 @@ const Header = () => {
             {dropdownOpen === 1 && (
               <div className="absolute top-full mt-2 bg-white border rounded shadow-md w-48 z-20">
                 <Link
-                  to="/products/app"
+                  to="/industry-served"
                   className="block px-4 py-2 hover:bg-gray-100 text-[#232B36]"
                 >
-                  App
+                  Industry 1
                 </Link>
                 <Link
-                  to="/products/tools"
+                  to="/industy-served"
                   className="block px-4 py-2 hover:bg-gray-100 text-[#232B36]"
                 >
-                  Tools
+                  Industry 2
                 </Link>
               </div>
             )}
