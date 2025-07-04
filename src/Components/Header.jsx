@@ -163,10 +163,10 @@ const Header = () => {
                   to="/services/design"
                   className="block hover:text-blue-600"
                 >
-                  Design
+                  Service 1
                 </Link>
                 <Link to="/services/dev" className="block hover:text-blue-600">
-                  Development
+                  Service 2
                 </Link>
               </div>
             )}
@@ -188,13 +188,13 @@ const Header = () => {
             {mobileDropdown.industries && (
               <div className="ml-4 mt-1 space-y-1">
                 <Link to="/products/app" className="block hover:text-blue-600">
-                  App
+                  Industry 1
                 </Link>
                 <Link
                   to="/products/tools"
                   className="block hover:text-blue-600"
                 >
-                  Tools
+                  Industry 2
                 </Link>
               </div>
             )}
