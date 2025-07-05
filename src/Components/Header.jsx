@@ -216,7 +216,7 @@ const Header = () => {
             to="/get-started"
             className="block w-full bg-[#2176C1] text-white text-center py-2 rounded hover:bg-[#1761a0]"
           >
-            Get a free Consultant
+            Get a free Consultan
           </Link>
         </div>
       )}
