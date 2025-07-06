@@ -6,17 +6,31 @@ import {
   FaYoutube,
 } from "react-icons/fa6";
 import { MdLocationOn, MdEmail, MdPhone } from "react-icons/md";
-import { Link } from "react-router-dom";
 import logo from "../assets/nextwaveLogo.png";
 
 const Footer = () => {
+  // Smooth scroll to section
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <footer className="w-full bg-[#2870B5] text-white px-6 md:px-12 xl:px-[72px] pt-[80px] pb-[32px]">
       <div className="max-w-[1440px] mx-auto flex flex-col xl:flex-row gap-[48px] xl:gap-[108px]">
         {/* Left Section */}
         <div className="w-full max-w-[342px] bg-[#F4F6F8] text-black rounded-[8px] px-6 py-6 flex flex-col gap-6">
-          <div className="flex items-center gap-3">
-            <img src={logo} alt="" />
+          <div
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            <img
+              src={logo}
+              alt=""
+              className="hover:scale-105 transition-transform duration-300"
+            />
           </div>
           <p className="text-sm leading-[20px]">
             Subscribe To Our NextWaveAI for exclusive deals, adventure tips and
@@ -35,38 +49,56 @@ const Footer = () => {
           {/* Quick Link */}
           <div className="flex flex-col gap-3 min-w-[140px]">
             <h3 className="font-semibold text-base">Quick Link</h3>
-            <Link to="/about" className="hover:text-gray-300 transition">
+            <button
+              onClick={() => scrollToSection("about")}
+              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+            >
               About us
-            </Link>
-            <Link to="/services" className="hover:text-gray-300 transition">
+            </button>
+            <button
+              onClick={() => scrollToSection("services")}
+              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+            >
               Services
-            </Link>
-            <Link to="/testimonial" className="hover:text-gray-300 transition">
+            </button>
+            <button
+              onClick={() => scrollToSection("testimonials")}
+              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+            >
               Testimonials
-            </Link>
-            <Link
-              to="/industry-served"
-              className="hover:text-gray-300 transition"
+            </button>
+            <button
+              onClick={() => scrollToSection("industries")}
+              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
             >
               Industries
-            </Link>
-            <Link to="/case-studies" className="hover:text-gray-300 transition">
-              Case Studies
-            </Link>
-            <Link to="/research" className="hover:text-gray-300 transition">
+            </button>
+            <button
+              onClick={() => scrollToSection("research")}
+              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+            >
               Research & Insights
-            </Link>
+            </button>
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+            >
+              Contact
+            </button>
           </div>
 
           {/* Customer Service */}
           <div className="flex flex-col gap-3 min-w-[140px]">
             <h3 className="font-semibold text-base">Customer Service</h3>
-            <Link to="/FAQ" className="hover:text-gray-300 transition">
+            <button
+              onClick={() => scrollToSection("faqs")}
+              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+            >
               FAQ
-            </Link>
-            <Link to="/privacy" className="hover:text-gray-300 transition">
+            </button>
+            <span className="hover:text-gray-300 transition cursor-pointer">
               Privacy Policy
-            </Link>
+            </span>
           </div>
 
           {/* Contact Us */}

@@ -183,18 +183,6 @@ const Testimonials = () => (
           )
         )}
       </div>
-      <style>
-        {`
-          /* Hide scrollbar for all browsers */
-          .max-w-\\[1296px\\]::-webkit-scrollbar {
-            display: none;
-          }
-          .max-w-\\[1296px\\] {
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-          }
-        `}
-      </style>
     </div>
   </section>
 );

@@ -1,7 +1,6 @@
 import React from "react";
-import { FaTags } from "react-icons/fa";
+import { FaTags, FaUsers, FaChartLine } from "react-icons/fa";
 import { FiClock } from "react-icons/fi";
-import { FaUsers } from "react-icons/fa";
 
 const data = [
   {
@@ -34,16 +33,26 @@ const data = [
     title: "User Engagement",
     desc: "Increase in user engagement with AI solutions",
   },
+  {
+    icon: (
+      <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#FFC043]">
+        <FaChartLine size={20} color="#fff" />
+      </span>
+    ),
+    percent: "75%",
+    title: "Performance Boost",
+    desc: "Significant improvement in operational efficiency",
+  },
 ];
 
 const HomepageData = ({
-  cardClassName = "flex-1 min-w-[280px] max-w-xs bg-white rounded-xl border border-[#E9EDF2] shadow-[0_0_0_4px_rgba(233,237,242,0.5)] px-6 py-6 flex flex-col gap-3",
+  cardClassName = "flex-1 min-w-[220px] max-w-[280px] bg-white rounded-xl border border-[#E9EDF2] shadow-[0_0_0_4px_rgba(233,237,242,0.5)] px-6 py-6 flex flex-col gap-3 transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg",
   percentClassName = "text-3xl font-bold text-[#232B36]",
   titleClassName = "text-lg font-semibold text-[#232B36] mb-1",
   descClassName = "text-sm ",
 }) => {
   return (
-    <div className="w-full flex flex-col md:flex-row gap-6 justify-center items-center my-10">
+    <div className="w-full flex flex-row flex-wrap gap-6 justify-center items-stretch my-10 px-4">
       {data.map((item, idx) => (
         <div
           key={idx}

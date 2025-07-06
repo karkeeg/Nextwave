@@ -21,9 +21,18 @@ const Header = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+    setMenuOpen(false);
+    setDropdownOpen(null);
+  };
+
   return (
     <header className="bg-white border-b border-gray/20">
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 md:px-[72px] py-4">
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 md:px-[48px] py-4">
         {/* Logo */}
         <Link to="/" className="shrink-0 flex items-center">
           <img src={logo} alt="Logo" className="h-10" />
@@ -41,18 +50,24 @@ const Header = () => {
             </button>
             {dropdownOpen === 0 && (
               <div className="absolute top-full mt-2 bg-white border rounded shadow-md w-48 z-20">
-                <Link
-                  to="/services"
-                  className="block px-4 py-2 hover:bg-gray-100 text-[#232B36]"
+                <button
+                  onClick={() => scrollToSection("services")}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-[#232B36]"
                 >
-                  Service 1
-                </Link>
-                <Link
-                  to="/services"
-                  className="block px-4 py-2 hover:bg-gray-100 text-[#232B36]"
+                  Our Services
+                </button>
+                <button
+                  onClick={() => scrollToSection("testimonials")}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-[#232B36]"
                 >
-                  Service 2
-                </Link>
+                  Testimonials
+                </button>
+                <button
+                  onClick={() => scrollToSection("faqs")}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-[#232B36]"
+                >
+                  FAQs
+                </button>
               </div>
             )}
           </div>
@@ -67,40 +82,40 @@ const Header = () => {
             </button>
             {dropdownOpen === 1 && (
               <div className="absolute top-full mt-2 bg-white border rounded shadow-md w-48 z-20">
+                <button
+                  onClick={() => scrollToSection("industries")}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-[#232B36]"
+                >
+                  Industries We Serve
+                </button>
                 <Link
                   to="/industry-served"
                   className="block px-4 py-2 hover:bg-gray-100 text-[#232B36]"
                 >
-                  Industry 1
-                </Link>
-                <Link
-                  to="/industy-served"
-                  className="block px-4 py-2 hover:bg-gray-100 text-[#232B36]"
-                >
-                  Industry 2
+                  Industry Details
                 </Link>
               </div>
             )}
           </div>
 
-          <Link
-            to="/about"
+          <button
+            onClick={() => scrollToSection("about")}
             className="font-medium hover:text-blue-600 transition"
           >
-            Case Studies
-          </Link>
-          <Link
-            to="/blog"
+            About Us
+          </button>
+          <button
+            onClick={() => scrollToSection("research")}
             className="font-medium hover:text-blue-600 transition"
           >
             Research & Insights
-          </Link>
-          <Link
-            to="/contact"
+          </button>
+          <button
+            onClick={() => scrollToSection("contact")}
             className="font-medium hover:text-blue-600 transition"
           >
             Contact
-          </Link>
+          </button>
 
           <Link
             to="/get-started"
@@ -159,15 +174,24 @@ const Header = () => {
             </button>
             {mobileDropdown.services && (
               <div className="ml-4 mt-1 space-y-1">
-                <Link
-                  to="/services/design"
-                  className="block hover:text-blue-600"
+                <button
+                  onClick={() => scrollToSection("services")}
+                  className="block w-full text-left hover:text-blue-600"
                 >
-                  Service 1
-                </Link>
-                <Link to="/services/dev" className="block hover:text-blue-600">
-                  Service 2
-                </Link>
+                  Our Services
+                </button>
+                <button
+                  onClick={() => scrollToSection("testimonials")}
+                  className="block w-full text-left hover:text-blue-600"
+                >
+                  Testimonials
+                </button>
+                <button
+                  onClick={() => scrollToSection("faqs")}
+                  className="block w-full text-left hover:text-blue-600"
+                >
+                  FAQs
+                </button>
               </div>
             )}
           </div>
@@ -187,36 +211,48 @@ const Header = () => {
             </button>
             {mobileDropdown.industries && (
               <div className="ml-4 mt-1 space-y-1">
-                <Link to="/products/app" className="block hover:text-blue-600">
-                  Industry 1
-                </Link>
+                <button
+                  onClick={() => scrollToSection("industries")}
+                  className="block w-full text-left hover:text-blue-600"
+                >
+                  Industries We Serve
+                </button>
                 <Link
-                  to="/products/tools"
+                  to="/industry-served"
                   className="block hover:text-blue-600"
                 >
-                  Industry 2
+                  Industry Details
                 </Link>
               </div>
             )}
           </div>
 
           {/* Static Items */}
-          <Link to="/about" className="block hover:text-blue-600">
-            Case Studies
-          </Link>
-          <Link to="/blog" className="block hover:text-blue-600">
+          <button
+            onClick={() => scrollToSection("about")}
+            className="block w-full text-left hover:text-blue-600"
+          >
+            About Us
+          </button>
+          <button
+            onClick={() => scrollToSection("research")}
+            className="block w-full text-left hover:text-blue-600"
+          >
             Research & Insights
-          </Link>
-          <Link to="/contact" className="block hover:text-blue-600">
+          </button>
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="block w-full text-left hover:text-blue-600"
+          >
             Contact
-          </Link>
+          </button>
 
           {/* CTA */}
           <Link
             to="/get-started"
             className="block w-full bg-[#2176C1] text-white text-center py-2 rounded hover:bg-[#1761a0]"
           >
-            Get a free Consultan
+            Get a free Consultant
           </Link>
         </div>
       )}

@@ -1,59 +1,6 @@
 import React from "react";
-
-const blogPosts = [
-  {
-    id: 1,
-    author: "Kritive Bhandari",
-    category: "About AI",
-    date: "April 23,2025",
-    title: "Unlocking the Future: How AI is Changing Our World",
-    desc: "Artificial Intelligence (AI) is no longer a concept confined to science fiction or tech labs. It's here, it's real, and it's transforming the way we live, work, and interact with the world. From voice assistants in our phones to recommendation systems on Netflix, AI has quietly become an integral part of our daily lives.",
-    image:
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-    featured: true,
-  },
-  {
-    id: 2,
-    author: "Kritive Bhandari",
-    category: "About AI",
-    date: "April 23,2025",
-    title: "Changing the World with AI",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
-    image:
-      "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
-    dark: true,
-  },
-  {
-    id: 3,
-    author: "Kritive Bhandari",
-    category: "About AI",
-    date: "April 23,2025",
-    title: "Change World with Artificial Intelligence",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
-    image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 4,
-    author: "Kritive Bhandari",
-    category: "About AI",
-    date: "April 23,2025",
-    title: "Change World with Artificial Intelligence",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
-    image:
-      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 5,
-    author: "Kritive Bhandari",
-    category: "About AI",
-    date: "April 23,2025",
-    title: "Change World with Artificial Intelligence",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
-    image:
-      "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80",
-  },
-];
+import { Link } from "react-router-dom";
+import blogPosts from "../blogPosts";
 
 const Blog = () => {
   return (
@@ -94,7 +41,10 @@ const Blog = () => {
                 {blogPosts[0].desc}
               </p>
             </div>
-            <button className="self-start mt-2 group">
+            <Link
+              to={`/blog/${blogPosts[0].id}`}
+              className="self-start mt-2 group"
+            >
               <span className="inline-block w-10 h-10 rounded-full border border-[#2176C1] flex items-center justify-center group-hover:bg-[#2176C1] transition">
                 <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path
@@ -107,7 +57,7 @@ const Blog = () => {
                   />
                 </svg>
               </span>
-            </button>
+            </Link>
           </div>
           {/* Right: Image */}
           <div className="w-full h-64 md:h-auto">
@@ -135,9 +85,12 @@ const Blog = () => {
                 {blogPosts[1].title}
               </h3>
               <p className="text-white text-base mb-4">{blogPosts[1].desc}</p>
-              <button className="border border-white text-white px-5 py-2 rounded-full hover:bg-white hover:text-[#232B36] transition w-max">
+              <Link
+                to={`/blog/${blogPosts[1].id}`}
+                className="border border-white text-white px-5 py-2 rounded-full hover:bg-white hover:text-[#232B36] transition w-max"
+              >
                 Read More
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -188,9 +141,12 @@ const Blog = () => {
                   <p className="text-[#7B8591] text-sm mb-4">{post.desc}</p>
                 </div>
                 <div className="mt-4">
-                  <button className="border border-[#2176C1] text-[#2176C1] px-4 py-2 rounded-full hover:bg-[#2176C1] hover:text-white transition w-full">
+                  <Link
+                    to={`/blog/${post.id}`}
+                    className="border border-[#2176C1] text-[#2176C1] px-4 py-2 rounded-full hover:bg-[#2176C1] hover:text-white transition w-full text-center block"
+                  >
                     Read More
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

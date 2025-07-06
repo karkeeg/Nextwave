@@ -53,10 +53,7 @@ const FAQs = () => {
         }}
       >
         {faqs.map((faq, idx) => (
-          <div
-            key={idx}
-            className={`border-b last:border-b-0 transition-all`}
-          >
+          <div key={idx} className={`border-b last:border-b-0 transition-all`}>
             <button
               className="w-full flex items-center justify-between px-6 py-6 md:py-8 text-left focus:outline-none"
               onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
