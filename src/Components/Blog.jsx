@@ -45,7 +45,7 @@ const Blog = () => {
               to={`/blog/${blogPosts[0].id}`}
               className="self-start mt-2 group"
             >
-              <span className="inline-block w-10 h-10 rounded-full border border-[#2176C1] flex items-center justify-center group-hover:bg-[#2176C1] transition">
+              <span className=" w-10 h-10 rounded-full border border-[#2176C1] flex items-center justify-center group-hover:bg-[#2176C1] transition">
                 <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path
                     d="M8 12h8m0 0-3.5-3.5M16 12l-3.5 3.5"

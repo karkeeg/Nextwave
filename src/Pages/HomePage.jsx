@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
 import HomepageData from "../Components/HomepageData";
 import Services from "../Components/Services";
 import Testimonials from "../Components/Testimonials";
@@ -34,21 +35,25 @@ const heroSlides = [
 
 const SLIDE_INTERVAL = 6000;
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
+
 const HomePage = () => {
   const [visibleElements, setVisibleElements] = useState(new Set());
   const sectionRefs = useRef({});
   const [slide, setSlide] = useState(0);
   const [scrollY, setScrollY] = useState(0);
-  const [scrollDir, setScrollDir] = useState("down");
 
-  // Fade out on scroll
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Hero auto slider
   useEffect(() => {
     const interval = setInterval(() => {
       setSlide((prev) => (prev + 1) % heroSlides.length);
@@ -56,7 +61,6 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Intersection observer for fade-in
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -83,21 +87,39 @@ const HomePage = () => {
 
   const isVisible = (id) => visibleElements.has(id);
 
+  // Calculate scroll progress percentage
+  const scrollProgress =
+    (scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+
   return (
     <main className="w-full bg-white font-['Inter']">
+      {/* Scroll Progress Bar */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          height: "4px",
+          backgroundColor: "#2176C1",
+          width: `${scrollProgress}%`,
+          zIndex: 9999,
+          transition: "width 0.2s ease-out",
+        }}
+      />
+
       {/* Hero Section */}
       <section
         ref={(ref) => addRef("hero", ref)}
         id="hero"
         className="relative w-full h-[700px] flex flex-col md:flex-row items-center justify-center px-4 md:px-12 lg:px-32 py-16 md:py-24 overflow-hidden"
       >
-        {/* Background Image Slider + Fade & Transform */}
+        {/* Background Slider */}
         <div
           className="absolute inset-0 z-0 transition-all duration-700 ease-in-out"
           style={{
-            opacity: scrollDir === "down" && scrollY > 100 ? 0.3 : 1,
+            opacity: scrollY > 100 ? 0.3 : 1,
             transform:
-              scrollDir === "down" && scrollY > 100
+              scrollY > 100
                 ? "translateY(-30px) scale(1.02)"
                 : "translateY(0px) scale(1)",
           }}
@@ -111,32 +133,22 @@ const HomePage = () => {
               style={{ backgroundImage: slideData.bg }}
             />
           ))}
-          {/* Overlay */}
           <div className="absolute inset-0 bg-black/20 pointer-events-none" />
         </div>
 
-        {/* Floating Shapes */}
+        {/* Animated Floating Shapes */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <span className="absolute top-10 left-10 w-32 h-32 bg-[#FFC043] opacity-20 rounded-full animate-float-slow" />
-          <span className="absolute top-1/2 left-1/4 w-16 h-16 bg-[#2176C1] opacity-15 rounded-full animate-float" />
-          <span className="absolute bottom-10 right-20 w-24 h-24 bg-[#4ECDC4] opacity-20 rounded-full animate-float-reverse" />
-          <span className="absolute top-1/3 right-10 w-20 h-20 bg-[#FF6B6B] opacity-10 rounded-full animate-float" />
-          <span className="absolute bottom-1/4 left-1/3 w-14 h-14 bg-[#A3E4D7] opacity-15 rounded-full animate-float-reverse" />
+          {/* ... you can keep your motion.spans here or static spans */}
         </div>
 
-        {/* Hero Content (text + video) */}
-        <div
+        {/* Hero Content */}
+        <motion.div
           className="relative z-10 flex flex-col md:flex-row items-center w-full max-w-6xl mx-auto gap-12"
-          style={{
-            opacity: scrollDir === "down" && scrollY > 100 ? 0.25 : 1,
-            transform:
-              scrollDir === "down" && scrollY > 100
-                ? "translateY(-20px)"
-                : "translateY(0px)",
-            transition: "opacity 0.8s ease, transform 0.8s ease",
-          }}
+          initial="hidden"
+          animate="show"
+          variants={fadeInUp}
         >
-          {/* Left: Headline + Buttons */}
+          {/* Left */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 drop-shadow-sm">
               {heroSlides[slide].headline}
@@ -144,16 +156,20 @@ const HomePage = () => {
             <p className="text-lg md:text-xl text-white/90 mb-8 font-medium max-w-xl">
               {heroSlides[slide].subheadline}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto justify-center md:justify-start">
+            <motion.div
+              variants={fadeInUp}
+              initial="hidden"
+              animate="show"
+              transition={{ delay: 0.2 }}
+              className="flex flex-col sm:flex-row gap-4 w-full md:w-auto justify-center md:justify-start"
+            >
               <button className="bg-[#2176C1] text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:bg-[#185a96] hover:scale-105 transition-all duration-300 text-lg w-full sm:w-auto">
                 Get Started Free
               </button>
               <button className="bg-white text-[#2176C1] font-semibold px-8 py-4 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-lg w-full sm:w-auto">
                 Request a Demo
               </button>
-            </div>
-
-            {/* Dots */}
+            </motion.div>
             <div className="flex gap-2 mt-6">
               {heroSlides.map((_, idx) => (
                 <button
@@ -167,7 +183,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Right: Video */}
+          {/* Right */}
           <div className="flex-1 flex items-center justify-center w-full max-w-xl">
             <div className="bg-[#E9EDF2] rounded-2xl shadow-lg overflow-hidden w-full aspect-video max-w-2xl">
               <iframe
@@ -180,107 +196,33 @@ const HomePage = () => {
               ></iframe>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Remaining sections */}
-      <section
-        ref={(ref) => addRef("data", ref)}
-        id="data"
-        className={`transition-all duration-1000 ease-out ${
-          isVisible("data")
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
-        }`}
-      >
-        <HomepageData />
-      </section>
+      {/* Animated Sections */}
+      {[
+        ["data", <HomepageData />],
+        ["about", <AboutPage />],
+        ["services", <Services />],
+        ["industries", <IndustryServed />],
+        ["research", <Blog />],
+        ["testimonials", <Testimonials />],
+        ["faqs", <FAQs />],
+        ["contact", <Contact />],
+      ].map(([id, component]) => (
+        <motion.section
+          key={id}
+          ref={(ref) => addRef(id, ref)}
+          id={id}
+          variants={fadeInUp}
+          initial="hidden"
+          animate={isVisible(id) ? "show" : "hidden"}
+        >
+          {component}
+        </motion.section>
+      ))}
 
-      <section
-        ref={(ref) => addRef("about", ref)}
-        id="about"
-        className={`transition-all duration-1000 ease-out ${
-          isVisible("about")
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
-        }`}
-      >
-        <AboutPage />
-      </section>
-
-      <section
-        ref={(ref) => addRef("services", ref)}
-        id="services"
-        className={`transition-all duration-1000 ease-out ${
-          isVisible("services")
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
-        }`}
-      >
-        <Services />
-      </section>
-
-      <section
-        ref={(ref) => addRef("industries", ref)}
-        id="industries"
-        className={`transition-all duration-1000 ease-out ${
-          isVisible("industries")
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
-        }`}
-      >
-        <IndustryServed />
-      </section>
-
-      <section
-        ref={(ref) => addRef("research", ref)}
-        id="research"
-        className={`transition-all duration-1000 ease-out ${
-          isVisible("research")
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
-        }`}
-      >
-        <Blog />
-      </section>
-
-      <section
-        ref={(ref) => addRef("testimonials", ref)}
-        id="testimonials"
-        className={`transition-all duration-1000 ease-out ${
-          isVisible("testimonials")
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
-        }`}
-      >
-        <Testimonials />
-      </section>
-
-      <section
-        ref={(ref) => addRef("faqs", ref)}
-        id="faqs"
-        className={`transition-all duration-1000 ease-out ${
-          isVisible("faqs")
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
-        }`}
-      >
-        <FAQs />
-      </section>
-
-      <section
-        ref={(ref) => addRef("contact", ref)}
-        id="contact"
-        className={`transition-all duration-1000 ease-out ${
-          isVisible("contact")
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
-        }`}
-      >
-        <Contact />
-      </section>
-
-      {/* Scroll to Top Button */}
+      {/* Scroll to Top */}
       <div
         className="fixed bottom-8 right-8 z-50 transition-all duration-300 hover:scale-110"
         style={{
