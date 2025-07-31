@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   FaXTwitter,
   FaLinkedin,
@@ -37,10 +38,18 @@ const Footer = () => {
             new service alerts
           </p>
           <div className="flex items-center gap-4 text-xl text-black">
-            <FaXTwitter className="cursor-pointer hover:text-blue-600 transition duration-200" />
+            <Link to="https://twitter.com/nextwaveai" target="_blank" rel="noopener noreferrer">
+              <FaXTwitter className="cursor-pointer hover:text-blue-600 transition duration-200" />
+            </Link>
+            <Link to="https://www.linkedin.com/company/nxt-wave-ai/posts/?feedView=all" target="_blank" rel="noopener noreferrer">
             <FaLinkedin className="cursor-pointer hover:text-blue-600 transition duration-200" />
+            </Link>
+            <Link to="https://www.instagram.com/nextwaveai/"  target="_blank" rel="noopener noreferrer">
             <FaInstagram className="cursor-pointer hover:text-pink-600 transition duration-200" />
+              </Link>
+            <Link to="https://www.youtube.com/@nextwaveai" target="_blank" rel="noopener noreferrer">
             <FaYoutube className="cursor-pointer hover:text-red-600 transition duration-200" />
+            </Link>
           </div>
         </div>
 
@@ -96,9 +105,12 @@ const Footer = () => {
             >
               FAQ
             </button>
-            <span className="hover:text-gray-300 transition cursor-pointer">
+            <Link
+              to="/privacy-policy"
+              className="hover:text-gray-300 transition cursor-pointer"
+            >
               Privacy Policy
-            </span>
+            </Link>
           </div>
 
           {/* Contact Us */}

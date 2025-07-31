@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <header className="bg-white border-b border-gray/20">
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 md:px-[48px] py-4">
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 md:px-[24px] py-4">
         {/* Logo */}
         <Link to="/" className="shrink-0 flex items-center">
           <img src={logo} alt="Logo" className="h-10" />

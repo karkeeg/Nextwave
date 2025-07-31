@@ -1,59 +1,46 @@
 import React from "react";
-import { FaRobot } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import { FaChartLine, FaBrain, FaComments, FaLanguage, FaRobot } from "react-icons/fa";
 
 const services = [
   {
-    title: "AI Chat Development",
+    id: "data-science",
+    title: "Data Science & Predictive Analytics",
     desc: "Create intelligent conversational experiences with our advanced AI chatbot development services, powered by the latest in NLP and machine learning.",
     features: [
       "Custom conversational flows and personality design",
       "Advanced NLP engines and intent classification",
       "Multilingual support and sentiment analysis",
     ],
-    icon: (
-      <span className="inline-flex items-center justify-center w-10 h-10 rounded bg-[#2176C1] text-white mr-3 transition-all duration-300 group-hover:scale-110 group-hover:bg-[#185a96] group-hover:rotate-3">
-        <FaRobot
-          size={24}
-          className="transition-transform duration-300 group-hover:scale-110"
-        />
-      </span>
-    ),
+    icon: <FaChartLine size={24} />,
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
   },
   {
-    title: "AI Chat Development",
+    id: "machine-learning",
+    title: "Machine Learning Engineering",
     desc: "Create intelligent conversational experiences with our advanced AI chatbot development services, powered by the latest in NLP and machine learning.",
     features: [
       "Custom conversational flows and personality design",
       "Advanced NLP engines and intent classification",
       "Multilingual support and sentiment analysis",
     ],
-    icon: (
-      <span className="inline-flex items-center justify-center w-10 h-10 rounded bg-[#2176C1] text-white mr-3 transition-all duration-300 group-hover:scale-110 group-hover:bg-[#185a96] group-hover:rotate-3">
-        <FaRobot
-          size={24}
-          className="transition-transform duration-300 group-hover:scale-110"
-        />
-      </span>
-    ),
+    icon: <FaBrain size={24} />,
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
   },
   {
-    title: "AI Chat Development",
+    id: "nlp",
+    title: "Natural Language Processing (NLP)",
     desc: "Create intelligent conversational experiences with our advanced AI chatbot development services, powered by the latest in NLP and machine learning.",
     features: [
       "Custom conversational flows and personality design",
       "Advanced NLP engines and intent classification",
       "Multilingual support and sentiment analysis",
     ],
-    icon: (
-      <span className="inline-flex items-center justify-center w-10 h-10 rounded bg-[#2176C1] text-white mr-3 transition-all duration-300 group-hover:scale-110 group-hover:bg-[#185a96] group-hover:rotate-3">
-        <FaRobot
-          size={24}
-          className="transition-transform duration-300 group-hover:scale-110"
-        />
-      </span>
-    ),
+    icon: <FaLanguage size={24} />,
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
   },
   {
+    id: "ai-chat",
     title: "AI Chat Development",
     desc: "Create intelligent conversational experiences with our advanced AI chatbot development services, powered by the latest in NLP and machine learning.",
     features: [
@@ -61,75 +48,118 @@ const services = [
       "Advanced NLP engines and intent classification",
       "Multilingual support and sentiment analysis",
     ],
-    icon: (
-      <span className="inline-flex items-center justify-center w-10 h-10 rounded bg-[#2176C1] text-white mr-3 transition-all duration-300 group-hover:scale-110 group-hover:bg-[#185a96] group-hover:rotate-3">
-        <FaRobot
-          size={24}
-          className="transition-transform duration-300 group-hover:scale-110"
-        />
-      </span>
-    ),
+    icon: <FaComments size={24} />,
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
   },
+  {
+    id: "ai-robotics",
+    title: "AI Robotics & Automation",
+    desc: "Create intelligent conversational experiences with our advanced AI chatbot development services, powered by the latest in NLP and machine learning.",
+    features: [
+      "Custom conversational flows and personality design",
+      "Advanced NLP engines and intent classification",
+      "Multilingual support and sentiment analysis",
+    ],
+    icon: <FaRobot size={24} />,
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+  }
 ];
 
-const Services = () => (
-  <section className="w-full min-h-screen bg-white py-10 px-2 flex flex-col items-center">
-    <h2 className="text-3xl md:text-4xl font-extrabold text-[#2176C1] text-center mb-2 font-['Inter'] transition-all duration-300 hover:scale-105">
-      Our Services
-    </h2>
-    <p className="text-[#7B8591] text-base text-center mb-12 font-['Inter'] transition-all duration-300 hover:text-[#232B36]">
-      Specialized technical solutions that power modern businesses with
-      cutting-edge technology.
-    </p>
-    <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 justify-center items-start">
-      {services.map((service, idx) => (
-        <div
-          key={idx}
-          className="group bg-[#F8FAFC] rounded-2xl shadow-md border border-[#E9EDF2] p-8 flex flex-col min-h-[320px] transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-[#2176C1] hover:bg-white cursor-pointer transform hover:-translate-y-2"
-        >
-          <div className="flex items-center mb-4">
-            {service.icon}
-            <span className="text-xl md:text-2xl font-bold text-[#232B36] font-['Inter'] transition-all duration-300 group-hover:text-[#2176C1]">
-              {service.title}
-            </span>
-          </div>
-          <p className="text-[#7B8591] text-base mb-4 font-['Inter'] transition-all duration-300 group-hover:text-[#232B36]">
-            {service.desc}
+const Services = () => {
+  const navigate = useNavigate();
+
+  const handleServiceClick = (serviceId) => {
+    navigate(`/services/${serviceId}`);
+  };
+
+  return (
+    <section className="w-full min-h-screen bg-white py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#2176C1] mb-2">
+            Our Services
+          </h1>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Specialized technical solutions that power modern businesses with cutting-edge technology.
           </p>
-          <ul className="text-[#232B36] text-sm mb-6 font-['Inter'] list-decimal list-inside space-y-1 pl-2">
-            {service.features.map((f, i) => (
-              <li
-                key={i}
-                className="transition-all duration-300 group-hover:text-[#2176C1] group-hover:translate-x-1"
-              >
-                {f}
-              </li>
-            ))}
-          </ul>
-          <button className="flex items-center gap-2 text-[#2176C1] font-medium mt-auto hover:text-[#185a96] transition-all duration-300 group-hover:underline transform hover:scale-105 active:scale-95">
-            Learn more
-            <span className="inline-block transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110">
-              <svg
-                width="18"
-                height="18"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="transition-all duration-300 group-hover:stroke-[#185a96]"
-              >
-                <path
-                  d="M8 12h8m0 0-3.5-3.5M16 12l-3.5 3.5"
-                  stroke="#2176C1"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </button>
         </div>
-      ))}
-    </div>
-  </section>
-);
+
+        {/* Services Grid */}
+        <div className="space-y-12">
+          {services.map((service, index) => (
+            <div
+              key={service.id}
+              className={`flex flex-col lg:flex-row items-center gap-8 ${
+                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+              }`}
+            >
+              {/* Text Content */}
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-[#2176C1] rounded-lg flex items-center justify-center text-white">
+                    {service.icon}
+                  </div>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    {service.title}
+                  </h2>
+                </div>
+                
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  {service.desc}
+                </p>
+                
+                <ol className="space-y-2 text-gray-700">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <span className="text-[#2176C1] font-bold text-sm mt-1">
+                        {idx + 1}.
+                      </span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ol>
+                
+                <button
+                  onClick={() => handleServiceClick(service.id)}
+                  className="inline-flex items-center gap-2 text-[#2176C1] font-semibold hover:text-[#185a96] transition-colors duration-300 group"
+                >
+                  Learn more
+                  <svg
+                    width="18"
+                    height="18"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  >
+                    <path
+                      d="M8 12h8m0 0-3.5-3.5M16 12l-3.5 3.5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Image */}
+              <div className="flex-1">
+                <div className="relative group cursor-pointer" onClick={() => handleServiceClick(service.id)}>
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-80 object-cover rounded-2xl shadow-lg transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 rounded-2xl"></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default Services;

@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const industryData = [
   {
+    id: "financial-services",
     title: "Financial Services",
     images: [
-      "https://images.unsplash.com/photo-1556742400-b5da35d32d78",
-      "https://images.unsplash.com/photo-1585241936939-bc16c66f1f48",
-      "https://images.unsplash.com/photo-1556741533-f6acd647d2fb",
+      "https://images.unsplash.com/photo-1556742400-b5da35d32d78?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1585241936939-bc16c66f1f48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1556741533-f6acd647d2fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     features: [
       ["Fraud detection", "AI-driven risk assessment"],
@@ -15,11 +17,12 @@ const industryData = [
     ],
   },
   {
+    id: "education",
     title: "Education",
     images: [
-      "https://images.unsplash.com/photo-1571260899304-425eee4c7efc",
-      "https://images.unsplash.com/photo-1558024920-b63f9a365f84",
-      "https://images.unsplash.com/photo-1513258496099-48168024aec0",
+      "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     features: [
       ["E-learning platforms", "Virtual classrooms"],
@@ -27,11 +30,25 @@ const industryData = [
     ],
   },
   {
-    title: "IT Services",
+    id: "healthcare",
+    title: "Healthcare",
     images: [
-      "https://images.unsplash.com/photo-1581093588401-22a9a2a60c8e",
-      "https://images.unsplash.com/photo-1518770660439-4636190af475",
-      "https://images.unsplash.com/photo-1614064641938-e0f2d94ad6cd",
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1581093588401-22a9a2a60c8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    ],
+    features: [
+      ["Medical image analysis", "Predictive healthcare"],
+      ["Patient data management", "Telemedicine solutions"],
+    ],
+  },
+  {
+    id: "technology",
+    title: "Technology",
+    images: [
+      "https://images.unsplash.com/photo-1581093588401-22a9a2a60c8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     features: [
       ["Cloud infrastructure", "Managed IT services"],
@@ -39,22 +56,25 @@ const industryData = [
     ],
   },
   {
-    title: "Website Development",
+    id: "manufacturing",
+    title: "Manufacturing",
     images: [
-      "https://images.unsplash.com/photo-1581090700227-1e8e8dd214e4",
-      "https://images.unsplash.com/photo-1542744094-3a31f272c490",
-      "https://images.unsplash.com/photo-1587620931232-efe7f5b9c4b3",
+      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1581093588401-22a9a2a60c8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     features: [
-      ["Custom website design", "SEO optimization"],
-      ["Responsive layouts", "Backend integrations"],
+      ["Predictive maintenance", "Quality automation"],
+      ["Supply chain optimization", "Production planning"],
     ],
   },
 ];
 
 const IndustryServed = () => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   const handlePrev = () => {
     setCurrentIndex((prev) =>
@@ -68,7 +88,22 @@ const IndustryServed = () => {
     );
   };
 
-  const { title, images, features } = industryData[currentIndex];
+  const handleIndustryClick = (industryId) => {
+    navigate(`/industries/${industryId}`);
+  };
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [currentIndex, isAutoPlaying]);
+
+  const { id, title, images, features } = industryData[currentIndex];
 
   return (
     <section className="w-full min-h-screen py-12 px-4 flex flex-col items-center">
@@ -111,10 +146,11 @@ const IndustryServed = () => {
               <img
                 key={index}
                 src={img}
-                alt={`industry-${index}`}
+                alt={`${title} - Image ${index + 1}`}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className={`w-80 h-60 rounded-2xl object-cover shadow-lg transition-all duration-300 ease-in-out ${scale}`}
+                onClick={() => handleIndustryClick(id)}
+                className={`w-80 h-60 rounded-2xl object-cover shadow-lg transition-all duration-300 ease-in-out ${scale} cursor-pointer`}
               />
             );
           })}
@@ -124,7 +160,7 @@ const IndustryServed = () => {
           {title}
         </h3>
 
-        <div className="w-full flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12">
+        <div className="w-full flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 mb-8">
           {features.map((column, idx) => (
             <ul
               key={idx}
@@ -135,6 +171,35 @@ const IndustryServed = () => {
               ))}
             </ul>
           ))}
+        </div>
+
+        {/* Carousel Indicators */}
+        <div className="flex justify-center items-center gap-3 mb-6">
+          {industryData.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'bg-[#2176C1] scale-125' 
+                  : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Auto-play Toggle */}
+        <div className="text-center">
+          <button
+            onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors duration-300 ${
+              isAutoPlaying 
+                ? 'bg-[#2176C1] text-white hover:bg-[#185a96]' 
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            {isAutoPlaying ? 'Pause Auto-play' : 'Start Auto-play'}
+          </button>
         </div>
       </div>
     </section>

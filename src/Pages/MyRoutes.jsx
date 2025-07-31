@@ -7,6 +7,9 @@ import FAQs from "../Components/FAQs";
 import Blog from "../Components/Blog";
 import IndustryServed from "../Components/IndustryServed";
 import BlogArticle from "../Components/BlogArticle";
+import ServiceDetail from "../Components/ServiceDetail";
+import IndustryDetail from "../Components/IndustryDetail";
+import PrivacyPolicy from "./PrivacyPolicy";
 
 const MyRoutes = () => {
   return (
@@ -19,6 +22,9 @@ const MyRoutes = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/industry-served" element={<IndustryServed />} />
           <Route path="/blog/:id" element={<BlogArticle />} />
+          <Route path="/services/:serviceId" element={<ServiceDetail />} />
+          <Route path="/industries/:industryId" element={<IndustryDetail />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Route>
       </Routes>
     </BrowserRouter>
