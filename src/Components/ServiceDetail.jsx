@@ -148,16 +148,16 @@ const servicesData = {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6">
+    <div className="min-h-screen bg-gray-50 py-6 pt-20">
       <div className="max-w-6xl mx-auto px-4">
-                 {/* Back Button */}
-         <button
-           onClick={handleBackToServices}
-           className="inline-flex items-center gap-2 text-[#2176C1] hover:text-[#185a96] mb-6 transition-colors duration-300"
-         >
-           <FaArrowLeft size={16} />
-           Back to Services
-         </button>
+        {/* Back Button */}
+        <button
+          onClick={handleBackToServices}
+          className="inline-flex items-center gap-3 px-6 py-3 bg-white/90 backdrop-blur-sm text-[#2176C1] hover:text-[#185a96] mb-6 transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl border border-gray-200 font-semibold"
+        >
+          <FaArrowLeft size={16} />
+          Back to Services
+        </button>
 
         {/* Main Service Card */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">

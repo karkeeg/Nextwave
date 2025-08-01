@@ -201,8 +201,8 @@ const HomePage = () => {
 
       {/* Animated Sections */}
       {[
-        ["data", <HomepageData />],
-        ["about", <AboutPage />],
+       
+        // ["about", <AboutPage />],
         ["services", <Services />],
         ["industries", <IndustryServed />],
         ["research", <Blog />],
