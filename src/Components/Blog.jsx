@@ -78,9 +78,9 @@ const Blog = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
+          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 leading-tight py-2">
             Insights & Stories
-          </h1>
+        </h1>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
             Discover the latest trends, insights, and innovations in AI technology from our expert team.
           </p>
@@ -132,18 +132,18 @@ const Blog = () => {
                         <div className="flex items-center gap-2">
                           <FaUser className="text-blue-400" />
                           <span>{currentPost.author}</span>
-                        </div>
+          </div>
                         <div className="flex items-center gap-2">
                           <FaCalendar className="text-blue-400" />
                           <span>{currentPost.date}</span>
-                        </div>
+          </div>
                         <div className="flex items-center gap-2">
                           <FaTag className="text-blue-400" />
                           <span className="bg-blue-600 px-3 py-1 rounded-full text-xs">
                             {currentPost.category}
                           </span>
-                        </div>
-                      </div>
+        </div>
+      </div>
 
                       {/* Title */}
                       <h2 className="text-4xl md:text-6xl font-bold leading-tight">
@@ -164,11 +164,11 @@ const Blog = () => {
                         <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 group">
                           Read Full Article
                           <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-                        </div>
+            </div>
                       </motion.div>
                     </motion.div>
-                  </div>
-                </div>
+          </div>
+        </div>
 
                 {/* Compact Newsletter Signup - Top Right */}
                 <motion.div
@@ -192,7 +192,7 @@ const Blog = () => {
                         Subscribe
                       </button>
                     </div>
-                  </div>
+              </div>
                 </motion.div>
 
                 {/* Floating Elements */}
@@ -253,7 +253,7 @@ const Blog = () => {
                   whileTap={{ scale: 0.9 }}
                 />
               ))}
-            </div>
+                </div>
 
             {/* Post Counter */}
             <div className="absolute top-8 left-8 bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-2 border border-white/20">
@@ -263,7 +263,7 @@ const Blog = () => {
                 <span>{blogPosts.length}</span>
               </div>
             </div>
-          </div>
+        </div>
         </motion.div>
       </div>
     </section>

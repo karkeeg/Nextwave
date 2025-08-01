@@ -126,14 +126,9 @@ const ProjectGallery = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <div className="flex flex-col sm:flex-row items-center justify-between mb-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-0">
-              Project Gallery
-            </h2>
-            <button className="bg-[#2176C1] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[#185a96] transition-all duration-300 shadow-lg">
-              View All Projects
-            </button>
-          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Project Gallery
+          </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Explore our cutting-edge AI solutions and innovative projects that drive business transformation
           </p>
@@ -168,7 +163,7 @@ const ProjectGallery = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"
         >
           {projects.map((project) => {
             const colorClasses = getColorClasses(project.color);
@@ -278,9 +273,9 @@ const ProjectGallery = () => {
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="absolute inset-0 bg-gradient-to-t from-[#2176C1]/90 to-transparent rounded-2xl flex items-end justify-center pb-4"
+                    className="absolute inset-0 bg-gradient-to-t from-[#2176C1]/30 to-transparent rounded-2xl flex items-center justify-center"
                   >
-                    <button className="bg-white text-[#2176C1] font-semibold px-4 py-2 rounded-lg shadow-lg hover:bg-gray-50 transition-all duration-300 text-sm">
+                    <button className="bg-white text-[#2176C1] font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-gray-50 transition-all duration-300 text-sm">
                       View Project Details
                     </button>
                   </motion.div>
@@ -288,6 +283,22 @@ const ProjectGallery = () => {
               </motion.div>
             );
           })}
+        </motion.div>
+
+        {/* View All Projects Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <button className="inline-flex items-center gap-2 bg-white text-[#2176C1] font-medium px-6 py-3 rounded-lg border-2 border-[#2176C1] hover:bg-[#2176C1] hover:text-white transition-all duration-300 shadow-sm hover:shadow-md">
+            <span>View All Projects</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </motion.div>
       </div>
     </section>

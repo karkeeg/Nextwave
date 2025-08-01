@@ -106,11 +106,11 @@ const IndustryServed = () => {
   const { id, title, images, features } = industryData[currentIndex];
 
   return (
-    <section className="w-full min-h-screen py-12 px-4 flex flex-col items-center">
-      <h2 className="text-3xl md:text-4xl font-extrabold text-[#2176C1] text-center mb-2 font-['Inter']">
+    <section className="w-full min-h-screen py-8 px-4 flex flex-col items-center">
+      <h2 className="text-3xl md:text-4xl font-extrabold text-[#2176C1] text-center font-['Inter']">
         Industries Served
       </h2>
-      <p className="text-[#7B8591] text-base text-center mb-10 font-['Inter']">
+      <p className="text-[#7B8591] text-base text-center mt-10 font-['Inter']">
         Specialized technical solutions that power modern businesses with
         cutting-edge technology.
       </p>
