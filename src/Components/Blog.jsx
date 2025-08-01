@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaArrowRight, FaCalendar, FaUser, FaTag, FaBookOpen, FaHeart, FaShare, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaArrowRight, FaCalendar, FaUser, FaTag, FaBookOpen, FaHeart, FaShare, FaChevronLeft, FaChevronRight, FaEnvelope } from "react-icons/fa";
 import blogPosts from "../blogPosts";
 
 const Blog = () => {
   const navigate = useNavigate();
   const [selectedPost, setSelectedPost] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handlePostClick = (postId) => {
     navigate(`/blog/${postId}`);
@@ -23,6 +24,17 @@ const Blog = () => {
   const goToPost = (index) => {
     setSelectedPost(index);
   };
+
+  // Auto-rotation effect
+  useEffect(() => {
+    if (!isHovered) {
+      const interval = setInterval(() => {
+        nextPost();
+      }, 5000); // Change every 5 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [isHovered]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -81,7 +93,11 @@ const Blog = () => {
           initial="hidden"
           animate="visible"
         >
-          <div className="relative h-[600px] rounded-3xl overflow-hidden shadow-2xl">
+          <div 
+            className="relative h-[600px] rounded-3xl overflow-hidden shadow-2xl"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedPost}
@@ -154,19 +170,32 @@ const Blog = () => {
                   </div>
                 </div>
 
-                {/* Floating Elements */}
+                {/* Compact Newsletter Signup - Top Right */}
                 <motion.div
-                  className="absolute top-8 right-8 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20"
+                  className="absolute top-8 right-8 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 max-w-xs"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7 }}
                 >
-                  <div className="text-center text-white">
-                    <div className="text-2xl font-bold">Featured</div>
-                    <div className="text-sm opacity-80">Latest Post</div>
+                  <div className="text-white">
+                    <div className="flex items-center gap-2 mb-3">
+                      <FaEnvelope className="text-blue-400" />
+                      <span className="font-semibold text-sm">Stay Updated</span>
+                    </div>
+                    <div className="space-y-2">
+                      <input
+                        type="email"
+                        placeholder="Your email"
+                        className="w-full px-3 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white placeholder-white/70 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+                      />
+                      <button className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-300">
+                        Subscribe
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
 
+                {/* Floating Elements */}
                 <motion.div
                   className="absolute bottom-8 right-8 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20"
                   initial={{ opacity: 0, y: 20 }}
@@ -234,35 +263,6 @@ const Blog = () => {
                 <span>{blogPosts.length}</span>
               </div>
             </div>
-          </div>
-        </motion.div>
-
-        {/* Newsletter Signup */}
-        <motion.div 
-          className="mt-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 md:p-12 text-center text-white"
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <h3 className="text-3xl md:text-4xl font-bold mb-4">
-            Stay Updated with AI Insights
-          </h3>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Get the latest AI trends, insights, and stories delivered directly to your inbox.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-6 py-3 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50"
-            />
-            <motion.button
-              className="px-8 py-3 bg-white text-blue-600 font-semibold rounded-xl hover:bg-gray-100 transition-colors duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Subscribe
-            </motion.button>
           </div>
         </motion.div>
       </div>

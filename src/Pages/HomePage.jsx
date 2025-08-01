@@ -8,6 +8,7 @@ import Blog from "../Components/Blog";
 import FAQs from "../Components/FAQs";
 import IndustryServed from "../Components/IndustryServed";
 import AboutPage from "./AboutPage";
+import ProjectGallery from "../Components/ProjectGallery";
 
 const heroSlides = [
   {
@@ -92,7 +93,15 @@ const HomePage = () => {
     (scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
 
   return (
-    <main className="w-full bg-white font-['Inter']">
+    <motion.main 
+      className="w-full bg-white font-['Inter']"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ 
+        duration: 1.2,
+        ease: "easeOut"
+      }}
+    >
       {/* Scroll Progress Bar */}
       <div
         style={{
@@ -206,6 +215,7 @@ const HomePage = () => {
         ["services", <Services />],
         ["industries", <IndustryServed />],
         ["research", <Blog />],
+        ["projects", <ProjectGallery />],
         ["testimonials", <Testimonials />],
         ["faqs", <FAQs />],
         ["contact", <Contact />],
@@ -249,7 +259,7 @@ const HomePage = () => {
           </svg>
         </button>
       </div>
-    </main>
+    </motion.main>
   );
 };
 

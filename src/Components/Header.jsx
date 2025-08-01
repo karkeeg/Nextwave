@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import logo from "../assets/nextwaveLogo.png";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState({
@@ -52,6 +54,17 @@ const Header = () => {
     setDropdownOpen(null);
   };
 
+  const logoVariants = {
+    hover: { 
+      scale: 1.05,
+      transition: { duration: 0.2 }
+    },
+    tap: { 
+      scale: 0.95,
+      transition: { duration: 0.1 }
+    }
+  };
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 hover:bg-white group ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
@@ -59,7 +72,14 @@ const Header = () => {
       <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 md:px-[24px] py-4">
         {/* Logo */}
         <Link to="/" className="shrink-0 flex items-center">
-          <img src={logo} alt="Logo" className="h-10" />
+          <motion.img
+            src={logo}
+            alt="Logo"
+            className="h-10"
+            variants={logoVariants}
+            whileHover="hover"
+            whileTap="tap"
+          />
         </Link>
 
         {/* Desktop Navigation */}
