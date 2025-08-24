@@ -10,6 +10,7 @@ import BlogArticle from "../Components/BlogArticle";
 import ServiceDetail from "../Components/ServiceDetail";
 import IndustryDetail from "../Components/IndustryDetail";
 import PrivacyPolicy from "./PrivacyPolicy";
+import Practice from "../Components/Practice";
 
 const MyRoutes = () => {
   return (
@@ -25,6 +26,8 @@ const MyRoutes = () => {
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/industries/:industryId" element={<IndustryDetail />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/practice" element={<Practice />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

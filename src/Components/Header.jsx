@@ -69,7 +69,7 @@ const Header = () => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 hover:bg-white group ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     } bg-black/20 backdrop-blur-sm border-b border-white/20`} >
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 md:px-[24px] py-4">
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-3 md:px-[24px] py-4">
         {/* Logo */}
         <Link to="/" className="shrink-0 flex items-center">
           <motion.img

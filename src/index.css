@@ -116,3 +116,112 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Marquee animation for icon strip */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee {
+  position: relative;
+}
+
+.marquee-inner {
+  width: 200%;
+  animation: marqueeScroll 20s linear infinite;
+}
+
+/* Robot Mosaic grid (5x5) */
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 8px;
+  height: 520px; /* default height for md+ */
+}
+
+.div4 {
+  grid-row: span 5 / span 5; /* full height */
+  grid-column-start: 3; /* center column */
+}
+
+.div5 {
+  grid-row: span 3 / span 3;
+  grid-column-start: 2;
+  grid-row-start: 2;
+}
+
+.div7 {
+  grid-column: span 2 / span 2;
+  grid-row: span 2 / span 2;
+  grid-column-start: 1;
+  grid-row-start: 5;
+}
+
+.div8 {
+  grid-column: span 2 / span 2;
+  grid-column-start: 4;
+  grid-row-start: 2;
+}
+
+.div9 {
+  grid-column-start: 4;
+  grid-row-start: 3;
+}
+
+.div10 {
+  grid-column-start: 4;
+  grid-row-start: 4;
+}
+
+.div11 {
+  grid-column: span 2 / span 2;
+  grid-row: span 2 / span 2;
+  grid-column-start: 4;
+  grid-row-start: 5;
+}
+
+/* Responsive heights */
+@media (max-width: 1024px) {
+  .parent { height: 480px; }
+}
+@media (max-width: 768px) {
+  .parent { height: auto; gap: 12px; }
+  /* Stack on small screens */
+  .div4, .div5, .div7, .div8, .div9, .div10, .div11 {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+}
+
+/* Robot Mosaic layout v2 (4 columns x 6 rows) */
+.robot-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 620px;
+  height: 520px;
+}
+.robot-grid .tile { border-radius: 14px; overflow: hidden; }
+.robot-grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Positions matching the provided sample (with fixes) */
+.top-center { grid-column: 2 / span 2; grid-row: 1 / span 4; }
+.left-middle { grid-column: 1; grid-row: 2 / span 2; }
+.right-top { grid-column: 4; grid-row: 2; }
+.right-bottom { grid-column: 4; grid-row: 3; }
+.center-bottom { grid-column: 2 / span 2; grid-row: 5 / span 2; }
+.bottom-left { grid-column: 1; grid-row: 4; }
+/* corrected to span across columns 3-4 at row 4 */
+.bottom-right { grid-column: 3 / span 2; grid-row: 4; }
+
+@media (max-width: 768px) {
+  .robot-grid { height: auto; grid-template-rows: none; }
+  .top-center, .left-middle, .right-top, .right-bottom, .center-bottom, .bottom-left, .bottom-right {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
