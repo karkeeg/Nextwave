@@ -7,6 +7,12 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+/* Prevent horizontal overflow on full-bleed sections */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
@@ -119,8 +125,8 @@ body {
 
 /* Marquee animation for icon strip */
 @keyframes marqueeScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
 .marquee {
@@ -129,7 +135,8 @@ body {
 
 .marquee-inner {
   width: 200%;
-  animation: marqueeScroll 20s linear infinite;
+  will-change: transform;
+  animation: marqueeScroll 22s linear infinite;
 }
 
 /* Robot Mosaic grid (5x5) */

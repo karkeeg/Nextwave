@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaChartLine, FaBrain, FaComments, FaLanguage, FaRobot, FaArrowLeft } from "react-icons/fa";
+import { FaChartLine, FaBrain, FaComments, FaLanguage, FaRobot, FaArrowLeft, FaGlobe, FaMobileAlt } from "react-icons/fa";
 
 const servicesData = {
   "data-science": {
@@ -112,24 +112,67 @@ const servicesData = {
     ],
     icon: <FaRobot size={32} />,
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+  },
+  "web-dev": {
+    title: "Website Development",
+    subtitle: "Modern, fast, and SEO-friendly websites",
+    desc: "We build responsive, performant websites using React/Next.js, with accessibility and Core Web Vitals baked in.",
+    longDesc: "From landing pages to complex product sites, we deliver pixel-perfect, scalable websites. Our builds emphasize accessibility (WCAG), SEO best practices, and Lighthouse performance, with modern stacks like Next.js, Tailwind CSS, and headless CMS integrations.",
+    features: [
+      "Responsive UI and component design",
+      "SEO and Core Web Vitals optimization",
+      "Headless CMS and API integrations",
+      "Analytics, A/B testing, and tracking",
+      "CI/CD and edge caching setup",
+    ],
+    benefits: [
+      "Higher conversion and engagement",
+      "Better organic reach via technical SEO",
+      "Faster iteration with modular components",
+      "Maintainable, scalable architecture",
+    ],
+    icon: <FaGlobe size={32} />,
+    image: "https://images.unsplash.com/photo-1529336953121-ad5a0d43d0d2?q=80&w=2069&auto=format&fit=crop"
+  },
+  "app-dev": {
+    title: "App Development",
+    subtitle: "Cross‑platform mobile apps that scale",
+    desc: "Build and ship high-quality iOS and Android apps with React Native and robust backend services.",
+    longDesc: "We craft cross-platform apps with native performance using React Native and modern tooling. From auth and secure APIs to offline-first experiences and push notifications, we cover product from MVP to scale.",
+    features: [
+      "Single codebase for iOS and Android",
+      "Offline-first, push notifications, deep links",
+      "Secure auth (OAuth, JWT) and analytics",
+      "Native modules and device integrations",
+      "Automated testing and app store delivery",
+    ],
+    benefits: [
+      "Faster time-to-market",
+      "Reduced development costs",
+      "Consistent UX across platforms",
+      "Observability and crash analytics",
+    ],
+    icon: <FaMobileAlt size={32} />,
+    image: "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?q=80&w=2069&auto=format&fit=crop"
   }
 };
 
-  const ServiceDetail = () => {
-    const { serviceId } = useParams();
-    const navigate = useNavigate();
-    const service = servicesData[serviceId];
+const ServiceDetail = () => {
+  const { serviceId } = useParams();
+  const navigate = useNavigate();
+  const service = servicesData[serviceId];
 
-    const handleBackToServices = () => {
-      navigate('/');
-      // Scroll to services section after navigation
-      setTimeout(() => {
-        const servicesSection = document.getElementById('services');
-        if (servicesSection) {
-          servicesSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    };
+  const handleBackToServices = () => {
+    navigate('/');
+    // Scroll to services section after navigation
+    setTimeout(() => {
+      const servicesSection = document.getElementById('services');
+      if (servicesSection) {
+        servicesSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+   
 
   if (!service) {
     return (

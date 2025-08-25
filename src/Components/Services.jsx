@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaChartLine, FaBrain, FaComments, FaLanguage, FaRobot, FaArrowRight, FaPlay, FaCode, FaDatabase } from "react-icons/fa";
+import { FaChartLine, FaBrain, FaComments, FaLanguage, FaArrowRight, FaPlay, FaCode, FaDatabase, FaGlobe, FaMobileAlt } from "react-icons/fa";
 
 const services = [
   {
@@ -16,6 +16,7 @@ const services = [
     icon: <FaBrain size={24} />,
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     color: "from-blue-500 to-purple-600",
+    lightColor: "from-blue-100 to-purple-100",
     bgColor: "bg-blue-50"
   },
   {
@@ -30,6 +31,7 @@ const services = [
     icon: <FaLanguage size={24} />,
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     color: "from-green-500 to-teal-600",
+    lightColor: "from-green-100 to-teal-100",
     bgColor: "bg-green-50"
   },
   {
@@ -44,6 +46,7 @@ const services = [
     icon: <FaChartLine size={24} />,
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     color: "from-orange-500 to-red-600",
+    lightColor: "from-orange-100 to-red-100",
     bgColor: "bg-orange-50"
   },
   {
@@ -58,44 +61,86 @@ const services = [
     icon: <FaComments size={24} />,
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     color: "from-purple-500 to-pink-600",
+    lightColor: "from-purple-100 to-pink-100",
     bgColor: "bg-purple-50"
+  },
+  {
+    id: "web-dev",
+    title: "Website Development",
+    desc: "Modern, performant websites using React/Next.js, optimized for SEO, accessibility, and speed.",
+    features: [
+      "Responsive UI with Tailwind CSS",
+      "SEO and Core Web Vitals optimization",
+      "CMS and API integrations",
+    ],
+    icon: <FaGlobe size={24} />,
+    image: "https://images.unsplash.com/photo-1529336953121-ad5a0d43d0d2?q=80&w=2069&auto=format&fit=crop",
+    color: "from-cyan-500 to-blue-600",
+    lightColor: "from-cyan-100 to-blue-100",
+    bgColor: "bg-cyan-50"
+  },
+  {
+    id: "app-dev",
+    title: "App Development",
+    desc: "Cross-platform mobile apps with React Native and robust backends tailored to your business.",
+    features: [
+      "iOS and Android with one codebase",
+      "Offline-first and push notifications",
+      "Secure auth and scalable APIs",
+    ],
+    icon: <FaMobileAlt size={24} />,
+    image: "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?q=80&w=2069&auto=format&fit=crop",
+    color: "from-rose-500 to-orange-500",
+    lightColor: "from-rose-100 to-orange-100",
+    bgColor: "bg-rose-50"
   }
 ];
 
 const Services = () => {
   const navigate = useNavigate();
   const [selectedService, setSelectedService] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [autoplayEnabled, setAutoplayEnabled] = useState(true);
+  const listRef = useRef(null);
+  const middleRef = useRef(null);
+  const leftPanelRef = useRef(null);
+  const rightPanelRef = useRef(null);
+  const [itemMetrics, setItemMetrics] = useState({ top: 0, step: 64, height: 86, trackTop: 0, trackHeight: 0 });
 
-  // Auto-rotate services with longer timeout and pause functionality
-  useEffect(() => {
-    if (isPaused || !autoplayEnabled) return; // Don't auto-rotate when paused or autoplay disabled
-    
-    const interval = setInterval(() => {
-      setSelectedService((prev) => (prev + 1) % services.length);
-    }, 3000); 
-    
-    return () => clearInterval(interval);
-  }, [isPaused, autoplayEnabled]);
+  // Measure the list and compute a full-height center track that matches tallest column
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (!listRef.current || !middleRef.current) return;
+      const items = Array.from(listRef.current.querySelectorAll('[data-service-item="true"]'));
+      if (!items.length) return;
+      const first = items[0].getBoundingClientRect();
+      const second = items[1] ? items[1].getBoundingClientRect() : null;
+      const last = items[items.length - 1].getBoundingClientRect();
+      const middleRect = middleRef.current.getBoundingClientRect();
+      // Determine full track height from tallest column
+      const leftRect = leftPanelRef.current ? leftPanelRef.current.getBoundingClientRect() : { height: 0 };
+      const rightRect = rightPanelRef.current ? rightPanelRef.current.getBoundingClientRect() : { height: 0 };
+      const trackTop = 0; // start from top of middle column
+      const trackHeight = Math.max(middleRect.height, leftRect.height, rightRect.height);
+      const height = first.height;
+      const step = second ? second.top - first.top : height + 16; // include gap if any
+      setItemMetrics({ top: trackTop, step, height, trackTop, trackHeight });
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    window.addEventListener('scroll', measure, { passive: true });
+    return () => {
+      window.removeEventListener('resize', measure);
+      window.removeEventListener('scroll', measure);
+    };
+  }, []);
+
+  // Derived positions for indicator within the track (equal segments across services)
+  const segments = Math.max(1, services.length);
+  const indicatorHeight = itemMetrics.trackHeight > 0 ? itemMetrics.trackHeight / segments : 0;
+  const maxYWithinTrack = Math.max(0, itemMetrics.trackHeight - indicatorHeight);
+  const indicatorY = itemMetrics.trackTop + Math.min(selectedService * indicatorHeight, maxYWithinTrack);
 
   const handleServiceClick = (serviceId) => {
     navigate(`/services/${serviceId}`);
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(false);
-    setIsPaused(false);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setIsPaused(false);
-  };
-
-  const toggleAutoplay = () => {
-    setAutoplayEnabled(!autoplayEnabled);
   };
 
   const containerVariants = {
@@ -124,7 +169,7 @@ const Services = () => {
   const currentService = services[selectedService];
 
   return (
-    <section className="w-full min-h-screen bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section className="w-full bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -132,229 +177,144 @@ const Services = () => {
         <div className="absolute top-40 left-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-14">
         {/* Header */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-8"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
+          {/* <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
             Our Services
           </h1>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
             Specialized technical solutions that power modern businesses with cutting-edge AI and machine learning technology.
-          </p>
+          </p> */}
         </motion.div>
 
-        {/* Main Content Grid */}
+        {/* Main Content: Left list | Middle divider | Right details */}
         <motion.div 
-          className="grid lg:grid-cols-2 gap-8 items-center h-[450px]"
+          className="grid grid-cols-1 lg:grid-cols-[1fr_16px_1.2fr] gap-4 items-stretch"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         >
-          {/* Left Content Block */}
-          <motion.div 
-            className="h-full flex flex-col justify-center"
-            variants={itemVariants}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedService}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
-                transition={{ duration: 0.5 }}
-                className="h-full flex flex-col justify-center space-y-6"
-              >
-                {/* Service Icon and Title */}
-                <div className="flex items-center gap-4">
-                  <motion.div 
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${currentService.color} flex items-center justify-center text-white shadow-lg`}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    {currentService.icon}
-                  </motion.div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                    {currentService.title}
-                  </h2>
-                </div>
-
-                {/* Description */}
-                <p className="text-lg text-gray-600 leading-relaxed h-16 flex items-center">
-                  {currentService.desc}
-                </p>
-
-                {/* Features List */}
-                <div className="space-y-3 h-32">
-                  {currentService.features.map((feature, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex items-start gap-4"
-                    >
-                      <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${currentService.color} flex items-center justify-center text-white text-sm font-bold mt-1 flex-shrink-0`}>
-                        {idx + 1}
-                      </div>
-                      <span className="text-base text-gray-700 leading-relaxed">{feature}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* CTA Button */}
-                <motion.button
-                  onClick={() => handleServiceClick(currentService.id)}
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 group w-fit"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Learn more
-                  <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-                </motion.button>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Service Navigation Dots with Autoplay Toggle */}
-            <div className="flex flex-col items-center gap-4 mt-8">
-              {/* Autoplay Toggle Button */}
-              <motion.div
-                className="flex items-center gap-3"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-              >
-                <span className="text-sm text-gray-600">Autoplay:</span>
-                <motion.button
-                  onClick={toggleAutoplay}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-                    autoplayEnabled ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <motion.span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
-                      autoplayEnabled ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </motion.button>
-                <span className="text-sm text-gray-600 min-w-[60px] text-left">
-                  {autoplayEnabled ? 'ON' : 'OFF'}
-                </span>
-              </motion.div>
-              
-              {/* Navigation Dots */}
-              <div className="flex gap-3">
-                {services.map((_, idx) => (
-                  <motion.button
-                    key={idx}
-                    onClick={() => setSelectedService(idx)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      idx === selectedService 
-                        ? `bg-gradient-to-r ${currentService.color}` 
-                        : 'bg-gray-300 hover:bg-gray-400'
-                    }`}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
-                  />
-                ))}
-              </div>
+          {/* Left: Services list */}
+          <motion.div ref={leftPanelRef} className="bg-white/60 rounded-2xl p-4 md:p-5 shadow-sm" variants={itemVariants}>
+            <div className="mb-8">
+              <h2 className="text-6xl font-extrabold text-slate-900">Our Services</h2>
+              <p className="text-slate-600 mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
             </div>
+            <ul ref={listRef} className="space-y-3 relative">
+              {services.map((s, idx) => (
+                <li key={s.id} data-service-item="true">
+                  <button
+                    className={`group w-full flex items-center gap-4 rounded-xl px-3 py-2 text-left transition-colors ${
+                      idx === selectedService
+                        ? `bg-gradient-to-r ${s.lightColor}`
+                        : "bg-white hover:bg-slate-50"
+                    }`}
+                    onClick={() => setSelectedService(idx)}
+                  >
+                    <span className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold ${
+                      idx === selectedService ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-700"
+                    }`}>{idx + 1}</span>
+                    <span className="font-semibold text-slate-900">{s.title}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
           </motion.div>
 
-          {/* Right Content Block - Interactive Demo */}
-          <motion.div 
-            className="relative h-full flex items-center"
-            variants={itemVariants}
-          >
+          {/* Middle: vertical divider with animated indicator */}
+          <div className="hidden lg:flex items-stretch min-h-full" ref={middleRef}>
+            <div className="relative h-full min-h-full w-full">
+              {/* Light full-height track */}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 w-[10px] rounded-full"
+                style={{ background: "rgba(37, 99, 235, 0.20)", top: itemMetrics.trackTop, height: itemMetrics.trackHeight }}
+              />
+              <motion.div
+                className="absolute left-1/4 -translate-x-1/2 w-[8px] rounded-full shadow-sm"
+                style={{
+                  height: indicatorHeight,
+                  background: "linear-gradient(180deg, rgba(37, 99, 235, 0.20) 0%, #2563EB 100%)",
+                }}
+                animate={{ y: indicatorY }}
+                transition={{ type: "spring", stiffness: 300, damping: 24 }}
+              />
+            </div>
+          </div>
+
+          {/* Right: Details panel */}
+          <motion.div ref={rightPanelRef} className="space-y-4" variants={itemVariants}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedService}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.5 }}
-                className="relative w-full h-[450px]"
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -30 }}
+                transition={{ duration: 0.4 }}
+                className="space-y-4"
               >
-                {/* Main Image */}
-                <div className="relative group cursor-pointer h-full" onClick={() => handleServiceClick(currentService.id)}>
-                  <motion.img
-                    src={currentService.image}
-                    alt={currentService.title}
-                    className="w-full h-full object-cover rounded-3xl shadow-2xl"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  
-                  {/* Overlay with Play Button */}
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 rounded-3xl flex items-center justify-center">
-                    <motion.div
-                      className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      <FaPlay className="text-blue-600 text-xl ml-1" />
-                    </motion.div>
+                <div className="flex items-center gap-4">
+                  <div className={`w-12 h-12 rounded-2xl bg-gradient-to-r ${currentService.color} flex items-center justify-center text-white shadow-lg`}>
+                    {currentService.icon}
                   </div>
-
-                  {/* Floating Stats Cards */}
-                  <motion.div
-                    className="absolute -top-6 -right-6 bg-white rounded-2xl shadow-xl p-4 border border-gray-100"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-600">98%</div>
-                      <div className="text-sm text-gray-600">Accuracy</div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 border border-gray-100"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 }}
-                  >
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-green-600">24/7</div>
-                      <div className="text-sm text-gray-600">Support</div>
-                    </div>
-                  </motion.div>
+                  <h3 className="text-3xl font-bold text-slate-900">{currentService.title}</h3>
                 </div>
 
-                {/* Interactive Elements */}
-                <motion.div
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1, type: "spring", stiffness: 200 }}
+                <p className="text-slate-700 text-lg">{currentService.desc}</p>
+
+                <ol className="space-y-2">
+                  {currentService.features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className={`mt-0.5 w-6 h-6 rounded-full text-xs font-bold text-white flex items-center justify-center bg-gradient-to-r ${currentService.color}`}>{i + 1}</span>
+                      <span className="text-slate-800">{f}</span>
+                    </li>
+                  ))}
+                </ol>
+
+                <button
+                  onClick={() => handleServiceClick(currentService.id)}
+                  className="inline-flex items-center gap-2 text-blue-700 font-semibold hover:gap-3 transition-all"
                 >
-                  <div className="text-center space-y-2">
-                    <div className="text-2xl font-bold text-gray-800">Live Demo</div>
-                    <div className="text-sm text-gray-600">Click to explore</div>
-                    <motion.button
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                  Learn more
+                  <FaArrowRight />
+                </button>
+
+                <div className="mt-2">
+                  <div className="relative h-[300px]">
+                    <motion.img
+                      key={currentService.image}
+                      src={currentService.image}
+                      alt={currentService.title}
+                      className="w-full h-full object-cover rounded-2xl shadow-xl"
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4 }}
+                    />
+                    <motion.div
+                      className="absolute -right-4 -top-4 bg-gray-200 rounded-xl shadow p-3 border border-slate-100"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
                     >
-                      Try Now
-                    </motion.button>
+                      <div className="text-center">
+                        <div className="text-xl font-bold text-blue-600">98%</div>
+                        <div className="text-xs text-slate-600">Accuracy</div>
+                      </div>
+                    </motion.div>
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
             </AnimatePresence>
           </motion.div>
         </motion.div>
 
         {/* Bottom Stats Section */}
-        <motion.div 
+        {/* <motion.div 
           className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -376,7 +336,7 @@ const Services = () => {
               <div className="text-sm text-gray-600">{stat.label}</div>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

@@ -19,9 +19,9 @@ import AboutPage from "./AboutPage";
 import ProjectGallery from "../Components/ProjectGallery";
 import RobotMosaic from "../Components/RobotMosaic";
 
-// Icon Marquee component
+// Icon Marquee component with seamless infinite loop
 const IconMarquee = () => {
-  const size = 34;
+  const size = 48; // Increased from 34 to 42
   const [tip, setTip] = React.useState({ show: false, x: 0, y: 0, label: "" });
   const showTip = (label, e) => {
     setTip({ show: true, x: e.clientX, y: e.clientY + 18, label });
@@ -65,32 +65,34 @@ const IconMarquee = () => {
     { key: "awsa", label: "AWS Amplify", node: <SiAwsamplify size={size} /> },
   ];
   
-  // duplicate for seamless loop
+  // Triple the icons for seamless infinite scroll
   const strip = [...icons, ...icons, ...icons];
   
   return (
     <div className="w-full">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-12 lg:px-32">
-        <div className="overflow-x-hidden py-3 md:py-4 rounded-xl bg-white/40 backdrop-blur border border-black/5">
-          <div className="marquee flex items-center gap-6 md:gap-10">
-            <div className="marquee-inner flex items-center gap-6 md:gap-10 opacity-70 hover:opacity-100 transition-opacity">
-              {strip.map((item, i) => (
-                <div
-                  key={`${item.key}-${i}`}
-                  // title={item.label}
-                  aria-label={item.label}
-                  className="text-slate-700 flex-shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer"
-                  onMouseEnter={(e) => showTip(item.label, e)}
-                  onMouseMove={moveTip}
-                  onMouseLeave={hideTip}
-                >
-                  {item.node}
-                </div>
-              ))}
-            </div>
+      <div className="mx-0">
+        <div className="overflow-hidden py-3 md:py-4 bg-transparent">
+          <div 
+            className="flex items-center gap-12 md:gap-28 animate-marquee"
+            style={{
+              width: 'max-content',
+            }}
+          >
+            {strip.map((item, i) => (
+              <div
+                key={`${item.key}-${i}`}
+                aria-label={item.label}
+                className="text-slate-700 flex-shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer"
+                onMouseEnter={(e) => showTip(item.label, e)}
+                onMouseMove={moveTip}
+                onMouseLeave={hideTip}
+              >
+                {item.node}
+              </div>
+            ))}
           </div>
         </div>
-        {/* Fixed-position tooltip (not clipped by overflow) */}
+        {/* Fixed-position tooltip */}
         {tip.show && (
           <div
             style={{ position: "fixed", left: tip.x, top: tip.y, zIndex: 10000 }}
@@ -100,6 +102,24 @@ const IconMarquee = () => {
           </div>
         )}
       </div>
+
+      {/* CSS for seamless marquee animation */}
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-33.33%);
+          }
+        }
+        
+        .animate-marquee {
+          animation: marquee 90s linear infinite;
+        }
+        
+        
+      `}</style>
     </div>
   );
 };
@@ -204,11 +224,11 @@ const HomePage = () => {
       <section
         ref={(node) => { addRef("hero", node); bubbleAreaRef.current = node; }}
         id="hero"
-        className="relative w-full min-h-[600px] md:h-[680px] bg-[#c4d4f5]  flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 lg:px-32 py-12 sm:py-16 md:py-24 overflow-visible"
+        className="relative w-full min-h-[620px] md:h-[780px] bg-[#c4d4f5] flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 lg:px-24 py-12 sm:py-18 md:py-24 overflow-hidden"
         onMouseMove={handleMouseMove}
       >
         {/* Background: requested gradient */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-\[#E2EAFD\] via-\[#E2EAFD\] to-\[#9DB5E8\]" />
+        <div className="absolute inset-0 z-0" />
 
         {/* Animated Color Bubble (mouse-follow + slow orbit) */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -224,17 +244,17 @@ const HomePage = () => {
         {/* Hero Content */}
         <div ref={heroParallaxRef}>
         <motion.div
-          className="relative z-10 flex flex-col lg:flex-row items-center w-full max-w-6xl mx-auto gap-8 md:gap-12 justify-between"
+          className="relative z-10 flex flex-col lg:flex-row items-center w-full max-w-6xl mx-auto gap-8 md:gap-12 justify-between md:scale-95 opacity-90"
           initial="hidden"
           animate="show"
           variants={fadeInUp}
         >
           {/* Left column (constrained) */}
-          <motion.div style={{ y: yLeft }} className="flex-1 min-w-0 max-w-2xl flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight mb-4 md:mb-6 px-2 sm:px-0">
+          <motion.div style={{ y: yLeft }} className="flex-1 min-w-0 max-w-3xl flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-800 leading-tight mb-4 md:mb-6 px-2 sm:px-0">
               {HERO_HEADLINE}
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-slate-700 mb-6 md:mb-8 font-medium max-w-xl px-4 sm:px-0">
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 mb-6 md:mb-8 font-medium max-w-xl px-4 sm:px-0">
               {HERO_SUB}
             </p>
             <motion.div
@@ -244,10 +264,10 @@ const HomePage = () => {
               transition={{ delay: 0.2 }}
               className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto justify-center lg:justify-start px-4 sm:px-0"
             >
-              <button className="bg-[#2176C1] text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg hover:bg-[#185a96] hover:scale-105 transition-all duration-300 text-base sm:text-lg w-full sm:w-auto">
+              <button className="bg-[#2176C1] text-white font-semibold px-4 sm:px-5 py-2 sm:py-3 rounded-lg shadow-lg hover:bg-[#185a96] hover:scale-105 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto">
                 Get Started Free
               </button>
-              <button className="bg-white text-[#2176C1] font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-base sm:text-lg w-full sm:w-auto">
+              <button className="bg-white text-[#2176C1] font-semibold px-4 sm:px-5 py-2 sm:py-3 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto">
                 Request a Demo
               </button>
             </motion.div>
@@ -261,13 +281,19 @@ const HomePage = () => {
           </motion.div>
         </motion.div>
         </div>
-        {/* Marquee tucked inside hero with side margins */}
-        <div className="relative z-10 mt-8 md:mt-12 w-full">
+        
+        {/* Full-bleed Marquee with proper responsive margins */}
+        <div
+          className="relative z-10 mt-8 md:mt-12 w-full"
+          style={{
+            width: 'calc(100vw - 8px)',
+            marginLeft: 'calc(50% - 50vw + 4px)',
+            marginRight: 'calc(50% - 50vw + 4px)'
+          }}
+        >
           <IconMarquee />
         </div>
       </section>
-
-      
 
       {/* Animated Sections */}
       {[
