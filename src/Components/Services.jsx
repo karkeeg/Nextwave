@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChartLine, FaBrain, FaComments, FaLanguage, FaArrowRight, FaPlay, FaCode, FaDatabase, FaGlobe, FaMobileAlt } from "react-icons/fa";
@@ -103,7 +103,12 @@ const Services = () => {
   const middleRef = useRef(null);
   const leftPanelRef = useRef(null);
   const rightPanelRef = useRef(null);
+  const rightScrollRef = useRef(null);
+  const cardRefs = useRef([]);
   const [itemMetrics, setItemMetrics] = useState({ top: 0, step: 64, height: 86, trackTop: 0, trackHeight: 0 });
+  const [scrollMetrics, setScrollMetrics] = useState({ scrollTop: 0, scrollHeight: 0, clientHeight: 0 });
+  const selectingRef = useRef(false);
+  const leftItemRefs = useRef([]);
 
   // Measure the list and compute a full-height center track that matches tallest column
   useLayoutEffect(() => {
@@ -133,15 +138,92 @@ const Services = () => {
     };
   }, []);
 
-  // Derived positions for indicator within the track (equal segments across services)
-  const segments = Math.max(1, services.length);
-  const indicatorHeight = itemMetrics.trackHeight > 0 ? itemMetrics.trackHeight / segments : 0;
+  // Derived positions for indicator: show overall scroll progress of right panel
+  const viewRatio = scrollMetrics.scrollHeight > 0
+    ? scrollMetrics.clientHeight / scrollMetrics.scrollHeight
+    : 0;
+  const indicatorHeight = itemMetrics.trackHeight > 0
+    ? Math.max(28, itemMetrics.trackHeight * viewRatio)
+    : 0;
   const maxYWithinTrack = Math.max(0, itemMetrics.trackHeight - indicatorHeight);
-  const indicatorY = itemMetrics.trackTop + Math.min(selectedService * indicatorHeight, maxYWithinTrack);
+  const progress = scrollMetrics.scrollHeight > scrollMetrics.clientHeight
+    ? scrollMetrics.scrollTop / (scrollMetrics.scrollHeight - scrollMetrics.clientHeight)
+    : 0;
+  const indicatorY = itemMetrics.trackTop + (maxYWithinTrack * progress);
+  const fillHeight = Math.max(0, itemMetrics.trackHeight * progress);
+  const capOffset = Math.max(0, fillHeight - 10);
 
   const handleServiceClick = (serviceId) => {
     navigate(`/services/${serviceId}`);
   };
+
+  const handleLeftSelect = (idx) => {
+    setSelectedService(idx);
+    selectingRef.current = true;
+  };
+
+  // Scroll-sync: when left selection changes (from click), scroll right list to that card
+  useEffect(() => {
+    const container = rightScrollRef.current;
+    const el = cardRefs.current[selectedService];
+    if (!container || !el) return;
+    if (!selectingRef.current) return; // only auto-scroll when initiated from left click
+    const target = el.offsetTop - (container.clientHeight / 2 - el.clientHeight / 2);
+    container.scrollTo({ top: Math.max(0, target), behavior: "smooth" });
+    window.setTimeout(() => { selectingRef.current = false; }, 450);
+  }, [selectedService]);
+
+  // Smoothly ensure the active left item is visible when selection changes
+  useEffect(() => {
+    const li = leftItemRefs.current[selectedService];
+    if (!li) return;
+    li.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+  }, [selectedService]);
+
+  // Detect active card while scrolling right list and update left highlight + middle indicator (progress)
+  useEffect(() => {
+    const container = rightScrollRef.current;
+    if (!container) return;
+    let ticking = false;
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        // Update progress metrics for the middle indicator
+        setScrollMetrics({
+          scrollTop: container.scrollTop,
+          scrollHeight: container.scrollHeight,
+          clientHeight: container.clientHeight,
+        });
+        const containerRect = container.getBoundingClientRect();
+        const containerCenter = containerRect.top + containerRect.height / 2;
+        let closestIdx = 0;
+        let closestDist = Infinity;
+        cardRefs.current.forEach((node, idx) => {
+          if (!node) return;
+          const r = node.getBoundingClientRect();
+          const center = r.top + r.height / 2;
+          const dist = Math.abs(center - containerCenter);
+          if (dist < closestDist) {
+            closestDist = dist;
+            closestIdx = idx;
+          }
+        });
+        setSelectedService((prev) => (prev !== closestIdx ? closestIdx : prev));
+        ticking = false;
+      });
+    };
+
+    container.addEventListener("scroll", onScroll, { passive: true });
+    // Initialize metrics on mount
+    setScrollMetrics({
+      scrollTop: container.scrollTop,
+      scrollHeight: container.scrollHeight,
+      clientHeight: container.clientHeight,
+    });
+    return () => container.removeEventListener("scroll", onScroll);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -201,33 +283,29 @@ const Services = () => {
           animate="visible"
         >
           {/* Left: Services list */}
-          <motion.div ref={leftPanelRef} className="bg-white/60 rounded-2xl p-4 md:p-5 shadow-sm" variants={itemVariants}>
+          <motion.div ref={leftPanelRef} className="rounded-2xl p-4 md:p-5" variants={itemVariants}>
             <div className="mb-8">
               <h2 className="text-6xl font-extrabold text-[#2176C1]">Our Services</h2>
               <p className="text-slate-600 mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
             </div>
             <ul ref={listRef} className="space-y-3 relative">
               {services.map((s, idx) => (
-                <li key={s.id} data-service-item="true">
+                <li key={s.id} data-service-item="true" ref={(el) => (leftItemRefs.current[idx] = el)}>
                   <button
-                    className={`group w-full flex items-center gap-4 rounded-xl px-3 py-2 text-left transition-colors ${
-                      idx === selectedService
-                        ? `bg-gradient-to-r ${s.lightColor}`
-                        : "bg-white hover:bg-slate-50"
-                    }`}
-                    onClick={() => setSelectedService(idx)}
+                    className={`group w-full flex items-center gap-4 rounded-xl px-3 py-2 text-left transition-colors`}
+                    onClick={() => handleLeftSelect(idx)}
                   >
-                    <span className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold ${
-                      idx === selectedService ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-700"
+                    <span className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold transition-colors duration-200 ${
+                      idx === selectedService ? "bg-slate-200 text-black" : "bg-slate-100 text-slate-700"
                     }`}>{idx + 1}</span>
-                    <span className="font-semibold text-slate-900">{s.title}</span>
+                    <span className={`transition-colors duration-200 ${idx === selectedService ? "font-bold text-slate-900" : "text-slate-700 group-hover:text-slate-900"}`}>{s.title}</span>
                   </button>
                 </li>
               ))}
             </ul>
           </motion.div>
 
-          {/* Middle: vertical divider with animated indicator */}
+          {/* Middle: vertical divider with animated progress fill */}
           <div className="hidden lg:flex items-stretch min-h-full" ref={middleRef}>
             <div className="relative h-full min-h-full w-full">
               {/* Light full-height track */}
@@ -235,81 +313,97 @@ const Services = () => {
                 className="absolute left-1/2 -translate-x-1/2 w-[10px] rounded-full"
                 style={{ background: "rgba(37, 99, 235, 0.20)", top: itemMetrics.trackTop, height: itemMetrics.trackHeight }}
               />
+              {/* Filled portion from top to current progress */}
               <motion.div
-                className="absolute left-1/4 -translate-x-1/2 w-[8px] rounded-full shadow-sm"
+                className="absolute left-1/2 -translate-x-1/2 w-[10px] rounded-full"
                 style={{
-                  height: indicatorHeight,
-                  background: "linear-gradient(180deg, rgba(37, 99, 235, 0.20) 0%, #2563EB 100%)",
+                  background: "linear-gradient(180deg, #60A5FA 0%, #2563EB 100%)",
+                  top: itemMetrics.trackTop,
                 }}
-                animate={{ y: indicatorY }}
-                transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                animate={{ height: fillHeight }}
+                transition={{ type: "spring", stiffness: 250, damping: 30 }}
+              />
+              {/* Soft glow around the filled portion */}
+              <motion.div
+                className="absolute left-1/4 -translate-x-1/2 w-[16px] rounded-full pointer-events-none"
+                style={{
+                  top: itemMetrics.trackTop,
+                  background: "linear-gradient(180deg, rgba(96,165,250,0.55) 0%, rgba(37,99,235,0.55) 100%)",
+                  filter: "blur(6px)",
+                  opacity: 0.9,
+                }}
+                animate={{ height: fillHeight }}
+                transition={{ type: "spring", stiffness: 200, damping: 28 }}
+              />
+              {/* Glowing cap dot at the current progress end */}
+              <motion.div
+                className="absolute left-1/4 -translate-x-1/2 w-[14px] h-[14px] rounded-full bg-blue-500 shadow-lg shadow-blue-400/60"
+                style={{ top: itemMetrics.trackTop - 7 }}
+                animate={{ y: capOffset }}
+                transition={{ type: "spring", stiffness: 220, damping: 26 }}
               />
             </div>
           </div>
 
-          {/* Right: Details panel */}
-          <motion.div ref={rightPanelRef} className="space-y-4" variants={itemVariants}>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedService}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
-                transition={{ duration: 0.4 }}
-                className="space-y-4"
-              >
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-2xl bg-gradient-to-r ${currentService.color} flex items-center justify-center text-white shadow-lg`}>
-                    {currentService.icon}
-                  </div>
-                  <h3 className="text-3xl font-bold text-slate-900">{currentService.title}</h3>
-                </div>
-
-                <p className="text-slate-700 text-lg">{currentService.desc}</p>
-
-                <ol className="space-y-2">
-                  {currentService.features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className={`mt-0.5 w-6 h-6 rounded-full text-xs font-bold text-white flex items-center justify-center bg-gradient-to-r ${currentService.color}`}>{i + 1}</span>
-                      <span className="text-slate-800">{f}</span>
-                    </li>
-                  ))}
-                </ol>
-
-                <button
-                  onClick={() => handleServiceClick(currentService.id)}
-                  className="inline-flex items-center gap-2 text-blue-700 font-semibold hover:gap-3 transition-all"
+          {/* Right: Scrollable details list (one card at a time, snap) */}
+          <motion.div ref={rightPanelRef} className="min-h-full" variants={itemVariants}>
+            <div
+              ref={rightScrollRef}
+              className="h-[520px] md:h-[600px] overflow-y-auto pr-2 space-y-24 md:space-y-36 lg:space-y-48 pb-24 md:pb-36 no-scrollbar"
+            >
+              {services.map((svc, idx) => (
+                <motion.div
+                  key={svc.id}
+                  ref={(el) => (cardRefs.current[idx] = el)}
+                  className={`group relative rounded-3xl border bg-white/80 backdrop-blur shadow-lg transition-all
+                    ${idx === selectedService ? "border-blue-200 ring-2 ring-blue-100" : "border-slate-200 hover:border-slate-300"}
+                  `}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
                 >
-                  Learn more
-                  <FaArrowRight />
-                </button>
-
-                <div className="mt-2">
-                  <div className="relative h-[300px]">
-                    <motion.img
-                      key={currentService.image}
-                      src={currentService.image}
-                      alt={currentService.title}
-                      className="w-full h-full object-cover rounded-2xl shadow-xl"
-                      initial={{ opacity: 0, scale: 0.98 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.4 }}
+                  {/* Full-image card with content overlay on top */}
+                  <div className="relative w-full h-[260px] md:h-[320px] overflow-hidden rounded-3xl">
+                    <img
+                      src={svc.image}
+                      alt={svc.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
                     />
-                    <motion.div
-                      className="absolute -right-4 -top-4 bg-gray-200 rounded-xl shadow p-3 border border-slate-100"
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <div className="text-center">
-                        <div className="text-xl font-bold text-blue-600">98%</div>
-                        <div className="text-xs text-slate-600">Accuracy</div>
+                    {/* Gradient overlay for readability */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/20" />
+                    {/* Content overlay */}
+                    <div className="absolute inset-x-0 top-0 p-4 md:p-5">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0 text-white">
+                          <h4 className="text-lg md:text-xl font-semibold">{svc.title}</h4>
+                          <p className="text-white/90 text-sm md:text-base mt-1 line-clamp-2 md:line-clamp-3">{svc.desc}</p>
+                          <ul className="mt-2 space-y-1">
+                            {svc.features.slice(0, 3).map((f, i) => (
+                              <li key={i} className="flex items-center gap-2 text-sm">
+                                <span className={`w-5 h-5 rounded-full text-[10px] font-bold text-white flex items-center justify-center bg-gradient-to-r ${svc.color}`}>{i + 1}</span>
+                                <span className="truncate">{f}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <button
+                          onClick={() => handleServiceClick(svc.id)}
+                          className="mt-1 shrink-0 inline-flex items-center gap-2 rounded-lg border border-white/30 bg-white/20 backdrop-blur px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/30"
+                        >
+                          Learn more
+                          <FaArrowRight />
+                        </button>
                       </div>
-                    </motion.div>
+                    </div>
+                    {/* Floating icon badge */}
+                    <div className="absolute -top-3 -right-3 w-11 h-11 rounded-xl bg-white/90 shadow-md flex items-center justify-center">
+                      <div className={`w-9 h-9 rounded-lg bg-gradient-to-r ${svc.color} text-white flex items-center justify-center`}>{svc.icon}</div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
 
