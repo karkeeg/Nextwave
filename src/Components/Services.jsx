@@ -203,7 +203,7 @@ const Services = () => {
           {/* Left: Services list */}
           <motion.div ref={leftPanelRef} className="bg-white/60 rounded-2xl p-4 md:p-5 shadow-sm" variants={itemVariants}>
             <div className="mb-8">
-              <h2 className="text-6xl font-extrabold text-slate-900">Our Services</h2>
+              <h2 className="text-6xl font-extrabold text-[#2176C1]">Our Services</h2>
               <p className="text-slate-600 mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
             </div>
             <ul ref={listRef} className="space-y-3 relative">

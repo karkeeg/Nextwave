@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const faqs = [
   {
@@ -32,78 +33,56 @@ const FAQs = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section className="w-full min-h-screen flex flex-col items-center justify-start bg-[#fff] py-12 px-2">
-      <h2
-        className="text-3xl md:text-4xl font-bold text-[#2176C1] text-center mb-2"
-        style={{ fontFamily: "Inter, sans-serif" }}
-      >
-        Frequently Asked Questions
-      </h2>
-      <p
-        className="text-[#7B8591] text-base text-center mb-10"
-        style={{ fontFamily: "Inter, sans-serif" }}
-      >
-        Find answers to common questions about NextWaveAI, our services, and how
-        we can help your business grow.
-      </p>
-      <div
-        className="w-full max-w-3xl bg-white rounded-2xl shadow-xl mx-auto"
-        style={{
-          boxShadow: "0px 32px 80px 0px #0000001A",
-        }}
-      >
-        {faqs.map((faq, idx) => (
-          <div key={idx} className={`border-b last:border-b-0 transition-all`}>
-            <button
-              className="w-full flex items-center justify-between px-6 py-6 md:py-8 text-left focus:outline-none"
-              onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-              aria-expanded={openIndex === idx}
-            >
-              <span
-                className="text-[#232B36] text-base md:text-lg"
-                style={{ fontFamily: "Inter, sans-serif" }}
+    <section className="w-full min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-[#E2EAFD] via-[#E2EAFD] to-[#9DB5E8] py-14 px-3">
+      <div className="w-full max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-[#2176C1]">Frequently Asked Questions</h2>
+          <p className="text-[#334155]/80 mt-3 text-base md:text-lg">Find answers to common questions about NextWaveAI, our services, and how we can help your business grow.</p>
+        </div>
+
+        <div className="bg-white/70 backdrop-blur rounded-2xl shadow-xl ring-1 ring-black/5 divide-y divide-slate-200 overflow-hidden">
+          {faqs.map((faq, idx) => (
+            <div key={idx} className="group">
+              <button
+                className="w-full flex items-center gap-4 justify-between px-5 md:px-7 py-5 md:py-7 text-left focus:outline-none hover:bg-white/60 transition-colors"
+                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                aria-expanded={openIndex === idx}
               >
-                {faq.question}
-              </span>
-              <svg
-                className={`w-5 h-5 text-[#232B36] transform transition-transform duration-200 ${
-                  openIndex === idx ? "rotate-180" : ""
-                }`}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
-            {openIndex === idx && (
-              <div
-                className="px-6 pb-6 md:pb-8 text-[#7B8591] text-base"
-                style={{ fontFamily: "Inter, sans-serif" }}
-              >
-                {faq.answer}
-              </div>
-            )}
-          </div>
-        ))}
+                <div className="flex items-center gap-4">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-[#2176C1] to-[#6BA8E5] text-white text-sm font-bold shadow-sm">{idx + 1}</span>
+                  <span className="text-[#0f172a] text-base md:text-lg font-medium">{faq.question}</span>
+                </div>
+                <svg
+                  className={`w-5 h-5 text-[#334155] transform transition-transform duration-300 ${openIndex === idx ? "rotate-180" : "rotate-0"}`}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {openIndex === idx && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-5 md:px-7 pb-6 md:pb-8 text-[#475569] text-base leading-relaxed">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
       </div>
-      <style>
-        {`
-          /* Responsive FAQ width and hide scrollbar */
-          @media (max-width: 600px) {
-            .max-w-3xl {
-              max-width: 98vw !important;
-            }
-          }
-          .max-w-3xl::-webkit-scrollbar { display: none; }
-          .max-w-3xl { -ms-overflow-style: none; scrollbar-width: none; }
-        `}
-      </style>
     </section>
   );
 };

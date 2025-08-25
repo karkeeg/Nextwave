@@ -284,7 +284,7 @@ const HomePage = () => {
         
         {/* Full-bleed Marquee with proper responsive margins */}
         <div
-          className="relative z-10 mt-8 md:mt-12 w-full"
+          className="relative z-10 mt-12 md:mt-20 lg:mt-24 w-full"
           style={{
             width: 'calc(100vw - 8px)',
             marginLeft: 'calc(50% - 50vw + 4px)',

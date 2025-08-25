@@ -70,15 +70,15 @@ const Blog = () => {
         <div className="absolute top-40 left-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-6"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 leading-tight py-2">
+          <h1 className="text-5xl md:text-7xl font-bold bg-[#2176C1] bg-clip-text text-transparent  leading-tight py-2">
             Insights & Stories
         </h1>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
