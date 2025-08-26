@@ -11,10 +11,12 @@ import ServiceDetail from "../Components/ServiceDetail";
 import IndustryDetail from "../Components/IndustryDetail";
 import PrivacyPolicy from "./PrivacyPolicy";
 import Practice from "../Components/Practice";
+import ScrollToTop from "../Components/ScrollToTop";
 
 const MyRoutes = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<LayoutPage />}>
           <Route index element={<HomePage />} />

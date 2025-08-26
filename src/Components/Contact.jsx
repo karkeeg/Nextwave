@@ -6,10 +6,10 @@ const Contact = () => (
     <div className="w-full flex flex-col md:flex-row max-w-6xl mx-auto py-16">
       {/* Left: Form */}
       <div className="flex-[2] px-8 md:px-16 py-10 flex flex-col justify-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-[#2176C1] mb-2 font-['Inter']">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-[#2176C1] mb-2">
           Contact Us
         </h2>
-        <p className="text-[#7B8591] text-base mb-8 font-['Inter'] max-w-lg">
+        <p className="text-[#7B8591] text-base mb-8 max-w-lg">
           Contact us to get connected with our team of experts. We are here to
           help you with your AI and software development needs.
         </p>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   FaXTwitter,
   FaLinkedin,
@@ -10,11 +10,20 @@ import { MdLocationOn, MdEmail, MdPhone } from "react-icons/md";
 import logo from "../assets/nextwaveLogo.png";
 
 const Footer = () => {
-  // Smooth scroll to section
+  const navigate = useNavigate();
+  const location = useLocation();
+  // Smooth scroll to section with route awareness
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    const headerOffset = 80;
+    if (location.pathname !== "/") {
+      navigate(`/#${sectionId}`);
+      return;
+    }
+    const el = document.getElementById(sectionId);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      const targetY = (window.scrollY || window.pageYOffset) + rect.top - headerOffset;
+      window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
     }
   };
 

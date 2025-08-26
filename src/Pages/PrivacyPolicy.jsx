@@ -4,8 +4,9 @@ import { FaArrowLeft } from "react-icons/fa";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="min-h-screen bg-white py-8">
-      <div className="max-w-4xl mx-auto px-4">
+    <div className="min-h-screen bg-gray-50 pt-24 md:pt-28 pb-8">
+      <div className="max-w-6xl mx-auto px-6 md:px-8">
+
         {/* Back Button */}
         <Link
           to="/"

@@ -7,9 +7,9 @@ const industryData = [
     id: "financial-services",
     title: "Financial Services",
     images: [
-      "https://images.unsplash.com/photo-1556742400-b5da35d32d78?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1585241936939-bc16c66f1f48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1556741533-f6acd647d2fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1200&q=80", // stock market screens
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=80", // fintech dashboard
+      "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80", // bank building
     ],
     features: [
       ["Fraud detection", "AI-driven risk assessment"],
@@ -20,9 +20,9 @@ const industryData = [
     id: "education",
     title: "Education",
     images: [
-      "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80", // classroom
+      "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1200&q=80", // graduation
+      "https://images.unsplash.com/photo-1587614382346-4ec72b3c7a3a?auto=format&fit=crop&w=1200&q=80", // e-learning
     ],
     features: [
       ["E-learning platforms", "Virtual classrooms"],
@@ -33,9 +33,9 @@ const industryData = [
     id: "healthcare",
     title: "Healthcare",
     images: [
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1581093588401-22a9a2a60c8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1580281657527-47e2c5b1a83f?auto=format&fit=crop&w=1200&q=80", // doctor with tablet
+      "https://images.unsplash.com/photo-1583912267550-61c3d1fef7cd?auto=format&fit=crop&w=1200&q=80", // hospital corridor
+      "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80", // medical imaging
     ],
     features: [
       ["Medical image analysis", "Predictive healthcare"],
@@ -46,9 +46,9 @@ const industryData = [
     id: "technology",
     title: "Technology",
     images: [
-      "https://images.unsplash.com/photo-1581093588401-22a9a2a60c8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=1200&q=80", // code on screen
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80", // data center
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80", // circuit board
     ],
     features: [
       ["Cloud infrastructure", "Managed IT services"],
@@ -59,9 +59,9 @@ const industryData = [
     id: "manufacturing",
     title: "Manufacturing",
     images: [
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1581093588401-22a9a2a60c8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1581091014362-7b1a3b43fa9f?auto=format&fit=crop&w=1200&q=80", // assembly line
+      "https://images.unsplash.com/photo-1598294209028-021f3d9b0e42?auto=format&fit=crop&w=1200&q=80", // robotic arm
+      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", // factory floor
     ],
     features: [
       ["Predictive maintenance", "Quality automation"],
@@ -74,7 +74,7 @@ const IndustryServed = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  // Always autoplay; remove pause toggle
 
   const handlePrev = () => {
     setCurrentIndex((prev) =>
@@ -92,25 +92,22 @@ const IndustryServed = () => {
     navigate(`/industries/${industryId}`);
   };
 
-  // Auto-play functionality
+  // Auto-play functionality (always on)
   useEffect(() => {
-    if (!isAutoPlaying) return;
-
     const interval = setInterval(() => {
       handleNext();
     }, 5000); // Change slide every 5 seconds
-
     return () => clearInterval(interval);
-  }, [currentIndex, isAutoPlaying]);
+  }, [currentIndex]);
 
   const { id, title, images, features } = industryData[currentIndex];
 
   return (
     <section className="w-full min-h-screen py-8 px-4 flex flex-col items-center">
-      <h2 className="text-3xl md:text-4xl font-extrabold text-[#2176C1] text-center font-['Inter']">
+      <h2 className="text-3xl md:text-4xl font-extrabold text-[#2176C1] text-center">
         Industries Served
       </h2>
-      <p className="text-[#7B8591] text-base text-center mt-10 font-['Inter']">
+      <p className="text-[#7B8591] text-base text-center mt-10">
         Specialized technical solutions that power modern businesses with
         cutting-edge technology.
       </p>
@@ -156,7 +153,7 @@ const IndustryServed = () => {
           })}
         </div>
 
-        <h3 className="text-2xl md:text-3xl font-bold text-[#232B36] text-center mb-4 font-['Inter']">
+        <h3 className="text-2xl md:text-3xl font-bold text-[#232B36] text-center mb-4">
           {title}
         </h3>
 
@@ -188,19 +185,7 @@ const IndustryServed = () => {
           ))}
         </div>
 
-        {/* Auto-play Toggle */}
-        <div className="text-center">
-          <button
-            onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors duration-300 ${
-              isAutoPlaying 
-                ? 'bg-[#2176C1] text-white hover:bg-[#185a96]' 
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
-          >
-            {isAutoPlaying ? 'Pause Auto-play' : 'Start Auto-play'}
-          </button>
-        </div>
+        {/* Auto-play is always on; toggle removed */}
       </div>
     </section>
   );

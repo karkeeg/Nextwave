@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "../assets/nextwaveLogo.png";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState({
@@ -46,12 +47,24 @@ const Header = () => {
   }, [lastScrollY]);
 
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    const headerOffset = 80; // approximate fixed header height
+    const closeMenus = () => {
+      setMenuOpen(false);
+      setDropdownOpen(null);
+    };
+
+    if (location.pathname !== "/") {
+      navigate(`/#${sectionId}`);
+      closeMenus();
+      return;
     }
-    setMenuOpen(false);
-    setDropdownOpen(null);
+    const el = document.getElementById(sectionId);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      const targetY = (window.scrollY || window.pageYOffset) + rect.top - headerOffset;
+      window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
+    }
+    closeMenus();
   };
 
   const logoVariants = {
@@ -66,7 +79,7 @@ const Header = () => {
   };
 
   return (
-    <header className={`fixed w-full top-0 left-0 right-0 z-50 transition-all duration-300 hover:bg-[#c4d4f5] group overflow-x-hidden ${
+    <header className={`fixed w-full top-0 left-0 right-0 z-50 transition-all duration-300 hover:bg-[#c4d4f5] group overflow-visible ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     } bg-black/20 backdrop-blur-sm border-b border-white/20`} >
       <div className="max-w-screen-xl mx-auto flex items-center justify-between px-3 md:px-[24px] py-4">
@@ -93,22 +106,22 @@ const Header = () => {
               Services ▾
             </button>
             {dropdownOpen === 0 && (
-              <div className="absolute top-full mt-2 bg-white/90 backdrop-blur-sm border border-white/20 rounded shadow-lg w-48 z-20">
+              <div className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-[#c4d4f5] border border-slate-200 shadow-lg shadow-slate-300/40 ring-1 ring-black/5 z-[60] overflow-hidden">
                 <button
                   onClick={() => scrollToSection("services")}
-                  className="block w-full text-left px-4 py-2 hover:bg-white/50 text-[#232B36]"
+                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50"
                 >
                   Our Services
                 </button>
                 <button
                   onClick={() => scrollToSection("testimonials")}
-                  className="block w-full text-left px-4 py-2 hover:bg-white/50 text-[#232B36]"
+                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50"
                 >
                   Testimonials
                 </button>
                 <button
                   onClick={() => scrollToSection("faqs")}
-                  className="block w-full text-left px-4 py-2 hover:bg-white/50 text-[#232B36]"
+                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50"
                 >
                   FAQs
                 </button>
@@ -125,16 +138,16 @@ const Header = () => {
               Industries ▾
             </button>
             {dropdownOpen === 1 && (
-              <div className="absolute top-full mt-2 bg-white/90 backdrop-blur-sm border border-white/20 rounded shadow-lg w-48 z-20">
+              <div className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-[#c4d4f5] border border-slate-200 shadow-lg shadow-slate-300/40 ring-1 ring-black/5 z-[60] overflow-hidden">
                 <button
                   onClick={() => scrollToSection("industries")}
-                  className="block w-full text-left px-4 py-2 hover:bg-white/50 text-[#232B36]"
+                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50"
                 >
                   Industries We Serve
                 </button>
                 <Link
                   to="/industry-served"
-                  className="block px-4 py-2 hover:bg-white/50 text-[#232B36]"
+                  className="block px-4 py-2 text-[#232B36] hover:bg-slate-50"
                 >
                   Industry Details
                 </Link>

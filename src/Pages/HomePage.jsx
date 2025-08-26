@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { 
   SiOpenai, SiTensorflow, SiReact, SiNextdotjs, SiAmazon, SiNodedotjs,
@@ -134,6 +135,7 @@ const fadeInUp = {
 };
 
 const HomePage = () => {
+  const location = useLocation();
   const [visibleElements, setVisibleElements] = useState(new Set());
   const sectionRefs = useRef({});
   const [scrollY, setScrollY] = useState(0);
@@ -164,6 +166,31 @@ const HomePage = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Scroll to section if hash or navigation state indicates a target
+  useEffect(() => {
+    const headerOffset = 80; // fixed header height approximation
+    const scrollToId = (id) => {
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const targetY = (window.scrollY || window.pageYOffset) + rect.top - headerOffset;
+      window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
+    };
+
+    // Prefer hash (e.g., /#services)
+    if (location.hash) {
+      scrollToId(location.hash.replace('#', ''));
+      return;
+    }
+    // Or state-based navigation (navigate('/', { state: { scrollTo: 'services' } }))
+    const stateTarget = location.state && location.state.scrollTo;
+    if (stateTarget) {
+      // small timeout to ensure sections are rendered
+      setTimeout(() => scrollToId(stateTarget), 0);
+    }
+  }, [location]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -198,7 +225,7 @@ const HomePage = () => {
 
   return (
     <motion.main 
-      className="w-full bg-white font-['Inter']"
+      className="w-full bg-white"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ 
@@ -244,7 +271,7 @@ const HomePage = () => {
         {/* Hero Content */}
         <div ref={heroParallaxRef}>
         <motion.div
-          className="relative z-10 flex flex-col lg:flex-row items-center w-full max-w-6xl mx-auto gap-8 md:gap-12 justify-between md:scale-95 opacity-90"
+          className="relative z-10 flex flex-col lg:flex-row items-center w-full max-w-6xl mx-auto gap-8 md:gap-12 justify-between mt-12 sm:mt-16 md:mt-24 lg:mt-36 md:scale-105 opacity-90"
           initial="hidden"
           animate="show"
           variants={fadeInUp}
@@ -284,7 +311,7 @@ const HomePage = () => {
         
         {/* Full-bleed Marquee with proper responsive margins */}
         <div
-          className="relative z-10 mt-12 md:mt-20 lg:mt-24 w-full"
+          className="relative z-10 mt-6 md:mt-10 lg:mt-12 w-full"
           style={{
             width: 'calc(100vw - 8px)',
             marginLeft: 'calc(50% - 50vw + 4px)',
@@ -300,7 +327,7 @@ const HomePage = () => {
         ["services", <Services />],
         ["industries", <IndustryServed />],
         ["research", <Blog />],
-        ["projects", <ProjectGallery />],
+        // ["projects", <ProjectGallery />],
         ["testimonials", <Testimonials />],
         ["faqs", <FAQs />],
         ["contact", <Contact />],

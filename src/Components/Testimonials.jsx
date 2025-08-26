@@ -57,13 +57,11 @@ const Testimonials = () => (
   >
     <h2
       className="text-3xl md:text-4xl font-bold text-[#2176C1] text-center mb-4"
-      style={{ fontFamily: "Inter, sans-serif" }}
     >
       Testimonial
     </h2>
     <p
       className="text-[#7B8591] text-base md:text-lg text-center mb-16"
-      style={{ fontFamily: "Inter, sans-serif" }}
     >
       Don’t take our word for it! Hear it from our Partners
     </p>
@@ -128,13 +126,11 @@ const Testimonials = () => (
               <div className="absolute bottom-6 left-6 text-white z-10">
                 <div
                   className="font-bold text-lg"
-                  style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   {t.name}
                 </div>
                 <div
                   className="text-sm text-[#FFC043]"
-                  style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   {t.title}
                 </div>
@@ -160,7 +156,6 @@ const Testimonials = () => (
                 />
                 <p
                   className="italic text-[#232B36] text-base mb-8"
-                  style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   {t.text}
                 </p>
@@ -168,13 +163,11 @@ const Testimonials = () => (
               <div>
                 <div
                   className="font-bold text-lg text-[#2176C1]"
-                  style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   {t.name}
                 </div>
                 <div
                   className="text-sm text-[#FFC043]"
-                  style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   {t.title}
                 </div>

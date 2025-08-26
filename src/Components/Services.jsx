@@ -104,11 +104,26 @@ const Services = () => {
   const leftPanelRef = useRef(null);
   const rightPanelRef = useRef(null);
   const rightScrollRef = useRef(null);
+  const stickyRef = useRef(null);
+  const sectionRef = useRef(null);
   const cardRefs = useRef([]);
   const [itemMetrics, setItemMetrics] = useState({ top: 0, step: 64, height: 86, trackTop: 0, trackHeight: 0 });
   const [scrollMetrics, setScrollMetrics] = useState({ scrollTop: 0, scrollHeight: 0, clientHeight: 0 });
   const selectingRef = useRef(false);
   const leftItemRefs = useRef([]);
+  const touchStartYRef = useRef(0);
+  const edgeLockRef = useRef(null); // kept for state reset compatibility
+  const releasingRef = useRef(false);
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+  );
+
+  // Track viewport size to toggle desktop/mobile behavior
+  useEffect(() => {
+    const onResize = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   // Measure the list and compute a full-height center track that matches tallest column
   useLayoutEffect(() => {
@@ -161,6 +176,116 @@ const Services = () => {
     setSelectedService(idx);
     selectingRef.current = true;
   };
+
+  // Lock section to viewport and route scroll to internal list while possible
+  useEffect(() => {
+    if (!isDesktop) return; // only enable sticky scroll interception on desktop
+    const el = stickyRef.current;
+    const list = rightScrollRef.current;
+    if (!el || !list) return;
+
+    const getSectionRect = () => sectionRef.current?.getBoundingClientRect?.();
+    // Only snap when scrolling INTO the Services section, not when exiting it
+    const trySnapIntoSection = (delta) => {
+      const r = getSectionRect();
+      if (!r) return false;
+      const vh = window.innerHeight;
+      // If section is below viewport and user scrolls down, snap
+      if (r.top > 0 && delta > 0) {
+        window.scrollBy({ top: r.top, behavior: "smooth" });
+        return true;
+      }
+      // If section is above viewport and user scrolls up, snap
+      if (r.bottom < vh && delta < 0) {
+        const offset = r.bottom - vh;
+        window.scrollBy({ top: offset, behavior: "smooth" });
+        return true;
+      }
+      return false;
+    };
+
+    const onWheel = (e) => {
+      if (releasingRef.current) return; // don't intercept while releasing to page
+      // Only capture vertical scroll
+      const delta = e.deltaY;
+      if (delta === 0) return;
+
+      // If user is approaching Services, snap it into view
+      const snapped = trySnapIntoSection(delta);
+      if (snapped) {
+        e.preventDefault();
+        return;
+      }
+      const atTop = list.scrollTop <= 0;
+      const atBottom = Math.ceil(list.scrollTop + list.clientHeight) >= list.scrollHeight;
+      const canScrollDown = delta > 0 && !atBottom;
+      const canScrollUp = delta < 0 && !atTop;
+      if (canScrollDown || canScrollUp) {
+        e.preventDefault();
+        // Use instant to feel native; smooth can feel laggy with passive prevention
+        list.scrollTo({ top: list.scrollTop + delta, behavior: "auto" });
+        edgeLockRef.current = null; // reset edge lock while scrolling internally
+        return;
+      }
+
+      // At edge: allow natural page scroll immediately
+      releasingRef.current = true;
+      window.setTimeout(() => { releasingRef.current = false; }, 500);
+      return; // let the browser handle this wheel normally
+    };
+
+    let lastY = 0;
+    const onTouchStart = (e) => {
+      if (e.touches && e.touches.length) {
+        lastY = e.touches[0].clientY;
+        touchStartYRef.current = lastY;
+      }
+    };
+    const onTouchMove = (e) => {
+      if (releasingRef.current) return; // don't intercept while releasing to page
+      if (!(e.touches && e.touches.length)) return;
+      const y = e.touches[0].clientY;
+      const delta = lastY - y; // positive when swiping up (scroll down)
+      lastY = y;
+
+      // Snap section if scrolling into it
+      const snapped = trySnapIntoSection(delta);
+      if (snapped) {
+        e.preventDefault();
+        return;
+      }
+      const atTop = list.scrollTop <= 0;
+      const atBottom = Math.ceil(list.scrollTop + list.clientHeight) >= list.scrollHeight;
+      const canScrollDown = delta > 0 && !atBottom;
+      const canScrollUp = delta < 0 && !atTop;
+      if (canScrollDown || canScrollUp) {
+        e.preventDefault();
+        list.scrollTo({ top: list.scrollTop + delta, behavior: "auto" });
+        edgeLockRef.current = null;
+        return;
+      }
+
+      // At edge on touch: release immediately and let native scrolling proceed
+      releasingRef.current = true;
+      window.setTimeout(() => { releasingRef.current = false; }, 500);
+      return; // let native scroll proceed
+    };
+    const onTouchEnd = () => {
+      // Small grace period already resets; keep behavior predictable on mobile
+    };
+
+    // Capture phase to intercept before page scroll
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [isDesktop]);
 
   // Scroll-sync: when left selection changes (from click), scroll right list to that card
   useEffect(() => {
@@ -251,7 +376,7 @@ const Services = () => {
   const currentService = services[selectedService];
 
   return (
-    <section className="w-full bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -259,10 +384,11 @@ const Services = () => {
         <div className="absolute top-40 left-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-14">
+      {/* Sticky viewport-locked container */}
+      <div ref={stickyRef} className="relative z-10 max-w-7xl mx-auto px-4 lg:h-screen lg:sticky lg:top-0">
         {/* Header */}
-        <motion.div 
-          className="text-center mb-8"
+        <motion.div
+          className="text-center py-6"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -275,20 +401,57 @@ const Services = () => {
           </p> */}
         </motion.div>
 
-        {/* Main Content: Left list | Middle divider | Right details */}
-        <motion.div 
-          className="grid grid-cols-1 lg:grid-cols-[1fr_16px_1.2fr] gap-4 items-stretch"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        {/* Mobile Timeline (stacked cards with numbered steps) */}
+        {!isDesktop && (
+          <div className="lg:hidden relative max-w-3xl mx-auto py-4">
+            <div className="absolute left-6 top-0 bottom-0 w-1 bg-blue-200 rounded-full" />
+            {services.map((svc, idx) => (
+              <div key={svc.id} className="relative pl-16 mb-10">
+                <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-white ring-2 ring-blue-400 text-blue-700 font-bold flex items-center justify-center shadow-sm">
+                  {idx + 1}
+                </div>
+                <div className="rounded-2xl border border-blue-200 bg-white shadow-sm overflow-hidden">
+                  <div className="relative w-full">
+                    <img src={svc.image} alt={svc.title} className="w-full h-48 object-cover" loading="lazy" />
+                    <div className="absolute inset-0 ring-1 ring-blue-200/50 rounded-none pointer-events-none" />
+                  </div>
+                  <div className="p-4">
+                    <h4 className="text-lg font-semibold text-slate-900">{svc.title}</h4>
+                    <p className="text-slate-600 text-sm mt-1">{svc.desc}</p>
+                    <ul className="mt-3 space-y-1">
+                      {svc.features.slice(0, 3).map((f, i) => (
+                        <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
+                          <span className={`w-5 h-5 rounded-full text-[10px] font-bold text-white flex items-center justify-center bg-gradient-to-r ${svc.color}`}>{i + 1}</span>
+                          <span className="flex-1">{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <button onClick={() => handleServiceClick(svc.id)} className="mt-4 inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-700 hover:bg-blue-100">
+                      Learn more
+                      <FaArrowRight />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Desktop: Left list | Middle divider | Right details */}
+        {isDesktop && (
+          <motion.div
+            className="grid grid-rows-[auto_1fr] lg:grid-rows-1 grid-cols-1 lg:grid-cols-[1fr_16px_1.2fr] gap-4 items-stretch h-[calc(100%-3.5rem)]"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
           {/* Left: Services list */}
-          <motion.div ref={leftPanelRef} className="rounded-2xl p-4 md:p-5" variants={itemVariants}>
+          <motion.div ref={leftPanelRef} className="rounded-2xl p-4 md:p-5 overflow-hidden" variants={itemVariants}>
             <div className="mb-8">
               <h2 className="text-6xl font-extrabold text-[#2176C1]">Our Services</h2>
               <p className="text-slate-600 mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
             </div>
-            <ul ref={listRef} className="space-y-3 relative">
+            <ul ref={listRef} className="space-y-3 relative max-h-[calc(100vh-220px)] overflow-auto pr-1 no-scrollbar">
               {services.map((s, idx) => (
                 <li key={s.id} data-service-item="true" ref={(el) => (leftItemRefs.current[idx] = el)}>
                   <button
@@ -335,21 +498,21 @@ const Services = () => {
                 animate={{ height: fillHeight }}
                 transition={{ type: "spring", stiffness: 200, damping: 28 }}
               />
-              {/* Glowing cap dot at the current progress end */}
+              {/* Glowing cap dot at the current progress end
               <motion.div
-                className="absolute left-1/4 -translate-x-1/2 w-[14px] h-[14px] rounded-full bg-blue-500 shadow-lg shadow-blue-400/60"
+                className="absolute left-1/4 -translate-x-1/2 w-[12px] h-[12px] rounded-full bg-blue-500 shadow-lg shadow-blue-400/60"
                 style={{ top: itemMetrics.trackTop - 7 }}
                 animate={{ y: capOffset }}
                 transition={{ type: "spring", stiffness: 220, damping: 26 }}
-              />
+              /> */}
             </div>
           </div>
 
           {/* Right: Scrollable details list (one card at a time, snap) */}
-          <motion.div ref={rightPanelRef} className="min-h-full" variants={itemVariants}>
+          <motion.div ref={rightPanelRef} className="min-h-0 h-full" variants={itemVariants}>
             <div
               ref={rightScrollRef}
-              className="h-[520px] md:h-[600px] overflow-y-auto pr-2 space-y-24 md:space-y-36 lg:space-y-48 pb-24 md:pb-36 no-scrollbar"
+              className="lg:h-full lg:overflow-y-auto pr-2 space-y-12 md:space-y-16 lg:space-y-48 pb-16 md:pb-24 lg:pb-36 no-scrollbar"
             >
               {services.map((svc, idx) => (
                 <motion.div
@@ -406,6 +569,7 @@ const Services = () => {
             </div>
           </motion.div>
         </motion.div>
+        )}
 
         {/* Bottom Stats Section */}
         {/* <motion.div 
