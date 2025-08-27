@@ -74,7 +74,7 @@ const services = [
       "CMS and API integrations",
     ],
     icon: <FaGlobe size={24} />,
-    image: "https://images.unsplash.com/photo-1529336953121-ad5a0d43d0d2?q=80&w=2069&auto=format&fit=crop",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLkNu6MhNMOu02871w6Xp2Lf2A9NiDtDyseA&s",
     color: "from-cyan-500 to-blue-600",
     lightColor: "from-cyan-100 to-blue-100",
     bgColor: "bg-cyan-50"
@@ -120,7 +120,12 @@ const Services = () => {
 
   // Track viewport size to toggle desktop/mobile behavior
   useEffect(() => {
-    const onResize = () => setIsDesktop(window.innerWidth >= 1024);
+    const onResize = () => {
+      const isDesktopView = window.innerWidth >= 1024;
+      setIsDesktop(isDesktopView);
+      if (isDesktopView) setSelectedService(0);
+    };
+    onResize(); // Initial check
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);

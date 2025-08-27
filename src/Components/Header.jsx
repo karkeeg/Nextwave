@@ -70,7 +70,32 @@ const Header = () => {
   const logoVariants = {
     hover: { 
       scale: 1.05,
-      transition: { duration: 0.2 }
+      // rotate: 1,
+      transition: { duration: 0.3, ease: "easeOut" }
+    },
+    tap: { 
+      scale: 0.95,
+      transition: { duration: 0.1 }
+    }
+  };
+
+  const navItemVariants = {
+    hover: { 
+      scale: 1.05,
+      y: -2,
+      transition: { duration: 0.2, ease: "easeOut" }
+    },
+    tap: { 
+      scale: 0.98,
+      transition: { duration: 0.1 }
+    }
+  };
+
+  const ctaButtonVariants = {
+    hover: { 
+      scale: 1.05,
+      boxShadow: "0 8px 25px rgba(33, 118, 193, 0.4)",
+      transition: { duration: 0.2, ease: "easeOut" }
     },
     tap: { 
       scale: 0.95,
@@ -99,97 +124,196 @@ const Header = () => {
         <nav className="hidden lg:flex items-center gap-6 text-md text-white">
           {/* Services Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => toggleDropdown(0)}
-              className="font-medium group-hover:text-gray-800 transition"
+            <motion.div
+              variants={navItemVariants}
+              whileHover="hover"
+              whileTap="tap"
             >
-              Services ▾
-            </button>
+              <motion.button
+                onClick={() => toggleDropdown(0)}
+                className="font-medium group-hover:text-gray-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+              >
+                <button>
+
+                Services ▾
+                </button>
+              </motion.button>
+            </motion.div>
             {dropdownOpen === 0 && (
-              <div className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-[#c4d4f5] border border-slate-200 shadow-lg shadow-slate-300/40 ring-1 ring-black/5 z-[60] overflow-hidden">
-                <button
-                  onClick={() => scrollToSection("services")}
-                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50"
+              <motion.div 
+                className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-[#c4d4f5] border border-slate-200 shadow-lg shadow-slate-300/40 ring-1 ring-black/5 z-[60] overflow-hidden"
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+              >
+                <motion.div
+                  whileHover={{ x: 4, backgroundColor: "rgba(248, 250, 252, 1)" }}
                 >
-                  Our Services
-                </button>
-                <button
-                  onClick={() => scrollToSection("testimonials")}
-                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50"
+                  <motion.button
+                    onClick={() => scrollToSection("services")}
+                    className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  >
+                    <button>
+                      
+                    Our Services
+                    </button>
+                  </motion.button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 4, backgroundColor: "rgba(248, 250, 252, 1)" }}
                 >
-                  Testimonials
-                </button>
-                <button
-                  onClick={() => scrollToSection("faqs")}
-                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50"
+                  <motion.button
+                    onClick={() => scrollToSection("testimonials")}
+                    className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  >
+                    <button>
+
+                    Testimonials
+                    </button>
+                  </motion.button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 4, backgroundColor: "rgba(248, 250, 252, 1)" }}
                 >
-                  FAQs
-                </button>
-              </div>
+                  <motion.button
+                    onClick={() => scrollToSection("faqs")}
+                    className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  >
+                    <button>
+                    FAQs
+                    </button>
+                  </motion.button>
+                </motion.div>
+              </motion.div>
             )}
           </div>
 
           {/* Industries Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => toggleDropdown(1)}
-              className="font-medium group-hover:text-gray-800 hover:text-blue-200 transition"
+            <motion.div
+              variants={navItemVariants}
+              whileHover="hover"
+              whileTap="tap"
             >
-              Industries ▾
-            </button>
+              <motion.button
+                onClick={() => toggleDropdown(1)}
+                className="font-medium group-hover:text-gray-800 hover:text-blue-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+              >
+              <button>
+                Industries ▾
+              </button>
+              </motion.button>
+            </motion.div>
             {dropdownOpen === 1 && (
-              <div className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-[#c4d4f5] border border-slate-200 shadow-lg shadow-slate-300/40 ring-1 ring-black/5 z-[60] overflow-hidden">
-                <button
-                  onClick={() => scrollToSection("industries")}
-                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50"
+              <motion.div 
+                className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-[#c4d4f5] border border-slate-200 shadow-lg shadow-slate-300/40 ring-1 ring-black/5 z-[60] overflow-hidden"
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+              >
+                <motion.div
+                  whileHover={{ x: 4, backgroundColor: "rgba(248, 250, 252, 1)" }}
                 >
-                  Industries We Serve
-                </button>
-                <Link
-                  to="/industry-served"
-                  className="block px-4 py-2 text-[#232B36] hover:bg-slate-50"
+                  <motion.button
+                    onClick={() => scrollToSection("industries")}
+                    className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  >
+              <button>
+                    Industries We Serve
+                        </button>
+                  </motion.button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 4, backgroundColor: "rgba(248, 250, 252, 1)" }}
+                  transition={{ duration: 0.2 }}
                 >
-                  Industry Details
-                </Link>
-              </div>
+                  <Link
+                    to="/industry-served"
+                    className="block px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  >
+                    <button>
+
+                    Industry Details
+                    </button>
+                  </Link>
+                </motion.div>
+              </motion.div>
             )}
           </div>
 
-          <button
-            onClick={() => scrollToSection("about")}
-            className="font-medium group-hover:text-gray-800 hover:text-blue-200 transition"
+          <motion.div
+            variants={navItemVariants}
+            whileHover="hover"
+            whileTap="tap"
           >
-            About Us
-          </button>
-          <button
-            onClick={() => scrollToSection("research")}
-            className="font-medium group-hover:text-gray-800 hover:text-blue-200 transition"
-          >
-            Research & Insights
-          </button>
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="font-medium group-hover:text-gray-800 hover:text-blue-200 transition"
-          >
-            Contact
-          </button>
+            <motion.button
+              onClick={() => scrollToSection("about")}
+              className="font-medium group-hover:text-gray-800 hover:text-blue-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+            ><button>
 
-          <Link
-            to="/get-started"
-            className="ml-4 bg-[#2176C1] text-white font-bold px-5 py-2.5 rounded hover:bg-[#1761a0] shadow-sm transition"
+              About Us
+            </button>
+            </motion.button>
+          </motion.div>
+          <motion.div
+            variants={navItemVariants}
+            whileHover="hover"
+            whileTap="tap"
           >
-            Get a free Consultant
-          </Link>
+            <motion.button
+              onClick={() => scrollToSection("research")}
+              className="font-medium group-hover:text-gray-800 hover:text-blue-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+            >
+              <button>
+
+              Research & Insights
+              </button>
+            </motion.button>
+          </motion.div>
+          <motion.div
+            variants={navItemVariants}
+            whileHover="hover"
+            whileTap="tap"
+          >
+            <motion.button
+              onClick={() => scrollToSection("contact")}
+              className="font-medium group-hover:text-gray-800 hover:text-blue-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+            >
+              <button>
+
+              Contact
+              </button>
+            </motion.button>
+          </motion.div>
+
+          <motion.div
+            variants={ctaButtonVariants}
+            whileHover="hover"
+            whileTap="tap"
+          >
+            <Link
+              to="/get-started"
+              className="ml-4 bg-[#2176C1] text-white font-bold px-5 py-2.5 rounded hover:bg-[#1761a0] shadow-sm transition-all duration-200"
+            >
+              <button>
+
+              Get a free Consultant
+              </button>
+            </Link>
+          </motion.div>
         </nav>
 
         {/* Hamburger Icon */}
         <div className="lg:hidden">
-          <button
+          <motion.button
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-white group-hover:text-gray-800 focus:outline-none"
+            whileHover={{ scale: 1.1, rotate: 90 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.2 }}
           >
             <svg
-              className="w-6 h-6"
+              className="w-6 h-6 transition-transform duration-200"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -209,109 +333,199 @@ const Header = () => {
                 />
               )}
             </svg>
-          </button>
+          </motion.button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="lg:hidden px-6 pb-4 space-y-3 bg-black/80 backdrop-blur-sm border-t border-white/20 text-white text-base">
+        <motion.div 
+          className="lg:hidden px-6 pb-4 space-y-3 bg-[#c4d4f5] backdrop-blur-sm overflow-visible border-t border-white/20 text-gray-900 transparent text-base"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
           {/* Services dropdown */}
           <div>
-            <button
-              onClick={() =>
-                setMobileDropdown((prev) => ({
-                  ...prev,
-                  services: !prev.services,
-                }))
-              }
-              className="w-full text-left font-medium hover:text-blue-200"
+            <motion.div
+              whileHover={{ x: 4 }}
+              whileTap={{ scale: 0.98 }}
             >
-              Services ▾
-            </button>
+              <motion.button
+                onClick={() =>
+                  setMobileDropdown((prev) => ({
+                    ...prev,
+                    services: !prev.services,
+                  }))
+                }
+                className="w-full text-left font-medium hover:text-blue-800 transition-colors duration-200"
+              >
+              <button>
+                Services ▾
+              </button>
+              </motion.button>
+            </motion.div>
             {mobileDropdown.services && (
-              <div className="ml-4 mt-1 space-y-1">
-                <button
-                  onClick={() => scrollToSection("services")}
-                  className="block w-full text-left hover:text-blue-200"
+              <motion.div 
+                className="ml-4 mt-1 space-y-1"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                transition={{ duration: 0.2 }}
+              >
+                <motion.div
+                  whileHover={{ x: 4 }}
                 >
-                  Our Services
-                </button>
-                <button
-                  onClick={() => scrollToSection("testimonials")}
-                  className="block w-full text-left hover:text-blue-200"
+                  <motion.button
+                    onClick={() => scrollToSection("services")}
+                    className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+                  >
+                    Our Services
+                  </motion.button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 4 }}
                 >
-                  Testimonials
-                </button>
-                <button
-                  onClick={() => scrollToSection("faqs")}
-                  className="block w-full text-left hover:text-blue-200"
+                  <motion.button
+                    onClick={() => scrollToSection("testimonials")}
+                    className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+                  >
+                    Testimonials
+                  </motion.button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 4 }}
                 >
-                  FAQs
-                </button>
-              </div>
+                  <motion.button
+                    onClick={() => scrollToSection("faqs")}
+                    className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+                  >
+                    FAQs
+                  </motion.button>
+                </motion.div>
+              </motion.div>
             )}
           </div>
 
           {/* Industries dropdown */}
           <div>
-            <button
-              onClick={() =>
-                setMobileDropdown((prev) => ({
-                  ...prev,
-                  industries: !prev.industries,
-                }))
-              }
-              className="w-full text-left font-medium hover:text-blue-200"
+            <motion.div
+              whileHover={{ x: 4 }}
+              whileTap={{ scale: 0.98 }}
             >
-              Industries ▾
-            </button>
+              <motion.button
+                onClick={() =>
+                  setMobileDropdown((prev) => ({
+                    ...prev,
+                    industries: !prev.industries,
+                  }))
+                }
+                className="w-full text-left font-medium hover:text-blue-800 transition-colors duration-200"
+              >
+              <button>
+                Industries ▾
+
+              </button>
+
+              </motion.button>
+            </motion.div>
             {mobileDropdown.industries && (
-              <div className="ml-4 mt-1 space-y-1">
-                <button
-                  onClick={() => scrollToSection("industries")}
-                  className="block w-full text-left hover:text-blue-200"
+              <motion.div 
+                className="ml-4 mt-1 space-y-1"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                transition={{ duration: 0.2 }}
+              >
+                <motion.div
+                  whileHover={{ x: 4 }}
                 >
-                  Industries We Serve
-                </button>
-                <Link
-                  to="/industry-served"
-                  className="block hover:text-blue-200"
+                  <motion.button
+                    onClick={() => scrollToSection("industries")}
+                    className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+                  >
+              <button>
+                    Industries We Serve
+              </button>
+                  </motion.button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 4 }}
                 >
-                  Industry Details
-                </Link>
-              </div>
+                  <Link
+                    to="/industry-served"
+                    className="block hover:text-blue-800 transition-colors duration-200"
+                  >
+                                <button> Industry Details </button>
+
+                  </Link>
+                </motion.div>
+              </motion.div>
             )}
           </div>
 
           {/* Static Items */}
-          <button
-            onClick={() => scrollToSection("about")}
-            className="block w-full text-left hover:text-blue-200"
+          <motion.div
+            whileHover={{ x: 4 }}
+            whileTap={{ scale: 0.98 }}
           >
-            About Us
-          </button>
-          <button
-            onClick={() => scrollToSection("research")}
-            className="block w-full text-left hover:text-blue-200"
+            <motion.button
+              onClick={() => scrollToSection("about")}
+              className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+            >
+              <button>
+
+                            About Us
+              </button>
+            </motion.button>
+          </motion.div>
+          <motion.div
+            whileHover={{ x: 4 }}
+            whileTap={{ scale: 0.98 }}
           >
-            Research & Insights
-          </button>
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="block w-full text-left hover:text-blue-200"
+            <motion.button
+              onClick={() => scrollToSection("research")}
+              className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+            >
+              <button>
+
+
+              Research & Insights
+              </button>
+            </motion.button>
+          </motion.div>
+          <motion.div
+            whileHover={{ x: 4 }}
+            whileTap={{ scale: 0.98 }}
           >
-            Contact
-          </button>
+            <motion.button
+              onClick={() => scrollToSection("contact")}
+              className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+            >
+              <button>
+
+              Contact
+              </button>
+            </motion.button>
+          </motion.div>
 
           {/* CTA */}
-          <Link
-            to="/get-started"
-            className="block w-full bg-[#2176C1] text-white text-center py-2 rounded hover:bg-[#1761a0]"
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            Get a free Consultant
-          </Link>
-        </div>
+            <motion.button className="block w-full bg-[#2176C1] text-white text-center py-2 rounded  transition-all duration-200">
+              <Link
+                to="/get-started"
+                className="block w-full h-full"
+              >
+                <button>
+
+                Get a free Consultant
+                </button>
+              </Link>
+            </motion.button>
+          </motion.div>
+        </motion.div>
       )}
     </header>
   );
