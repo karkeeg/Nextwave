@@ -66,7 +66,7 @@ const Footer = () => {
         <div className="flex flex-wrap justify-between flex-1 gap-8 text-sm">
           {/* Quick Link */}
           <div className="flex flex-col gap-3 min-w-[140px]">
-            <h3 className="font-semibold text-base">Quick Link</h3>
+            <p className="font-semibold text-gray-900 text-base">Quick Link</p>
             <button
               onClick={() => scrollToSection("about")}
               className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
@@ -107,7 +107,7 @@ const Footer = () => {
 
           {/* Customer Service */}
           <div className="flex flex-col gap-3 min-w-[140px]">
-            <h3 className="font-semibold text-base">Customer Service</h3>
+            <p className="font-semibold text-gray-900 text-base">Customer Service</p>
             <button
               onClick={() => scrollToSection("faqs")}
               className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
@@ -124,7 +124,7 @@ const Footer = () => {
 
           {/* Contact Us */}
           <div className="flex flex-col gap-3 min-w-[200px]">
-            <h3 className="font-semibold text-base">Contact Us</h3>
+            <p className="font-semibold text-gray-900 text-base">Contact Us</p>
             <div className="flex items-start gap-2">
               <MdLocationOn className="mt-0.5" />{" "}
               <span>123 Street, Kathmandu Nepal</span>

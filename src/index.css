@@ -30,6 +30,12 @@
   --size-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
   --size-small: 0.875rem;
 }
+.cursor--hover {
+  width: 24px;
+  height: 24px;
+  border-width: 1.5px;
+}
+
 
 /* Base element styles using Tailwind and vars */
 @layer base {

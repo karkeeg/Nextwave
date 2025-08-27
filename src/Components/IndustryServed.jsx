@@ -22,7 +22,7 @@ const industryData = [
     images: [
       "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80", // classroom
       "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1200&q=80", // graduation
-      "https://images.unsplash.com/photo-1587614382346-4ec72b3c7a3a?auto=format&fit=crop&w=1200&q=80", // e-learning
+      "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // e-learning
     ],
     features: [
       ["E-learning platforms", "Virtual classrooms"],
@@ -33,8 +33,8 @@ const industryData = [
     id: "healthcare",
     title: "Healthcare",
     images: [
-      "https://images.unsplash.com/photo-1580281657527-47e2c5b1a83f?auto=format&fit=crop&w=1200&q=80", // doctor with tablet
-      "https://images.unsplash.com/photo-1583912267550-61c3d1fef7cd?auto=format&fit=crop&w=1200&q=80", // hospital corridor
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=580&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // doctor with tablet
+      "https://images.unsplash.com/photo-1584467735871-8e85353a8413?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // hospital corridor
       "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80", // medical imaging
     ],
     features: [
@@ -59,8 +59,8 @@ const industryData = [
     id: "manufacturing",
     title: "Manufacturing",
     images: [
-      "https://images.unsplash.com/photo-1581091014362-7b1a3b43fa9f?auto=format&fit=crop&w=1200&q=80", // assembly line
-      "https://images.unsplash.com/photo-1598294209028-021f3d9b0e42?auto=format&fit=crop&w=1200&q=80", // robotic arm
+      "https://images.unsplash.com/photo-1581091212991-8891c7d4bd9b?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // assembly line
+      "https://images.unsplash.com/photo-1567789884554-0b844b597180?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // robotic arm
       "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", // factory floor
     ],
     features: [

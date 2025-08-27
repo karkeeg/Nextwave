@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { 
   SiOpenai, SiTensorflow, SiReact, SiNextdotjs, SiAmazon, SiNodedotjs,
   SiPython, SiMongodb, SiDjango, SiPytorch, SiKeras, SiScikitlearn, SiOpencv,
@@ -140,24 +140,11 @@ const HomePage = () => {
   const sectionRefs = useRef({});
   const [scrollY, setScrollY] = useState(0);
   const heroParallaxRef = useRef(null);
-  const bubbleAreaRef = useRef(null);
   // Parallax only for the hero section
   const { scrollYProgress: heroProgress } = useScroll({ target: heroParallaxRef, offset: ["start end", "end start"] });
   const yLeft = useTransform(heroProgress, [0, 1], [10, -10]);
   const yRight = useTransform(heroProgress, [0, 1], [20, -20]);
 
-  // Mouse-follow bubble motion
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const bubbleSize = 420; // px on md+, will be clamped by responsive classes
-  const x = useSpring(mx, { stiffness: 80, damping: 20 });
-  const y = useSpring(my, { stiffness: 80, damping: 20 });
-  const handleMouseMove = (e) => {
-    const rect = bubbleAreaRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mx.set(e.clientX - rect.left - bubbleSize / 2);
-    my.set(e.clientY - rect.top - bubbleSize / 2);
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -249,24 +236,23 @@ const HomePage = () => {
 
       {/* Hero Section */}
       <section
-        ref={(node) => { addRef("hero", node); bubbleAreaRef.current = node; }}
+        ref={(node) => addRef("hero", node)}
         id="hero"
         className="relative w-full min-h-[620px] md:h-[780px] bg-[#c4d4f5] flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 lg:px-24 py-12 sm:py-18 md:py-24 overflow-hidden"
-        onMouseMove={handleMouseMove}
       >
         {/* Background: requested gradient */}
         <div className="absolute inset-0 z-0" />
 
-        {/* Animated Color Bubble (mouse-follow + slow orbit) */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Animated Color Bubble (slow orbit) */}
+        {/* <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
           <motion.div
             className="absolute rounded-full blur-2xl opacity-90 w-72 h-72 md:w-[420px] md:h-[420px]"
-            style={{ x, y, background: "radial-gradient(closest-side, rgba(33,118,193,0.60), rgba(255,96,165,0.45), rgba(255,192,67,0.45))" }}
+            style={{ background: "radial-gradient(closest-side, rgba(33,118,193,0.60), rgba(255,96,165,0.45), rgba(255,192,67,0.45))" }}
             initial={{ scale: 0.98, rotate: 0 }}
             animate={{ scale: [0.98, 1.04, 1], rotate: [0, 12, -8, 0] }}
             transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
           />
-        </div>
+        </div> */}
 
         {/* Hero Content */}
         <div ref={heroParallaxRef}>

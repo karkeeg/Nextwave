@@ -1,0 +1,29 @@
+.cursor {
+  position: fixed;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: transparent;
+  box-sizing: border-box;
+  mix-blend-mode: normal;
+  transition: width 0.25s ease, height 0.25s ease, border-width 0.25s ease;
+}
+
+.cursor--hover {
+  width: 24px;
+  height: 24px;
+  border-width: 1.5px;
+}
+
+/* Hide system cursor */
+html, body {
+  cursor: none;
+}
+
+a, button, [role="button"], input, textarea, select, .cursor-pointer {
+  cursor: none !important;
+}

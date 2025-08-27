@@ -7,18 +7,13 @@ import F71 from "../assets/Frames for robot/Rectangle 71.png";
 import F72 from "../assets/Frames for robot/Rectangle 72.png";
 import F75 from "../assets/Frames for robot/Rectangle 75.png";
 
-/*
-  RobotMosaic
-  - Displays the 5 provided frame images in a mosaic similar to the reference.
-  - Responsive scaling while maintaining exact same layout structure
-  - Same robot frame positioning across all screen sizes
-*/
+
 const RobotMosaic = () => {
   // Timing
   const BASE = 0.2; // initial delay
-  const STEP = 0.6; // gap between tiles
+  const STEP = 0.4; // gap between tiles
   const TILE_COUNT = 9;
-  const REVEAL_MS = (BASE + (TILE_COUNT - 1) * STEP + 0.9) * 1000; // includes tile anim duration
+  const REVEAL_MS = (BASE + (TILE_COUNT - 1) * STEP + 0.9) * 200; // includes tile anim duration
   const HOLD_MS = 6000; // hold assembled state 6s
 
   // Define stable tile keys for reveal order control

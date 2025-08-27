@@ -63,7 +63,7 @@ Companies that embrace edge computing will gain a competitive edge in speed and 
     title: "How AI is Revolutionizing Healthcare Diagnostics",
     desc: "AI-powered tools are helping doctors diagnose diseases faster and more accurately.",
     image:
-      "https://images.unsplash.com/photo-1580281658626-1c34d23e1eae?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1512069511692-b82d787265cf?q=80&w=463&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     content: `Artificial intelligence assists healthcare professionals by analyzing medical images, lab results, and patient histories.
 
 Deep learning algorithms detect anomalies in X-rays and MRIs with remarkable precision.

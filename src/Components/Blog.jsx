@@ -1,273 +1,153 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaArrowRight, FaCalendar, FaUser, FaTag, FaBookOpen, FaHeart, FaShare, FaChevronLeft, FaChevronRight, FaEnvelope } from "react-icons/fa";
+import React, { useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FaArrowRight } from "react-icons/fa";
 import blogPosts from "../blogPosts";
+import './blog.css'
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Blog = () => {
   const navigate = useNavigate();
-  const [selectedPost, setSelectedPost] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  const sectionRef = useRef(null);
+  const itemsRef = useRef([]);
 
-  const handlePostClick = (postId) => {
-    navigate(`/blog/${postId}`);
-  };
-
-  const nextPost = () => {
-    setSelectedPost((prev) => (prev + 1) % blogPosts.length);
-  };
-
-  const prevPost = () => {
-    setSelectedPost((prev) => (prev - 1 + blogPosts.length) % blogPosts.length);
-  };
-
-  const goToPost = (index) => {
-    setSelectedPost(index);
-  };
-
-  // Auto-rotation effect
   useEffect(() => {
-    if (!isHovered) {
-      const interval = setInterval(() => {
-        nextPost();
-      }, 5000); // Change every 5 seconds
+    const section = sectionRef.current;
+    const items = itemsRef.current;
 
-      return () => clearInterval(interval);
-    }
-  }, [isHovered]);
+    // Reset all cards (except first)
+    items.forEach((item, i) => {
+      if (i !== 0) gsap.set(item, { yPercent: 100 });
+    });
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        pin: true,
+        start: "top top",
+        end: () => `+=${items.length * 100}%`,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        // markers: true,
+      },
+      defaults: { ease: "none" },
+    });
+
+    items.forEach((item, i) => {
+      if (i < items.length - 1) {
+        tl.to(item, { scale: 0.9, borderRadius: "20px" });
+        tl.to(items[i + 1], { yPercent: 0 }, "<");
       }
-    }
-  };
+    });
 
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const currentPost = blogPosts[selectedPost];
+    return () => {
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+      tl.kill();
+    };
+  }, []);
 
   return (
-    <section className="w-full min-h-screen bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+    <main className="main-wrapper">
+      {/* ========= HEADER ========= */}
+      <div className="section">
+        <div className="container-medium">
+          <div className="padding-vertical text-center">
+            <h1 className="text-5xl md:text-7xl font-bold bg-[#2176C1] bg-clip-text text-transparent leading-tight py-2">
+              Insights & Stories
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mt-4 leading-relaxed">
+              Discover the latest trends, insights, and innovations in AI
+              technology from our expert team.
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8">
-        {/* Header */}
-        <motion.div 
-          className="text-center mb-6"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-5xl md:text-7xl font-bold bg-[#2176C1] bg-clip-text text-transparent  leading-tight py-2">
-            Insights & Stories
-        </h1>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Discover the latest trends, insights, and innovations in AI technology from our expert team.
-          </p>
-        </motion.div>
-
-        {/* Featured Post Carousel */}
-        <motion.div 
-          className="mb-20"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <div 
-            className="relative h-[600px] rounded-3xl overflow-hidden shadow-2xl"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedPost}
-                initial={{ opacity: 0, scale: 1.1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.7 }}
-                className="relative w-full h-full cursor-pointer"
-                onClick={() => handlePostClick(currentPost.id)}
+      {/* ========= STACKING SECTION ========= */}
+      <div ref={sectionRef} className="scroll-section vertical-section">
+        <div className="wrapper">
+          <div role="list" className="list">
+            {blogPosts.map((post, i) => (
+              <div
+                key={post.id}
+                ref={(el) => (itemsRef.current[i] = el)}
+                role="listitem"
+                className="item"
+                onClick={() => navigate(`/blog/${post.id}`)}
               >
-                {/* Background Image */}
-                <div className="absolute inset-0">
+                <div className="item_content">
+                  <h2 className="item_number">{i + 1}</h2>
+                  <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
+                  <p className="item_p">{post.desc}</p>
+
+                  <div className="inline-flex items-center gap-3 px-6 py-3 mt-6 bg-black/10 backdrop-blur-md border border-black/10 rounded-xl text-black font-semibold hover:bg-black/20 transition-all duration-300 group">
+                    Read Full Article
+                    <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </div>
+                </div>
+
+                {/* Media (image or video) */}
+                <div className="item_media">
                   <img
-                    src={currentPost.image}
-                    alt={currentPost.title}
+                    src={post.image}
+                    alt={post.title}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
                 </div>
-
-                {/* Content Overlay */}
-                <div className="relative z-10 h-full flex items-center">
-                  <div className="max-w-2xl px-8 md:px-16 text-white">
-                    <motion.div
-                      initial={{ opacity: 0, x: -50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className="space-y-6"
-                    >
-                      {/* Meta Info */}
-                      <div className="flex items-center gap-4 text-sm">
-                        <div className="flex items-center gap-2">
-                          <FaUser className="text-blue-400" />
-                          <span>{currentPost.author}</span>
+              </div>
+            ))}
           </div>
-                        <div className="flex items-center gap-2">
-                          <FaCalendar className="text-blue-400" />
-                          <span>{currentPost.date}</span>
-          </div>
-                        <div className="flex items-center gap-2">
-                          <FaTag className="text-blue-400" />
-                          <span className="bg-blue-600 px-3 py-1 rounded-full text-xs">
-                            {currentPost.category}
-                          </span>
         </div>
       </div>
-
-                      {/* Title */}
-                      <h2 className="text-4xl md:text-6xl font-bold leading-tight">
-                        {currentPost.title}
-                      </h2>
-
-                      {/* Description */}
-                      <p className="text-xl text-gray-200 leading-relaxed">
-                        {currentPost.desc}
-                      </p>
-
-                      {/* CTA Button */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
-                      >
-                        <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 group">
-                          Read Full Article
-                          <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-            </div>
-                      </motion.div>
-                    </motion.div>
-          </div>
-        </div>
-
-                {/* Compact Newsletter Signup - Top Right */}
-                <motion.div
-                  className="absolute top-8 right-8 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 max-w-xs"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 }}
-                >
-                  <div className="text-white">
-                    <div className="flex items-center gap-2 mb-3">
-                      <FaEnvelope className="text-blue-400" />
-                      <span className="font-semibold text-sm">Stay Updated</span>
-                    </div>
-                    <div className="space-y-2">
-                      <input
-                        type="email"
-                        placeholder="Your email"
-                        className="w-full px-3 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white placeholder-white/70 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50"
-                      />
-                      <button className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-300">
-                        Subscribe
-                      </button>
-                    </div>
-              </div>
-                </motion.div>
-
-                {/* Floating Elements */}
-                <motion.div
-                  className="absolute bottom-8 right-8 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 }}
-                >
-                  <div className="flex items-center gap-4 text-white">
-                    <button className="p-2 hover:bg-white/20 rounded-lg transition-colors">
-                      <FaHeart className="text-red-400" />
-                    </button>
-                    <button className="p-2 hover:bg-white/20 rounded-lg transition-colors">
-                      <FaShare className="text-blue-400" />
-                    </button>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Navigation Arrows */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prevPost();
-              }}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 group z-20"
-            >
-              <FaChevronLeft className="text-xl group-hover:scale-110 transition-transform duration-300" />
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                nextPost();
-              }}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 group z-20"
-            >
-              <FaChevronRight className="text-xl group-hover:scale-110 transition-transform duration-300" />
-            </button>
-
-            {/* Navigation Dots */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
-              {blogPosts.map((_, idx) => (
-                <motion.button
-                  key={idx}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    goToPost(idx);
-                  }}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    idx === selectedPost 
-                      ? 'bg-white scale-125' 
-                      : 'bg-white/50 hover:bg-white/75'
-                  }`}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                />
-              ))}
-                </div>
-
-            {/* Post Counter */}
-            <div className="absolute top-8 left-8 bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-2 border border-white/20">
-              <div className="text-white text-sm">
-                <span className="font-bold">{selectedPost + 1}</span>
-                <span className="mx-1">/</span>
-                <span>{blogPosts.length}</span>
-              </div>
-            </div>
-        </div>
-        </motion.div>
-      </div>
-    </section>
+    </main>
   );
 };
 
 export default Blog;
+
+
+// extra feature of card 
+//   <div ref={sectionRef} className="scroll-section vertical-section">
+//         <div className="wrapper">
+//           <div role="list" className="list">
+//             {blogPosts.map((post, i) => (
+//               <div
+//                 key={post.id}
+//                 ref={(el) => (itemsRef.current[i] = el)}
+//                 role="listitem"
+//                 className="item cursor-pointer"
+//                 onClick={() => navigate(`/blog/${post.id}`)}
+//               >
+//                 {/* Card Background */}
+//                 <div className="absolute inset-0 w-full h-full">
+//                   <img
+//                     src={post.image}
+//                     alt={post.title}
+//                     className="w-full h-full object-cover"
+//                   />
+//                   {/* Dark overlay */}
+//                   <div className="absolute inset-0 bg-black/60"></div>
+//                 </div>
+
+//                 {/* Card Content */}
+//                 <div className="relative z-10 flex h-full items-center px-8 md:px-16">
+//                   <div className="max-w-3xl text-white">
+//                     <h2 className="item_number text-white">{i + 1}</h2>
+//                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+//                       {post.title}
+//                     </h2>
+//                     <p className="text-gray-200">{post.desc}</p>
+
+//                     <div className="inline-flex items-center gap-3 px-6 py-3 mt-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white font-semibold hover:bg-white/20 transition-all duration-300 group">
+//                       Read Full Article
+//                       <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>

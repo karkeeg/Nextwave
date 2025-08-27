@@ -1,5 +1,5 @@
 import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChartLine, FaBrain, FaComments, FaLanguage, FaArrowRight, FaPlay, FaCode, FaDatabase, FaGlobe, FaMobileAlt } from "react-icons/fa";
 
@@ -154,19 +154,19 @@ const Services = () => {
   }, []);
 
   // Derived positions for indicator: show overall scroll progress of right panel
-  const viewRatio = scrollMetrics.scrollHeight > 0
-    ? scrollMetrics.clientHeight / scrollMetrics.scrollHeight
-    : 0;
-  const indicatorHeight = itemMetrics.trackHeight > 0
-    ? Math.max(28, itemMetrics.trackHeight * viewRatio)
-    : 0;
-  const maxYWithinTrack = Math.max(0, itemMetrics.trackHeight - indicatorHeight);
+  // const viewRatio = scrollMetrics.scrollHeight > 0
+    // ? scrollMetrics.clientHeight / scrollMetrics.scrollHeight
+    // : 0;
+  // const indicatorHeight = itemMetrics.trackHeight > 0
+    // ? Math.max(28, itemMetrics.trackHeight * viewRatio)
+    // : 0;
+  // const maxYWithinTrack = Math.max(0, itemMetrics.trackHeight - indicatorHeight);
   const progress = scrollMetrics.scrollHeight > scrollMetrics.clientHeight
     ? scrollMetrics.scrollTop / (scrollMetrics.scrollHeight - scrollMetrics.clientHeight)
     : 0;
-  const indicatorY = itemMetrics.trackTop + (maxYWithinTrack * progress);
+  // const indicatorY = itemMetrics.trackTop + (maxYWithinTrack * progress);
   const fillHeight = Math.max(0, itemMetrics.trackHeight * progress);
-  const capOffset = Math.max(0, fillHeight - 10);
+  // const capOffset = Math.max(0, fillHeight - 10);
 
   const handleServiceClick = (serviceId) => {
     navigate(`/services/${serviceId}`);
@@ -393,12 +393,7 @@ const Services = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          {/* <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-            Our Services
-          </h1>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Specialized technical solutions that power modern businesses with cutting-edge AI and machine learning technology.
-          </p> */}
+          
         </motion.div>
 
         {/* Mobile Timeline (stacked cards with numbered steps) */}
@@ -498,13 +493,7 @@ const Services = () => {
                 animate={{ height: fillHeight }}
                 transition={{ type: "spring", stiffness: 200, damping: 28 }}
               />
-              {/* Glowing cap dot at the current progress end
-              <motion.div
-                className="absolute left-1/4 -translate-x-1/2 w-[12px] h-[12px] rounded-full bg-blue-500 shadow-lg shadow-blue-400/60"
-                style={{ top: itemMetrics.trackTop - 7 }}
-                animate={{ y: capOffset }}
-                transition={{ type: "spring", stiffness: 220, damping: 26 }}
-              /> */}
+              
             </div>
           </div>
 
@@ -512,57 +501,111 @@ const Services = () => {
           <motion.div ref={rightPanelRef} className="min-h-0 h-full" variants={itemVariants}>
             <div
               ref={rightScrollRef}
-              className="lg:h-full lg:overflow-y-auto pr-2 space-y-12 md:space-y-16 lg:space-y-48 pb-16 md:pb-24 lg:pb-36 no-scrollbar"
+              className="lg:h-full lg:overflow-y-auto pr-2 pt-[25vh] space-y-[60vh] pb-[25vh] no-scrollbar"
             >
               {services.map((svc, idx) => (
                 <motion.div
                   key={svc.id}
                   ref={(el) => (cardRefs.current[idx] = el)}
-                  className={`group relative rounded-3xl border bg-white/80 backdrop-blur shadow-lg transition-all
-                    ${idx === selectedService ? "border-blue-200 ring-2 ring-blue-100" : "border-slate-200 hover:border-slate-300"}
+                  className={`group relative rounded-3xl overflow-hidden transition-all duration-500 transform-gpu
+                    ${idx === selectedService 
+                      ? "shadow-2xl scale-[1.02] ring-2 ring-white/50" 
+                      : "shadow-xl hover:shadow-2xl hover:scale-[1.01]"
+                    }
                   `}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: 60 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  {/* Full-image card with content overlay on top */}
-                  <div className="relative w-full h-[260px] md:h-[320px] overflow-hidden rounded-3xl">
-                    <img
-                      src={svc.image}
-                      alt={svc.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                    {/* Gradient overlay for readability */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/20" />
-                    {/* Content overlay */}
-                    <div className="absolute inset-x-0 top-0 p-4 md:p-5">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0 text-white">
-                          <h4 className="text-lg md:text-xl font-semibold">{svc.title}</h4>
-                          <p className="text-white/90 text-sm md:text-base mt-1 line-clamp-2 md:line-clamp-3">{svc.desc}</p>
-                          <ul className="mt-2 space-y-1">
-                            {svc.features.slice(0, 3).map((f, i) => (
-                              <li key={i} className="flex items-center gap-2 text-sm">
-                                <span className={`w-5 h-5 rounded-full text-[10px] font-bold text-white flex items-center justify-center bg-gradient-to-r ${svc.color}`}>{i + 1}</span>
-                                <span className="truncate">{f}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <button
-                          onClick={() => handleServiceClick(svc.id)}
-                          className="mt-1 shrink-0 inline-flex items-center gap-2 rounded-lg border border-white/30 bg-white/20 backdrop-blur px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/30"
-                        >
-                          Learn more
-                          <FaArrowRight />
-                        </button>
+                  {/* Modern glassmorphism card with advanced gradients */}
+                  <div className="relative w-full h-[380px] md:h-[420px] overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
+                    {/* Dynamic background image with parallax effect */}
+                    <div className="absolute inset-0">
+                      <img
+                        src={svc.image}
+                        alt={svc.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      {/* Advanced multi-layer gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                      <div className={`absolute inset-0 bg-gradient-to-r ${svc.color} opacity-20 mix-blend-overlay`} />
+                    </div>
+
+                    {/* Floating elements for modern effect */}
+                    <div className="absolute top-4 right-4 w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center shadow-lg">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${svc.color} text-white flex items-center justify-center shadow-lg`}>
+                        {svc.icon}
                       </div>
                     </div>
-                    {/* Floating icon badge */}
-                    <div className="absolute -top-3 -right-3 w-11 h-11 rounded-xl bg-white/90 shadow-md flex items-center justify-center">
-                      <div className={`w-9 h-9 rounded-lg bg-gradient-to-r ${svc.color} text-white flex items-center justify-center`}>{svc.icon}</div>
+
+                    {/* Main content overlay */}
+                    <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">
+                      {/* Top section with title and description */}
+                      <div className="space-y-4">
+                        <div className="space-y-3">
+                          <h4 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                            {svc.title}
+                          </h4>
+                          <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-md">
+                            {svc.desc}
+                          </p>
+                        </div>
+
+                        {/* Modern feature list with enhanced styling */}
+                        <div className="space-y-3 mt-6">
+                          {svc.features.slice(0, 3).map((f, i) => (
+                            <motion.div
+                              key={i}
+                              className="flex items-center gap-3 text-sm md:text-base group/item"
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.1 + 0.2 }}
+                            >
+                              <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${svc.color} text-white flex items-center justify-center text-xs font-bold shadow-lg group-hover/item:scale-110 transition-transform`}>
+                                {i + 1}
+                              </div>
+                              <span className="text-white/95 font-medium flex-1 group-hover/item:text-white transition-colors">
+                                {f}
+                              </span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Bottom section with CTA */}
+                      <div className="flex justify-between items-end mt-8">
+                                                
+                        {/* <motion.button
+                          onClick={() => handleServiceClick(svc.id)}
+                          className="group/btn relative overflow-hidden rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-white/30 hover:shadow-xl hover:scale-105"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        > */}
+                        <Link to={`/services/${svc.id}`} className="w-full">
+                          <button className="relative rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 px-6 py-3 text-white font-semibold z-10 flex items-center gap-2">
+                            Learn more
+                            <FaArrowRight className="transition-transform group-hover/btn:translate-x-1" />
+                          </button>
+                        </Link>
+                          {/* Animated background on hover */}
+                          <div className={`absolute inset-0 bg-gradient-to-r ${svc.color} opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300`} />
+                        {/* </motion.button> */}
+                      </div>
                     </div>
+
+                    {/* Subtle border glow effect */}
+                    <div className="absolute inset-0 rounded-3xl ring-1 ring-white/20 pointer-events-none" />
+                    {idx === selectedService && (
+                      <motion.div
+                        className={`absolute inset-0 rounded-3xl ring-2 ${svc.color} opacity-50`}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.5 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -570,31 +613,6 @@ const Services = () => {
           </motion.div>
         </motion.div>
         )}
-
-        {/* Bottom Stats Section */}
-        {/* <motion.div 
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          {[
-            { number: "500+", label: "Projects Completed", icon: <FaCode /> },
-            { number: "50+", label: "Expert Team", icon: <FaBrain /> },
-            { number: "99.9%", label: "Uptime", icon: <FaDatabase /> },
-            { number: "24/7", label: "Support", icon: <FaComments /> }
-          ].map((stat, idx) => (
-            <motion.div
-              key={idx}
-              className="text-center hover:bg-blue-400  cursor-pointer p-4 bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300"
-              whileHover={{ y: -3, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div className="text-2xl font-bold text-blue-600 mb-1">{stat.number}</div>
-              <div className="text-sm text-gray-600">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div> */}
       </div>
     </section>
   );
