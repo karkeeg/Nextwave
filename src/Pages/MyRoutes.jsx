@@ -9,9 +9,9 @@ import IndustryServed from "../Components/IndustryServed";
 import BlogArticle from "../Components/BlogArticle";
 import ServiceDetail from "../Components/ServiceDetail";
 import IndustryDetail from "../Components/IndustryDetail";
-import PrivacyPolicy from "./PrivacyPolicy";
 import Practice from "../Components/Practice";
 import ScrollToTop from "../Components/ScrollToTop";
+import PrivacyPolicy from './../Components/PrivacyPolicy';
 
 const MyRoutes = () => {
   return (
@@ -27,8 +27,9 @@ const MyRoutes = () => {
           <Route path="/blog/:id" element={<BlogArticle />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/industries/:industryId" element={<IndustryDetail />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+         
           <Route path="/practice" element={<Practice />} />
+          <Route path="/practice" element={<PrivacyPolicy />} />
 
         </Route>
       </Routes>

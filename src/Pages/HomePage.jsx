@@ -275,12 +275,10 @@ const HomePage = () => {
               initial="hidden"
               animate="show"
               transition={{ delay: 0.2 }}
-              className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto justify-center lg:justify-start px-4 sm:px-0"
+              className=" w-[40px] sm:w-auto justify-center lg:justify-start px-4 sm:px-0"
             >
-              <button className="bg-[#2176C1] text-white font-semibold px-4 sm:px-5 py-2 sm:py-3 rounded-lg shadow-lg hover:bg-[#185a96] hover:scale-105 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto">
-                Get Started Free
-              </button>
-              <button className="bg-white text-[#2176C1] font-semibold px-4 sm:px-5 py-2 sm:py-3 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto">
+              
+              <button className="bg-[#c4d4f5] text-[#2176C1] font-semibold px-4 sm:px-5 py-2 sm:py-3 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto">
                 Request a Demo
               </button>
             </motion.div>

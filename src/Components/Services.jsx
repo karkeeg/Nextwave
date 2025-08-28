@@ -1,5 +1,5 @@
 import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChartLine, FaBrain, FaComments, FaLanguage, FaArrowRight, FaPlay, FaCode, FaDatabase, FaGlobe, FaMobileAlt } from "react-icons/fa";
 
@@ -14,7 +14,7 @@ const services = [
       "Multilingual support and sentiment analysis",
     ],
     icon: <FaBrain size={24} />,
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.unsplash.com/photo-1591453089816-0fbb971b454c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     color: "from-blue-500 to-purple-600",
     lightColor: "from-blue-100 to-purple-100",
     bgColor: "bg-blue-50"
@@ -29,7 +29,7 @@ const services = [
       "Multilingual support and sentiment analysis",
     ],
     icon: <FaLanguage size={24} />,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://www.ibm.com/content/dam/adobe-cms/firefly-generated-assets/2025/05/f8efb989-c324-4715-b7a1-f146ad3ce429.jpeg/_jcr_content/renditions/cq5dam.web.1280.1280.jpeg",
     color: "from-green-500 to-teal-600",
     lightColor: "from-green-100 to-teal-100",
     bgColor: "bg-green-50"
@@ -44,7 +44,7 @@ const services = [
       "Big data processing and machine learning pipelines",
     ],
     icon: <FaChartLine size={24} />,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.unsplash.com/photo-1599658880436-c61792e70672?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     color: "from-orange-500 to-red-600",
     lightColor: "from-orange-100 to-red-100",
     bgColor: "bg-orange-50"
@@ -59,7 +59,7 @@ const services = [
       "Integration with existing business systems",
     ],
     icon: <FaComments size={24} />,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.prismic.io/intuzwebsite/d9daef05-a416-4e84-b0f8-2d5e2e3b58d8_A+Comprehensive+Guide+to+Building+an+AI+Chatbot%402x.png?w=2400&q=80&auto=format,compress&fm=png8",
     color: "from-purple-500 to-pink-600",
     lightColor: "from-purple-100 to-pink-100",
     bgColor: "bg-purple-50"
@@ -74,7 +74,7 @@ const services = [
       "CMS and API integrations",
     ],
     icon: <FaGlobe size={24} />,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLkNu6MhNMOu02871w6Xp2Lf2A9NiDtDyseA&s",
+    image: "https://cdn.wegic.ai/cms/seo/img/custom-web-development-service/33767F88.png?format=webp&args=pr:sharp/q:60",
     color: "from-cyan-500 to-blue-600",
     lightColor: "from-cyan-100 to-blue-100",
     bgColor: "bg-cyan-50"
@@ -89,7 +89,7 @@ const services = [
       "Secure auth and scalable APIs",
     ],
     icon: <FaMobileAlt size={24} />,
-    image: "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?q=80&w=2069&auto=format&fit=crop",
+    image: "https://plus.unsplash.com/premium_photo-1661326248013-3107a4b2bd91?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     color: "from-rose-500 to-orange-500",
     lightColor: "from-rose-100 to-orange-100",
     bgColor: "bg-rose-50"
@@ -120,12 +120,7 @@ const Services = () => {
 
   // Track viewport size to toggle desktop/mobile behavior
   useEffect(() => {
-    const onResize = () => {
-      const isDesktopView = window.innerWidth >= 1024;
-      setIsDesktop(isDesktopView);
-      if (isDesktopView) setSelectedService(0);
-    };
-    onResize(); // Initial check
+    const onResize = () => setIsDesktop(window.innerWidth >= 1024);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
@@ -381,7 +376,7 @@ const Services = () => {
   const currentService = services[selectedService];
 
   return (
-    <section ref={sectionRef} className="w-full bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-gradient-to-br from-gray-50 to-white relative mb-12 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -401,46 +396,100 @@ const Services = () => {
           
         </motion.div>
 
-        {/* Mobile Timeline (stacked cards with numbered steps) */}
+        {/* Mobile/Tablet Vertical Scroll */}
         {!isDesktop && (
-          <div className="lg:hidden relative max-w-3xl mx-auto py-4">
-            <div className="absolute left-6 top-0 bottom-0 w-1 bg-blue-200 rounded-full" />
-            {services.map((svc, idx) => (
-              <div key={svc.id} className="relative pl-16 mb-10">
-                <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-white ring-2 ring-blue-400 text-blue-700 font-bold flex items-center justify-center shadow-sm">
-                  {idx + 1}
-                </div>
-                <div className="rounded-2xl border border-blue-200 bg-white shadow-sm overflow-hidden">
-                  <div className="relative w-full">
-                    <img src={svc.image} alt={svc.title} className="w-full h-48 object-cover" loading="lazy" />
-                    <div className="absolute inset-0 ring-1 ring-blue-200/50 rounded-none pointer-events-none" />
-                  </div>
-                  <div className="p-4">
-                    <h4 className="text-lg font-semibold text-slate-900">{svc.title}</h4>
-                    <p className="text-slate-600 text-sm mt-1">{svc.desc}</p>
-                    <ul className="mt-3 space-y-1">
-                      {svc.features.slice(0, 3).map((f, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
-                          <span className={`w-5 h-5 rounded-full text-[10px] font-bold text-white flex items-center justify-center bg-gradient-to-r ${svc.color}`}>{i + 1}</span>
-                          <span className="flex-1">{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <button onClick={() => handleServiceClick(svc.id)} className="mt-4 inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-700 hover:bg-blue-100">
-                      Learn more
-                      <FaArrowRight />
-                    </button>
-                  </div>
-                </div>
+          <div className="lg:hidden relative mb-12">
+            {/* Header for mobile */}
+            <div className="mb-8 px-4">
+              <h1 className="">Our Services</h1>
+              <p className="">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
+            </div>
+            
+            {/* Vertical scrollable container */}
+            <div className="max-h-[70vh] overflow-y-auto no-scrollbar px-4">
+              <div className="space-y-6">
+                {services.map((svc, idx) => (
+                  <motion.div
+                    key={svc.id}
+                    className="w-full"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  >
+                    <div className="group relative rounded-2xl md:rounded-3xl overflow-hidden h-[400px] md:h-[450px] shadow-lg hover:shadow-xl transition-all duration-500">
+                      {/* Full Background image */}
+                      <div className="absolute inset-0">
+                        <img
+                          src={svc.image}
+                          alt={svc.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      </div>
+
+                      {/* Centered content box with glassmorphism */}
+                      <div className="absolute inset-0 flex items-center justify-center p-4">
+                        <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-6 max-w-full w-full mx-4 shadow-xl">
+                          {/* Content */}
+                          <div className="space-y-4">
+                            {/* Title */}
+                            <h3 className="text-[#c3c3c3]">
+                              {svc.title}
+                            </h3>
+
+                            {/* Description */}
+                            <p className="text-gray-100 leading-relaxed">
+                              {svc.desc}
+                            </p>
+
+                            {/* Features list */}
+                            <div className="space-y-2">
+                              {svc.features.slice(0, 3).map((f, i) => (
+                                <div key={i} className="flex items-start gap-3 text-sm">
+                                  <span className="text-gray-100 font-semibold flex-shrink-0 mt-0.5">
+                                    {i + 1}.
+                                  </span>
+                                  <span className="text-gray-100 leading-relaxed line-clamp-1">
+                                    {f}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* CTA */}
+                            <motion.button
+                              onClick={() => handleServiceClick(svc.id)}
+                              className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200 group/btn mt-3"
+                              whileHover={{ x: 3 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <span>Learn more</span>
+                              <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1 text-sm" />
+                            </motion.button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Border */}
+                      <div className="absolute inset-0 rounded-2xl md:rounded-3xl ring-1 ring-white/20 pointer-events-none" />
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Mobile instruction */}
+            <div className="text-center mt-2 px-4">
+              <p className="text-slate-500 text-sm">Scroll to explore all services</p>
+            </div>
           </div>
         )}
 
         {/* Desktop: Left list | Middle divider | Right details */}
         {isDesktop && (
           <motion.div
-            className="grid grid-rows-[auto_1fr] lg:grid-rows-1 grid-cols-1 lg:grid-cols-[1fr_16px_1.2fr] gap-4 items-stretch h-[calc(100%-3.5rem)]"
+            className="grid grid-rows-[auto_1fr]  lg:grid-rows-1 grid-cols-1 lg:grid-cols-[1fr_16px_1.2fr] gap-4 items-stretch h-[calc(100%-3.5rem)]"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -448,8 +497,8 @@ const Services = () => {
           {/* Left: Services list */}
           <motion.div ref={leftPanelRef} className="rounded-2xl p-4 md:p-5 overflow-hidden" variants={itemVariants}>
             <div className="mb-8">
-              <h2 className="text-6xl font-extrabold text-[#2176C1]">Our Services</h2>
-              <p className="text-slate-600 mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
+              <h2 className="">Our Services</h2>
+              <p className="mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
             </div>
             <ul ref={listRef} className="space-y-3 relative max-h-[calc(100vh-220px)] overflow-auto pr-1 no-scrollbar">
               {services.map((s, idx) => (
@@ -459,7 +508,7 @@ const Services = () => {
                     onClick={() => handleLeftSelect(idx)}
                   >
                     <span className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold transition-colors duration-200 ${
-                      idx === selectedService ? "bg-slate-200 text-black" : "bg-slate-100 text-slate-700"
+                      idx === selectedService ? "bg-black text-white" : "bg-slate-100 text-slate-700"
                     }`}>{idx + 1}</span>
                     <span className={`transition-colors duration-200 ${idx === selectedService ? "font-bold text-slate-900" : "text-slate-700 group-hover:text-slate-900"}`}>{s.title}</span>
                   </button>
@@ -524,8 +573,8 @@ const Services = () => {
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                   {/* Modern glassmorphism card with advanced gradients */}
-                  <div className="relative w-full h-[380px] md:h-[420px] overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
-                    {/* Dynamic background image with parallax effect */}
+                  <div className="relative w-full h-[380px] md:h-[420px] overflow-hidden rounded-3xl shadow-xl">
+                    {/* Full background image */}
                     <div className="absolute inset-0">
                       <img
                         src={svc.image}
@@ -533,71 +582,54 @@ const Services = () => {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
                       />
-                      {/* Advanced multi-layer gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-transparent" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                      <div className={`absolute inset-0 bg-gradient-to-r ${svc.color} opacity-20 mix-blend-overlay`} />
                     </div>
 
-                    {/* Floating elements for modern effect */}
-                    <div className="absolute top-4 right-4 w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center shadow-lg">
-                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${svc.color} text-white flex items-center justify-center shadow-lg`}>
-                        {svc.icon}
-                      </div>
-                    </div>
-
-                    {/* Main content overlay */}
-                    <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">
-                      {/* Top section with title and description */}
-                      <div className="space-y-4">
-                        <div className="space-y-3">
-                          <h4 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                    {/* Centered content box */}
+                    <div className="absolute inset-0 flex items-center justify-center p-6 md:p-8">
+                      <div className="bg-white/20 backdrop-blur- border border-white/30 rounded-2xl p-6 md:p-8 max-w-full w-full shadow-xl">
+                        {/* Content */}
+                        <div className="space-y-4 md:space-y-6">
+                          {/* Title */}
+                          <h4 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 tracking-tight leading-tight">
                             {svc.title}
                           </h4>
-                          <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-md">
+
+                          {/* Description */}
+                          <p className="text-gray-800 text-sm md:text-base leading-relaxed">
                             {svc.desc}
                           </p>
-                        </div>
 
-                        {/* Modern feature list with enhanced styling */}
-                        <div className="space-y-3 mt-6">
-                          {svc.features.slice(0, 3).map((f, i) => (
-                            <motion.div
-                              key={i}
-                              className="flex items-center gap-3 text-sm md:text-base group/item"
-                              initial={{ opacity: 0, x: -20 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              transition={{ delay: i * 0.1 + 0.2 }}
-                            >
-                              <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${svc.color} text-white flex items-center justify-center text-xs font-bold shadow-lg group-hover/item:scale-110 transition-transform`}>
-                                {i + 1}
-                              </div>
-                              <span className="text-white/95 font-medium flex-1 group-hover/item:text-white transition-colors">
-                                {f}
-                              </span>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </div>
+                          {/* Features list */}
+                          <div className="space-y-2 md:space-y-3">
+                            {svc.features.slice(0, 3).map((f, i) => (
+                              <motion.div
+                                key={i}
+                                className="flex items-start gap-3 text-sm md:text-base"
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.1 + 0.2 }}
+                              >
+                                <span className="text-gray-900 font-semibold flex-shrink-0 mt-0.5">
+                                  {i + 1}.
+                                </span>
+                                <span className="text-gray-800 leading-relaxed group-hover/item:text-gray-900 transition-colors">
+                                  {f}
+                                </span>
+                              </motion.div>
+                            ))}
+                          </div>
 
-                      {/* Bottom section with CTA */}
-                      <div className="flex justify-between items-end mt-8">
-                                                
-                        {/* <motion.button
-                          onClick={() => handleServiceClick(svc.id)}
-                          className="group/btn relative overflow-hidden rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-white/30 hover:shadow-xl hover:scale-105"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        > */}
-                        <Link to={`/services/${svc.id}`} className="w-full">
-                          <button className="relative rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 px-6 py-3 text-white font-semibold z-10 flex items-center gap-2">
-                            Learn more
-                            <FaArrowRight className="transition-transform group-hover/btn:translate-x-1" />
-                          </button>
-                        </Link>
-                          {/* Animated background on hover */}
-                          <div className={`absolute inset-0 bg-gradient-to-r ${svc.color} opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300`} />
-                        {/* </motion.button> */}
+                          {/* CTA */}
+                          <motion.button
+                            onClick={() => handleServiceClick(svc.id)}
+                            className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-all duration-200 group/btn mt-4"
+                            whileHover={{ x: 5 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <span>Learn more</span>
+                            <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+                          </motion.button>
+                        </div>
                       </div>
                     </div>
 
@@ -605,9 +637,9 @@ const Services = () => {
                     <div className="absolute inset-0 rounded-3xl ring-1 ring-white/20 pointer-events-none" />
                     {idx === selectedService && (
                       <motion.div
-                        className={`absolute inset-0 rounded-3xl ring-2 ${svc.color} opacity-50`}
+                        className="absolute inset-0 rounded-3xl ring-2 ring-blue-400/50"
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.5 }}
+                        animate={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
                       />
                     )}

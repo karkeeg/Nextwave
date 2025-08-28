@@ -101,16 +101,16 @@ const IndustryServed = () => {
   const { id, title, images, features } = industryData[currentIndex];
 
   return (
-    <section className="w-full min-h-screen py-8 mt-8 px-4 flex flex-col items-center">
-      <h2 className="text-3xl md:text-4xl font-extrabold text-[#2176C1] text-center">
+    <section className="w-full min-h-screen px-4 flex flex-col items-center">
+      <h1 className="text-center">
         Industries Served
-      </h2>
-      <p className="text-[#7B8591] text-base text-center mt-1 md:mt-2 max-w-3xl">
-        Specialized technical solutions that power modern businesses with
+      </h1>
+      <p className="text-center">
+        Specialized technical solutions and power modern businesses with
         cutting-edge technology.
       </p>
 
-      <div className="w-full max-w-6xl bg-[#F4F8FE] rounded-xl mx-auto px-4 py-8 md:py-12 flex flex-col items-center relative overflow-hidden mt-8">
+      <div className="w-full max-w-6xl bg-[#F4F8FE] rounded-xl mx-auto px-4 py-8 md:py-12 flex flex-col items-center relative overflow-hidden mt-2">
         {/* Navigation */}
         <button
           className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-[#2176C1] p-2 rounded-full hover:bg-[#E9EDF2] transition z-10"
@@ -156,7 +156,7 @@ const IndustryServed = () => {
         </div>
 
         {/* Title */}
-        <h3 className="text-2xl md:text-3xl font-bold text-[#232B36] text-center mt-6 mb-6">
+        <h3 className="text-[#1E93AB] text-center mt-6 mb-6">
           {title}
         </h3>
 
@@ -168,7 +168,11 @@ const IndustryServed = () => {
               className="text-[#2176C1] text-base font-medium list-disc  space-y-2"
             >
               {column.map((feature, i) => (
-                <li key={i}>{feature}</li>
+                <li key={i}><p className="text-[#1E93AB] transition-colors cursor-pointer" onClick={() => handleIndustryClick(id)}>
+
+                  {feature}
+                </p>
+                  </li>
               ))}
             </ul>
           ))}

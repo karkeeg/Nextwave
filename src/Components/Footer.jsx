@@ -14,7 +14,7 @@ const Footer = () => {
   const location = useLocation();
   // Smooth scroll to section with route awareness
   const scrollToSection = (sectionId) => {
-    const headerOffset = 80;
+    const headerOffset = 60;
     if (location.pathname !== "/") {
       navigate(`/#${sectionId}`);
       return;
@@ -22,7 +22,7 @@ const Footer = () => {
     const el = document.getElementById(sectionId);
     if (el) {
       const rect = el.getBoundingClientRect();
-      const targetY = (window.scrollY || window.pageYOffset) + rect.top - headerOffset;
+      const targetY = (window.scrollY || window.pageYOffset) + rect.top ;
       window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
     }
   };
@@ -66,40 +66,40 @@ const Footer = () => {
         <div className="flex flex-wrap justify-between flex-1 gap-8 text-sm">
           {/* Quick Link */}
           <div className="flex flex-col gap-3 min-w-[140px]">
-            <p className="font-semibold text-gray-900 text-base">Quick Link</p>
+            <p className="font-semibold text-gray-900 ">Quick Link</p>
             <button
               onClick={() => scrollToSection("about")}
-              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+              className="hover:text-gray-300 transition text-left bg-transparent border-none cursor-pointer"
             >
               About us
             </button>
             <button
               onClick={() => scrollToSection("services")}
-              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+              className="hover:text-gray-300 transition text-left bg-transparent border-none  cursor-pointer"
             >
               Services
             </button>
             <button
               onClick={() => scrollToSection("testimonials")}
-              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+              className="hover:text-gray-300 transition text-left bg-transparent border-none cursor-pointer"
             >
               Testimonials
             </button>
             <button
               onClick={() => scrollToSection("industries")}
-              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+              className="hover:text-gray-300 transition text-left bg-transparent border-none  cursor-pointer"
             >
               Industries
             </button>
             <button
               onClick={() => scrollToSection("research")}
-              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+              className="hover:text-gray-300 transition text-left bg-transparent border-none  cursor-pointer"
             >
               Research & Insights
             </button>
             <button
               onClick={() => scrollToSection("contact")}
-              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+              className="hover:text-gray-300 transition text-left bg-transparent border-none  cursor-pointer"
             >
               Contact
             </button>
@@ -107,10 +107,10 @@ const Footer = () => {
 
           {/* Customer Service */}
           <div className="flex flex-col gap-3 min-w-[140px]">
-            <p className="font-semibold text-gray-900 text-base">Customer Service</p>
+            <p className="font-semibold text-gray-900">Customer Service</p>
             <button
               onClick={() => scrollToSection("faqs")}
-              className="hover:text-gray-300 transition text-left bg-transparent border-none p-0 m-0 cursor-pointer"
+              className="hover:text-gray-300 transition text-left bg-transparent border-none  cursor-pointer"
             >
               FAQ
             </button>
@@ -124,7 +124,7 @@ const Footer = () => {
 
           {/* Contact Us */}
           <div className="flex flex-col gap-3 min-w-[200px]">
-            <p className="font-semibold text-gray-900 text-base">Contact Us</p>
+            <p className="font-semibold text-gray-900 ">Contact Us</p>
             <div className="flex items-start gap-2">
               <MdLocationOn className="mt-0.5" />{" "}
               <span>123 Street, Kathmandu Nepal</span>
@@ -140,7 +140,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Footer Text */}
-      <div className="mt-16 text-xm text-white  border-t border-white/20 ">
+      <div className="mt-16 text-lg text-white  border-t border-white/20 ">
         Privacy and policy copyright ©2025, NEXTWAVEAI
       </div>
     </footer>

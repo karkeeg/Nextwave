@@ -35,47 +35,82 @@ const FAQs = () => {
   return (
     <section className="w-full min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-[#E2EAFD] via-[#E2EAFD] to-[#9DB5E8] py-14 px-3">
       <div className="w-full max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-[#2176C1]">Frequently Asked Questions</h2>
-          <p className="text-[#334155]/80 mt-3 text-base md:text-lg">Find answers to common questions about NextWaveAI, our services, and how we can help your business grow.</p>
+        <div className="text-center mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#0f172a]">
+            Frequently Asked Questions
+          </h1>
+          <p className="text-[#334155]/80 mt-3 text-base md:text-lg">
+            Find answers to common questions about NextWaveAI, our services, and
+            how we can help your business grow.
+          </p>
         </div>
 
-        <div className="bg-white/70 backdrop-blur rounded-2xl shadow-xl ring-1 ring-black/5 divide-y divide-slate-200 overflow-hidden">
+        <div className="bg-white/70 backdrop-blur rounded-2xl shadow-2xl ring-1 ring-black/5 divide-y divide-slate-200 overflow-hidden">
           {faqs.map((faq, idx) => (
             <div key={idx} className="group">
-              <button
-                className="w-full flex items-center gap-4 justify-between px-5 md:px-7 py-5 md:py-7 text-left focus:outline-none hover:bg-white/60 transition-colors"
+              <motion.button
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className={`w-full flex items-center gap-4 justify-between px-5 md:px-7 py-5 md:py-7 text-left focus:outline-none transition-all duration-300 ease-in-out ${
+                  openIndex === idx
+                    ? "bg-white/90 text-blue-600 font-semibold shadow-[0_0_15px_rgba(33,118,193,0.3)] border-l-4 border-blue-500"
+                    : "hover:bg-white/70 text-gray-800"
+                }`}
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
                 aria-expanded={openIndex === idx}
               >
                 <div className="flex items-center gap-4">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-[#2176C1] to-[#6BA8E5] text-white text-sm font-bold shadow-sm">{idx + 1}</span>
-                  <span className="text-[#0f172a] text-base md:text-lg font-medium">{faq.question}</span>
+                  <span
+                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-white text-sm font-bold shadow-md transition-all duration-300 ${
+                      openIndex === idx
+                        ? "bg-gradient-to-r from-[#2176C1] to-[#6BA8E5] shadow-[0_0_12px_rgba(33,118,193,0.6)]"
+                        : "bg-gradient-to-r from-gray-400 to-gray-500"
+                    }`}
+                  >
+                    {idx + 1}
+                  </span>
+                  <span className="text-[#0f172a] text-base md:text-lg font-medium">
+                    {faq.question}
+                  </span>
                 </div>
-                <svg
-                  className={`w-5 h-5 text-[#334155] transform transition-transform duration-300 ${openIndex === idx ? "rotate-180" : "rotate-0"}`}
+                <motion.svg
+                  initial={false}
+                  animate={{ rotate: openIndex === idx ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`w-5 h-5 transition-colors duration-300 ${
+                    openIndex === idx ? "text-blue-600 drop-shadow-sm" : "text-[#334155]"
+                  }`}
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </motion.svg>
+              </motion.button>
 
               <AnimatePresence initial={false}>
                 {openIndex === idx && (
                   <motion.div
-                    key="content"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <div className="px-5 md:px-7 pb-6 md:pb-8 text-[#475569] text-base leading-relaxed">
+                    <motion.div
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      transition={{ duration: 0.3 }}
+                      className="px-5 md:px-7 pb-5 md:pb-7 bg-gradient-to-r from-blue-50 to-blue-100/70 text-gray-700 rounded-b-xl shadow-inner"
+                    >
                       {faq.answer}
-                    </div>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>

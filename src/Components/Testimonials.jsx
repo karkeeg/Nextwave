@@ -49,21 +49,14 @@ const Testimonials = () => (
     className="w-full flex flex-col items-center bg-[#FAFBFC]"
     style={{
       width: "100%",
-      minHeight: 700,
+      minHeight: 600,
       margin: "0 auto",
       paddingTop: 64,
-      paddingBottom: 50,
+      // paddingBottom: 50,
     }}
   >
-    <h2
-      className="text-3xl md:text-4xl font-bold text-[#2176C1] text-center mb-4"
-    >
-      Testimonial
-    </h2>
-    <p
-      className="text-[#7B8591] text-base md:text-lg text-center mb-16"
-    >
-      Don’t take our word for it! Hear it from our Partners
+    <h1>Testimonial</h1>
+    <p> Don’t take our word for it! Hear it from our Partners
     </p>
     <div
       className="w-full max-w-[1200px] overflow-x-auto"
@@ -162,15 +155,15 @@ const Testimonials = () => (
               </div>
               <div>
                 <div
-                  className="font-bold text-lg text-[#2176C1]"
+                  className=" text-[#2176C1]"
                 >
                   {t.name}
                 </div>
-                <div
-                  className="text-sm text-[#FFC043]"
+                <p
+                  className=" text-[#FFC043]"
                 >
                   {t.title}
-                </div>
+                </p>
               </div>
             </div>
           )
