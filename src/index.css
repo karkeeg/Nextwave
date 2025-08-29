@@ -4,6 +4,43 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - var(--gap-size, 2rem)));
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.animation-paused {
+  animation-play-state: paused;
+}
+
+/* Ensure smooth scrolling */
+.animate-marquee > * {
+  flex-shrink: 0;
+  margin-right: var(--gap-size, 2rem);
+}
+
+/* Testimonial card hover effect */
+.testimonial-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
 /* Hide scrollbar utility */
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */

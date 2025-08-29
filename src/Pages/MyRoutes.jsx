@@ -12,6 +12,7 @@ import IndustryDetail from "../Components/IndustryDetail";
 import Practice from "../Components/Practice";
 import ScrollToTop from "../Components/ScrollToTop";
 import PrivacyPolicy from './../Components/PrivacyPolicy';
+import TestimonialDetail from "../Components/TestimonialsDetails";
 
 const MyRoutes = () => {
   return (
@@ -27,9 +28,10 @@ const MyRoutes = () => {
           <Route path="/blog/:id" element={<BlogArticle />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/industries/:industryId" element={<IndustryDetail />} />
+          <Route path="/testimonial/:id" element={<TestimonialDetail />} />
          
           <Route path="/practice" element={<Practice />} />
-          <Route path="/practice" element={<PrivacyPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         </Route>
       </Routes>

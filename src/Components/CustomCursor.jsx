@@ -19,15 +19,51 @@ const CustomCursor = () => {
       mouseY.set(e.clientY);
     };
 
-    const handleHover = () => setIsHovering(true);
-    const handleHoverEnd = () => setIsHovering(false);
+    const handleHover = (e) => {
+      // More specific check to ensure we're actually hovering over an interactive element
+      const target = e.target;
+      const isInteractive = target.matches('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer') ||
+                           target.closest('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer');
+      
+      if (isInteractive) {
+        setIsHovering(true);
+      }
+    };
+
+    const handleHoverEnd = (e) => {
+      // Add a small delay to prevent flicker
+      setTimeout(() => {
+        const elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
+        if (elementUnderCursor) {
+          const isStillOverInteractive = elementUnderCursor.matches('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer') ||
+                                        elementUnderCursor.closest('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer');
+          
+          if (!isStillOverInteractive) {
+            setIsHovering(false);
+          }
+        } else {
+          setIsHovering(false);
+        }
+      }, 10);
+    };
+
+    // Use mouseover/mouseout instead of mouseenter/mouseleave for better detection
+    const handleDocumentMouseOver = (e) => {
+      const target = e.target;
+      const isInteractive = target.matches('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer') ||
+                           target.closest('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer');
+      
+      setIsHovering(isInteractive);
+    };
 
     window.addEventListener("mousemove", moveCursor);
+    document.addEventListener("mouseover", handleDocumentMouseOver);
 
-    // hover detection (optional, could rely on CSS instead)
+    // Also keep the individual element listeners as backup
     const interactiveElements = document.querySelectorAll(
-      "button, a, [role='button'], input[type='submit'], input[type='button']"
+      "button, a, [role='button'], input[type='submit'], input[type='button'], .cursor-pointer"
     );
+    
     interactiveElements.forEach((el) => {
       el.addEventListener("mouseenter", handleHover);
       el.addEventListener("mouseleave", handleHoverEnd);
@@ -35,6 +71,7 @@ const CustomCursor = () => {
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
+      document.removeEventListener("mouseover", handleDocumentMouseOver);
       interactiveElements.forEach((el) => {
         el.removeEventListener("mouseenter", handleHover);
         el.removeEventListener("mouseleave", handleHoverEnd);

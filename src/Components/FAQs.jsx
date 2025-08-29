@@ -36,10 +36,10 @@ const FAQs = () => {
     <section className="w-full min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-[#E2EAFD] via-[#E2EAFD] to-[#9DB5E8] py-14 px-3">
       <div className="w-full max-w-4xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#0f172a]">
+          <h2 >
             Frequently Asked Questions
-          </h1>
-          <p className="text-[#334155]/80 mt-3 text-base md:text-lg">
+          </h2>
+          <p className=" mt-3 ">
             Find answers to common questions about NextWaveAI, our services, and
             how we can help your business grow.
           </p>

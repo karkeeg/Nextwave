@@ -225,13 +225,12 @@ const Header = () => {
           </motion.button>
 
           {/* CTA */}
-          <motion.div variants={ctaButtonVariants} whileHover="hover" whileTap="tap">
-            <Link
-              to="/get-started"
+          <motion.div variants={ctaButtonVariants} whileHover="hover" whileTap="tap" 
               className=" bg-[#2176C1] text-white font-bold px-5 py-2.5 rounded  shadow-sm transition-all duration-200"
-            >
+          onClick={() => scrollToSection("contact")}
+          >
+            
               Get a free Consultant
-            </Link>
           </motion.div>
         </nav>
 

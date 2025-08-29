@@ -153,14 +153,6 @@ const Services = () => {
     };
   }, []);
 
-  // Derived positions for indicator: show overall scroll progress of right panel
-  // const viewRatio = scrollMetrics.scrollHeight > 0
-    // ? scrollMetrics.clientHeight / scrollMetrics.scrollHeight
-    // : 0;
-  // const indicatorHeight = itemMetrics.trackHeight > 0
-    // ? Math.max(28, itemMetrics.trackHeight * viewRatio)
-    // : 0;
-  // const maxYWithinTrack = Math.max(0, itemMetrics.trackHeight - indicatorHeight);
   const progress = scrollMetrics.scrollHeight > scrollMetrics.clientHeight
     ? scrollMetrics.scrollTop / (scrollMetrics.scrollHeight - scrollMetrics.clientHeight)
     : 0;
@@ -169,7 +161,10 @@ const Services = () => {
   // const capOffset = Math.max(0, fillHeight - 10);
 
   const handleServiceClick = (serviceId) => {
-    navigate(`/services/${serviceId}`);
+    console.log('Navigating to service:', serviceId);
+    const path = `/services/${serviceId}`;
+    console.log('Navigation path:', path);
+    navigate(path, { replace: false });
   };
 
   const handleLeftSelect = (idx) => {
@@ -401,8 +396,8 @@ const Services = () => {
           <div className="lg:hidden relative mb-12">
             {/* Header for mobile */}
             <div className="mb-8 px-4">
-              <h1 className="">Our Services</h1>
-              <p className="">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
+              <h1 className="text-3xl font-bold text-gray-900">Our Services</h1>
+              <p className="mt-2 text-gray-600">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
             </div>
             
             {/* Vertical scrollable container */}
@@ -429,17 +424,17 @@ const Services = () => {
                       </div>
 
                       {/* Centered content box with glassmorphism */}
-                      <div className="absolute inset-0 flex items-center justify-center p-4">
-                        <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-6 max-w-full w-full mx-4 shadow-xl">
+                      <div className="absolute inset-0 flex items-center justify-center p-4 z-10">
+                        <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-6 max-w-full w-full mx-4 shadow-xl relative z-10">
                           {/* Content */}
                           <div className="space-y-4">
                             {/* Title */}
-                            <h3 className="text-[#c3c3c3]">
+                            <h3 className="text-xl font-bold text-gray-900">
                               {svc.title}
                             </h3>
 
                             {/* Description */}
-                            <p className="text-gray-100 leading-relaxed">
+                            <p className="text-gray-700 leading-relaxed">
                               {svc.desc}
                             </p>
 
@@ -447,22 +442,22 @@ const Services = () => {
                             <div className="space-y-2">
                               {svc.features.slice(0, 3).map((f, i) => (
                                 <div key={i} className="flex items-start gap-3 text-sm">
-                                  <span className="text-gray-100 font-semibold flex-shrink-0 mt-0.5">
+                                  <span className="text-gray-700 font-semibold flex-shrink-0 mt-0.5">
                                     {i + 1}.
                                   </span>
-                                  <span className="text-gray-100 leading-relaxed line-clamp-1">
+                                  <span className="text-gray-700 leading-relaxed line-clamp-1">
                                     {f}
                                   </span>
                                 </div>
                               ))}
                             </div>
 
-                            {/* CTA */}
+                            {/* CTA - Fixed button */}
                             <motion.button
                               onClick={() => handleServiceClick(svc.id)}
-                              className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200 group/btn mt-3"
+                              className="relative z-20 inline-flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg text-blue-600 font-semibold hover:text-blue-700 hover:bg-white transition-all duration-200 group/btn mt-3 shadow-md"
                               whileHover={{ x: 3 }}
-                              transition={{ duration: 0.2 }}
+                              whileTap={{ scale: 0.95 }}
                             >
                               <span>Learn more</span>
                               <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1 text-sm" />
@@ -494,7 +489,7 @@ const Services = () => {
             initial="hidden"
             animate="visible"
           >
-          {/* Left: Services list */}
+          {/* Left: Services list - RESTORED TO ORIGINAL STYLING */}
           <motion.div ref={leftPanelRef} className="rounded-2xl p-4 md:p-5 overflow-hidden" variants={itemVariants}>
             <div className="mb-8">
               <h2 className="">Our Services</h2>
@@ -503,15 +498,15 @@ const Services = () => {
             <ul ref={listRef} className="space-y-3 relative max-h-[calc(100vh-220px)] overflow-auto pr-1 no-scrollbar">
               {services.map((s, idx) => (
                 <li key={s.id} data-service-item="true" ref={(el) => (leftItemRefs.current[idx] = el)}>
-                  <button
-                    className={`group w-full flex items-center gap-4 rounded-xl px-3 py-2 text-left transition-colors`}
+                  <div
+                    className={`group w-full flex items-center gap-4 rounded-xl px-3 py-2 text-left transition-colors cursor-pointer`}
                     onClick={() => handleLeftSelect(idx)}
                   >
                     <span className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold transition-colors duration-200 ${
                       idx === selectedService ? "bg-black text-white" : "bg-slate-100 text-slate-700"
                     }`}>{idx + 1}</span>
                     <span className={`transition-colors duration-200 ${idx === selectedService ? "font-bold text-slate-900" : "text-slate-700 group-hover:text-slate-900"}`}>{s.title}</span>
-                  </button>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -579,14 +574,14 @@ const Services = () => {
                       <img
                         src={svc.image}
                         alt={svc.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full blur-sm object-cover transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
                       />
                     </div>
 
                     {/* Centered content box */}
-                    <div className="absolute inset-0 flex items-center justify-center p-6 md:p-8">
-                      <div className="bg-white/20 backdrop-blur- border border-white/30 rounded-2xl p-6 md:p-8 max-w-full w-full shadow-xl">
+                    <div className="absolute inset-0 flex items-center justify-center p-6 md:p-8 z-10">
+                      <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-6 md:p-8 max-w-full w-full shadow-xl relative z-10">
                         {/* Content */}
                         <div className="space-y-4 md:space-y-6">
                           {/* Title */}
@@ -619,12 +614,12 @@ const Services = () => {
                             ))}
                           </div>
 
-                          {/* CTA */}
+                          {/* CTA - Fixed button */}
                           <motion.button
                             onClick={() => handleServiceClick(svc.id)}
-                            className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-all duration-200 group/btn mt-4"
-                            whileHover={{ x: 5 }}
-                            whileTap={{ scale: 0.95 }}
+                            className="relative z-20 inline-flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg text-blue-600 font-semibold hover:text-blue-700 hover:bg-white transition-all duration-200 group/btn mt-4 shadow-md"
+                            whileHover={{ x: 5, scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
                           >
                             <span>Learn more</span>
                             <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" />
@@ -634,7 +629,7 @@ const Services = () => {
                     </div>
 
                     {/* Subtle border glow effect */}
-                    <div className="absolute inset-0 rounded-3xl ring-1 ring-white/20 pointer-events-none" />
+                    <div className="absolute inset-0 rounded-3xl ring-1 ring-white/20 pointer-events-none z-0" />
                     {idx === selectedService && (
                       <motion.div
                         className="absolute inset-0 rounded-3xl ring-2 ring-blue-400/50"

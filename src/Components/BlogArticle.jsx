@@ -155,64 +155,7 @@ const BlogArticle = () => {
           </div>
         </motion.div>
 
-        {/* Article Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="bg-white rounded-3xl p-8 shadow-xl mb-12"
-        >
-          <div className="flex flex-wrap items-center justify-between gap-6">
-            {/* Like and Comment */}
-            <div className="flex items-center gap-6">
-              <button
-                onClick={handleLike}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
-                  isLiked 
-                    ? 'bg-red-100 text-red-600' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600'
-                }`}
-              >
-                <FaHeart className={isLiked ? 'text-red-600' : ''} />
-                <span>{likeCount}</span>
-              </button>
-              
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-600 rounded-full">
-                <FaComment />
-                <span>{commentCount}</span>
-              </div>
-            </div>
-
-            {/* Share Buttons */}
-            <div className="flex items-center gap-3">
-              <span className="text-gray-600 font-medium">Share:</span>
-              <button
-                onClick={() => handleShare('twitter')}
-                className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300"
-              >
-                <FaTwitter />
-              </button>
-              <button
-                onClick={() => handleShare('facebook')}
-                className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-300"
-              >
-                <FaFacebook />
-              </button>
-              <button
-                onClick={() => handleShare('linkedin')}
-                className="p-2 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition-colors duration-300"
-              >
-                <FaLinkedin />
-              </button>
-              <button
-                onClick={() => handleShare('copy')}
-                className="p-2 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition-colors duration-300"
-              >
-                <FaShare />
-              </button>
-            </div>
-          </div>
-        </motion.div>
+      
 
         {/* Related Articles */}
         <motion.div

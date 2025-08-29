@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 const industryData = [
   {
@@ -73,38 +74,47 @@ const industryData = [
 const IndustryServed = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [selectedFeature, setSelectedFeature] = useState(null);
 
   const handlePrev = () => {
     setCurrentIndex((prev) =>
       prev === 0 ? industryData.length - 1 : prev - 1
     );
+    setSelectedFeature(null); // Reset feature selection when changing industry
   };
 
   const handleNext = () => {
     setCurrentIndex((prev) =>
       prev === industryData.length - 1 ? 0 : prev + 1
     );
+    setSelectedFeature(null); // Reset feature selection when changing industry
   };
 
   const handleIndustryClick = (industryId) => {
     navigate(`/industries/${industryId}`);
   };
 
+  const handleFeatureSelect = (industryId, feature) => {
+    setSelectedFeature(feature);
+    // You could add additional logic here, like tracking which feature was selected
+    console.log(`Selected feature: ${feature} for industry: ${industryId}`);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
-    }, 5000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [currentIndex]);
 
   const { id, title, images, features } = industryData[currentIndex];
 
   return (
-    <section className="w-full min-h-screen px-4 flex flex-col items-center">
-      <h1 className="text-center">
+    <section className="w-full min-h-screen px-4 pt-14 mb-20 flex flex-col items-center">
+      <h2 className="text-center">
         Industries Served
-      </h1>
+      </h2>
       <p className="text-center">
         Specialized technical solutions and power modern businesses with
         cutting-edge technology.
@@ -125,65 +135,136 @@ const IndustryServed = () => {
           <FaChevronRight size={24} />
         </button>
 
-        {/* Three-image carousel block */}
-        <div className="relative w-full flex justify-center items-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
-          {images.map((img, index) => {
-           const isHovered = hoveredIndex === index;
-            const isCenter = index === 1;
-            const scale = isHovered
-              ? "scale-110"
-              : isCenter
-              ? "scale-105"
-              : hoveredIndex !== null
-              ? "scale-90"
-              : "scale-100";
-                return (
-              <div
-                key={index}
-                onClick={() => handleIndustryClick(id)}
-                onMouseEnter={() => setHoveredIndex(index) }
-                onMouseLeave={() => setHoveredIndex(null)}
-                className={`relative w-40 sm:w-36 md:w-56 lg:w-64 aspect-[4/3] rounded-xl overflow-hidden shadow-lg cursor-pointer transform transition-all duration-300 ease-in-out ${scale}`}
+        {/* Three-image carousel block with fade animation */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={title + "-images"}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative w-full flex justify-center items-center gap-4 sm:gap-6 md:gap-8 flex-wrap"
+          >
+            {images.map((img, index) => {
+              const isHovered = hoveredIndex === index;
+              const isCenter = index === 1;
+              const scale = isHovered
+                ? "scale-110"
+                : isCenter
+                ? "scale-105"
+                : hoveredIndex !== null
+                ? "scale-90"
+                : "scale-100";
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  onClick={() => handleIndustryClick(id)}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  className={`relative w-44 sm:w-40 md:w-62 lg:w-72 aspect-[4/3] rounded-xl overflow-hidden shadow-lg cursor-pointer transform transition-all duration-300 ease-in-out ${scale}`}
+                >
+                  <img
+                    src={img}
+                    alt={`${title} - Image ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Title with fade animation */}
+        <AnimatePresence mode="wait">
+          <motion.h3
+            key={title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-[#1E93AB] text-center mt-6 mb-6"
+          >
+            {title}
+          </motion.h3>
+        </AnimatePresence>
+
+        {/* Features with fade animation, centered layout, and radio buttons */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={title + "-features"}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="w-full flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 mb-8 text-center"
+          >
+            {features.map((column, idx) => (
+              <motion.ul
+                key={idx}
+                initial={{ opacity: 0, x: idx === 0 ? -20 : 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 + idx * 0.2 }}
+                className="text-[#2176C1] text-base font-medium space-y-4"
               >
-                <img
-                  src={img}
-                  alt={`${title} - Image ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Title */}
-        <h3 className="text-[#1E93AB] text-center mt-6 mb-6">
-          {title}
-        </h3>
-
-        {/* Features */}
-        <div className="w-full flex flex-col md:flex-row justify-center items-start gap-6 md:gap-12 mb-8 text-left md:text-left">
-          {features.map((column, idx) => (
-            <ul
-              key={idx}
-              className="text-[#2176C1] text-base font-medium list-disc  space-y-2"
-            >
-              {column.map((feature, i) => (
-                <li key={i}><p className="text-[#1E93AB] transition-colors cursor-pointer" onClick={() => handleIndustryClick(id)}>
-
-                  {feature}
-                </p>
-                  </li>
-              ))}
-            </ul>
-          ))}
-        </div>
+                {column.map((feature, i) => (
+                  <motion.li 
+                    key={i} 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 1.0 + i * 0.1 }}
+                    className="flex items-center justify-start gap-3 cursor-pointer group"
+                    onClick={() => handleFeatureSelect(id, feature)}
+                  >
+                    {/* Radio button */}
+                    <div className="relative flex items-center justify-center">
+                      <input
+                        type="radio"
+                        name="industry-feature"
+                        checked={selectedFeature === feature}
+                        onChange={() => handleFeatureSelect(id, feature)}
+                        className="absolute opacity-0 cursor-pointer w-2 h-2"
+                      />
+                      <div className={`w-2 h-2 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                        selectedFeature === feature 
+                          ? "border-[#2176C1] bg-slate-800" 
+                          : "border-[#1E93AB] bg-[#1E93AB] group-hover:border-[#2176C1]"
+                      }`}>
+                        {selectedFeature === feature && (
+                          <div className="w-2 h-2 rounded-full bg-white"></div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Feature text */}
+                    <span className={`transition-colors text-left ${
+                      selectedFeature === feature 
+                        ? "text-[#2176C1] font-semibold" 
+                        : "text-[#1E93AB] group-hover:text-[#2176C1]"
+                    }`}>
+                      {feature}
+                    </span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
         {/* Carousel Indicators */}
-        <div className="flex justify-center items-center gap-3">
+        <div className="flex justify-center items-center gap-3 mt-4">
           {industryData.map((_, index) => (
-            <button
+            <motion.button
               key={index}
-              onClick={() => setCurrentIndex(index)}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 1.2 }}
+              onClick={() => {
+                setCurrentIndex(index);
+                setSelectedFeature(null); // Reset feature selection when changing industry
+              }}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentIndex
                   ? "bg-[#2176C1] scale-125"

@@ -6,9 +6,9 @@ const Contact = () => (
     <div className="w-full flex flex-col md:flex-row max-w-7xl mx-auto py-12">
       {/* Left: Form */}
       <div className="flex-[2] px-8 md:px-12 py-2 flex flex-col justify-center">
-        <h1 >
+        <h2 >
           Contact Us
-        </h1>
+        </h2>
         <p >
           Contact us to get connected with our team of experts. We are here to
           help you with your AI and software development needs.
@@ -28,7 +28,7 @@ const Contact = () => (
           </div>
           <div className="flex flex-col gap-1">
             <label className="text-[#232B36] font-semibold" htmlFor="email">
-              Email
+              Email  <span className="text-red-500">*</span>
             </label>
             <input
               id="email"

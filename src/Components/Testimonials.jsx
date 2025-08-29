@@ -1,176 +1,176 @@
 import React from "react";
-import bibek from "../assets/bibek.jpg"; // Use your avatar image
+import { motion } from "framer-motion";
+import { FaQuoteLeft, FaStar } from "react-icons/fa";
+import bibek from "../assets/bibek.jpg";
+import { Link } from "react-router-dom";
 
 const testimonials = [
   {
-    name: "Rob West",
-    title: "CEO at NextWaveAI",
-    text: `“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.”`,
+    id: 0,
+    name: "Sophia Turner",
+    title: "Marketing Director",
+    company: "BrightWave Solutions",
+    text: `NextWaveAI completely revolutionized our approach to customer analytics and data-driven decision making. Their AI-powered platform helped us identify previously hidden growth opportunities and streamline our entire reporting process. What used to take our team weeks now happens in real-time. The 40% reduction in reporting time allowed us to focus more on strategy and less on data compilation. The insights we've gained have directly contributed to a 25% increase in customer engagement and a significant boost in our quarterly revenue.`,
     avatar: bibek,
-    isVideo: false,
+    rating: 5,
   },
   {
-    name: "Rob West",
-    title: "CEO at NextWaveAI",
-    text: "",
+    id: 1,
+    name: "James Miller",
+    title: "Chief Technology Officer",
+    company: "InnovateHub",
+    text: `Working with NextWaveAI has been an absolute game-changer for our development workflow. The integration process was remarkably smooth - something that usually takes months was completed in just a few days. Their support team is exceptional, providing 24/7 assistance and going above and beyond to ensure our success. The platform's AI capabilities have enhanced our code quality, reduced deployment times by 60%, and improved our overall system reliability. I can confidently say this is one of the best technology partnerships we've ever established.`,
     avatar: bibek,
-    video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    isVideo: true,
+    rating: 5,
   },
   {
-    name: "Rob West",
-    title: "CEO at NextWaveAI",
-    text: `“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.”`,
+    id: 2,
+    name: "Olivia Chen",
+    title: "Senior Product Manager",
+    company: "AlphaTech Industries",
+    text: `What impressed me most about NextWaveAI is how intuitively designed their platform is. Despite being incredibly powerful, our entire team of 50+ people adopted it within the first week without any formal training. The user interface is clean, logical, and anticipates user needs perfectly. Since implementation, we've seen a 35% improvement in project delivery times and a 50% reduction in workflow bottlenecks. The AI-driven insights have helped us make more informed product decisions and prioritize features that truly matter to our users.`,
     avatar: bibek,
-    isVideo: false,
+    rating: 5,
   },
   {
-    name: "Rob West",
-    title: "CEO at NextWaveAI",
-    text: `“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.”`,
+    id: 3,
+    name: "Ethan Roberts",
+    title: "Founder & CEO",
+    company: "GrowthLabs",
+    text: `The level of precision and intelligence that NextWaveAI brings to marketing analytics is unprecedented. Their AI algorithms helped us understand our customer behavior patterns in ways we never thought possible. We were able to refine our marketing campaigns with surgical precision, targeting the right audience with the right message at the perfect time. The result? Our ROI increased by 180% in just six months, and our customer acquisition costs dropped by 45%. This platform has fundamentally transformed how we approach growth marketing.`,
     avatar: bibek,
-    isVideo: false,
+    rating: 5,
+  },
+  {
+    id: 4,
+    name: "Maria Gomez",
+    title: "Chief Executive Officer",
+    company: "FutureWorks Inc.",
+    text: `Partnering with NextWaveAI was one of the most strategic decisions we've made as a company. From day one, their team demonstrated unparalleled professionalism, technical expertise, and genuine commitment to our success. They didn't just provide a solution; they became true partners in our growth journey. The AI innovations they implemented have positioned us as industry leaders, improved our operational efficiency by 70%, and opened up new revenue streams we didn't even know existed. Their vision for the future of AI aligns perfectly with ours.`,
+    avatar: bibek,
+    rating: 5,
+  },
+  {
+    id: 5,
+    name: "David Park",
+    title: "Head of Operations",
+    company: "TechVenture Labs",
+    text: `NextWaveAI's machine learning solutions have transformed our supply chain management beyond recognition. The predictive analytics capabilities allowed us to anticipate demand fluctuations with 95% accuracy, reducing inventory costs by 30% while eliminating stockouts entirely. Their real-time monitoring systems detected potential issues before they became problems, saving us hundreds of thousands in potential losses. The team's expertise in AI implementation is world-class, and their ongoing support ensures we're always ahead of the curve.`,
+    avatar: bibek,
+    rating: 5,
   },
 ];
 
-const cardStyle = {
-  width: 321,
-  height: 467,
-  paddingTop: 23,
-  paddingRight: 31,
-  paddingBottom: 23,
-  paddingLeft: 31,
-  justifyContent: "space-between",
-  flex: "0 0 auto",
-};
+export const testimonialsData = testimonials;
+const Testimonials = () => {
+  return (
+    <section className="w-full bg-gradient-to-b from-[#FAFBFC] to-[#F0F9FF] py-16  overflow-hidden relative">
+      
 
-const Testimonials = () => (
-  <section
-    className="w-full flex flex-col items-center bg-[#FAFBFC]"
-    style={{
-      width: "100%",
-      minHeight: 600,
-      margin: "0 auto",
-      paddingTop: 64,
-      // paddingBottom: 50,
-    }}
-  >
-    <h1>Testimonial</h1>
-    <p> Don’t take our word for it! Hear it from our Partners
+      <div className="relative z-10 max-w-7xl mx-auto mb-12 mt-8 px-4">
+        {/* Header */}
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className=" mb-4">
+            Testimonials
+          </h2>
+          <p className=" ">
+            Discover how leading companies achieve breakthrough results with our AI solutions
+          </p>
+        </motion.div>
+
+        {/* Testimonials Marquee */}
+        <div className="relative">
+          <div className="flex gap-6 animate-marquees hover:[animation-play-state:paused]">
+            {testimonials.concat(testimonials).map((testimonial, index) => (
+              <motion.div
+  key={index}
+  className="testimonial-card relative flex-shrink-0 w-80 h-auto bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/30 p-6 flex flex-col items-center text-center hover:bg-white/80 hover:backdrop-blur-md hover:shadow-xl transition-all duration-300 group overflow-hidden"
+  initial={{ opacity: 0, y: 50 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: index * 0.1 }}
+>
+  {/* Avatar on top */}
+  <div className="mb-4">
+    <img
+      src={testimonial.avatar}
+      alt={testimonial.name}
+      className="w-20 h-20 rounded-full object-cover ring-2 ring-white shadow-md mx-auto"
+    />
+  </div>
+
+  {/* Testimonial Text */}
+  <div className="flex-1 mb-6">
+    <p className="text-[#374151] text-sm leading-relaxed italic">
+      "{testimonial.text.slice(0, 150)}..."
     </p>
-    <div
-      className="w-full max-w-[1200px] overflow-x-auto"
-      style={{
-        minHeight: 467,
-        padding: "20px 0",
-        WebkitOverflowScrolling: "touch",
-        scrollbarWidth: "none",
-        msOverflowStyle: "none",
-      }}
-    >
-      <div
-        className="flex gap-6 md:gap-10 px-4 md:px-0"
-        style={{
-          minWidth: 0,
-          width: "max-content",
-        }}
-      >
-        {testimonials.map((t, i) =>
-          t.isVideo ? (
-            <div
-              key={i}
-              className="relative rounded-3xl overflow-hidden shadow-lg flex flex-col justify-end"
-              style={{
-                ...cardStyle,
-                background: "#232B36",
-                margin: "0 8px",
-                position: "relative",
-                minWidth: 280,
-                width: 320,
-                height: 380,
-              }}
-            >
-              <div className="absolute top-6 left-6 z-10">
-                <img
-                  src={t.avatar}
-                  alt={t.name}
-                  className="w-10 h-10 rounded-full object-cover border-2 border-white"
-                />
-              </div>
-              <iframe
-                src={t.video}
-                title="Testimonial Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full rounded-3xl"
-                style={{ zIndex: 0, border: "none" }}
-              ></iframe>
-              <button
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-70 rounded-full p-4 shadow z-20"
-                aria-label="Play video"
-                tabIndex={-1}
-                style={{ pointerEvents: "none" }}
-              >
-                <svg width="32" height="32" fill="none" viewBox="0 0 32 32">
-                  <circle cx="16" cy="16" r="16" fill="#2176C1" />
-                  <polygon points="13,10 24,16 13,22" fill="#fff" />
-                </svg>
-              </button>
-              <div className="absolute bottom-6 left-6 text-white z-10">
-                <div
-                  className="font-bold text-lg"
-                >
-                  {t.name}
-                </div>
-                <div
-                  className="text-sm text-[#FFC043]"
-                >
-                  {t.title}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div
-              key={i}
-              className="bg-[#F4F8FE] rounded-3xl shadow-lg flex flex-col"
-              style={{
-                ...cardStyle,
-                margin: "0 8px",
-                minWidth: 280,
-                width: 320,
-                height: 380,
-              }}
-            >
-              <div>
-                <img
-                  src={t.avatar}
-                  alt={t.name}
-                  className="w-10 h-10 rounded-full object-cover mb-6"
-                />
-                <p
-                  className="italic text-[#232B36] text-base mb-8"
-                >
-                  {t.text}
-                </p>
-              </div>
-              <div>
-                <div
-                  className=" text-[#2176C1]"
-                >
-                  {t.name}
-                </div>
-                <p
-                  className=" text-[#FFC043]"
-                >
-                  {t.title}
-                </p>
-              </div>
-            </div>
-          )
-        )}
-      </div>
+  </div>
+
+  {/* Bottom Section: Left -> Name, title, company; Right -> See more */}
+  <div className="w-full flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+    <div className="text-left">
+      <h4 className="text-[#2176C1] font-semibold text-sm">{testimonial.name}</h4>
+      <p className="text-[#6B7280] text-xs">{testimonial.title}</p>
+      <p className="text-[#FFC043] text-xs font-medium">{testimonial.company}</p>
     </div>
-  </section>
-);
+
+    <Link
+      to={`/testimonial/${testimonial.id}`}
+      className="cursor-pointer group/btn inline-flex items-center gap-2 text-[#2176C1] hover:text-[#185a96] font-medium text-sm transition-colors duration-200"
+      onMouseEnter={() => document.body.classList.add('cursor-hover')}
+      onMouseLeave={() => document.body.classList.remove('cursor-hover')}
+    >
+      <span>See more</span>
+      <svg
+        className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+      </svg>
+    </Link>
+  </div>
+
+  {/* Subtle hover overlay */}
+  <div
+    className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"
+  ></div>
+</motion.div>
+
+            ))}
+          </div>
+
+  </div>
+   
+      </div>
+
+       <style jsx>{`
+        
+        
+        .animate-marquees {
+          animation: marquee 20s linear infinite;
+        }
+        
+        
+        
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        
+        @keyframes blob {
+          0%, 100% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+      `}</style>
+    </section>
+  );
+};
 
 export default Testimonials;
