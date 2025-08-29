@@ -82,7 +82,7 @@ const services = [
   {
     id: "app-dev",
     title: "App Development",
-    desc: "Cross-platform mobile apps with React Native and robust backends tailored to your business.",
+    desc: "Cross-platform mobile app with React Native and robust backends tailored to your business.",
     features: [
       "iOS and Android with one codebase",
       "Offline-first and push notifications",
