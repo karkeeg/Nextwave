@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   SiOpenai, SiTensorflow, SiReact, SiNextdotjs, SiAmazon, SiNodedotjs,
   SiPython, SiMongodb, SiDjango, SiPytorch, SiKeras, SiScikitlearn, SiOpencv,
@@ -9,15 +8,16 @@ import {
   SiNumpy, SiPandas, SiJupyter, SiAnaconda, SiHuggingface, SiApacheairflow, SiMlflow
 } from "react-icons/si";
 import { SiAwsamplify } from "react-icons/si";
+// Import your actual components - replace these paths with your actual component paths
 import Services from "../Components/Services";
-import Testimonials from "../Components/Testimonials";
+import Testimonials from "../Components/Testimonials"; 
 import Contact from "../Components/Contact";
 import Blog from "../Components/Blog";
 import FAQs from "../Components/FAQs";
 import IndustryServed from "../Components/IndustryServed";
 import RobotMosaic from "../Components/RobotMosaic";
 
-// ✅ Fixed Rolling Words Component (matches image style)
+// ✅ Responsive Rolling Words Component
 const RollingWords = ({ words, interval = 3000, className = "" }) => {
   const [index, setIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -28,7 +28,7 @@ const RollingWords = ({ words, interval = 3000, className = "" }) => {
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % words.length);
         setIsAnimating(false);
-      }, 800); // Slightly longer for smoother effect
+      }, 800);
     }, interval);
     return () => clearInterval(id);
   }, [words, interval]);
@@ -36,12 +36,18 @@ const RollingWords = ({ words, interval = 3000, className = "" }) => {
   const currentWord = words[index];
   const nextWord = words[(index + 1) % words.length];
 
+  // Calculate responsive width based on word length and screen size
+  const maxWordLength = Math.max(...words.map(word => word.length));
+  const baseWidth = maxWordLength * 30; // Increased base character width
+  
   return (
     <span 
-      className={`inline-block relative h-12 overflow-hidden ${className}`} 
+      className={`inline-block relative overflow-visible ${className}`} 
       style={{ 
-        minWidth: "300px",
-        perspective: "1000px" // Add 3D perspective
+        minWidth: `${baseWidth}px`,
+        maxWidth: "100%",
+        height: "0.7em",
+        perspective: "1000px"
       }}
     >
       {/* Current word with 3D cylinder roll effect */}
@@ -49,20 +55,22 @@ const RollingWords = ({ words, interval = 3000, className = "" }) => {
         key={`current-${currentWord}`}
         initial={{ rotateX: 0, y: 0, opacity: 1 }}
         animate={{ 
-          rotateX: isAnimating ? 90 : 0, // Rotate around X-axis for cylinder effect
-          y: isAnimating ? -20 : 0,      // Slight upward movement
+          rotateX: isAnimating ? 90 : 0,
+          y: isAnimating ? "-0.5em" : 0, // Use em for responsive movement
           opacity: isAnimating ? 1 : 1
         }}
         transition={{ 
           duration: 0.8, 
-          ease: [0.25, 0.46, 0.45, 0.94], // Custom cubic-bezier for smooth roll
+          ease: [0.25, 0.46, 0.45, 0.94],
           type: "tween"
         }}
-        className="absolute inset-0 text-[#2176C1] font-black block text-4xl md:text-6xl flex items-center"
+        className="absolute inset-0 text-[#2176C1] font-black flex items-center justify-center text-center w-full"
         style={{
-          transformOrigin: "center center", // Rotate around center
+          transformOrigin: "center center",
           transformStyle: "preserve-3d",
-          backfaceVisibility: "hidden"
+          backfaceVisibility: "hidden",
+          fontSize: "inherit", // Inherit font size from parent
+          lineHeight: "1.1"
         }}
       >
         {currentWord}
@@ -71,23 +79,25 @@ const RollingWords = ({ words, interval = 3000, className = "" }) => {
       {/* Next word rolling in from bottom */}
       <motion.span
         key={`next-${nextWord}`}
-        initial={{ rotateX: -90, y: 20, opacity: 0 }}
+        initial={{ rotateX: -90, y: "0.5em", opacity: 0 }}
         animate={{ 
           rotateX: isAnimating ? 0 : -90,
-          y: isAnimating ? 0 : 20,
+          y: isAnimating ? 0 : "0.5em",
           opacity: isAnimating ? 1 : 0
         }}
         transition={{ 
           duration: 0.8,
           ease: [0.25, 0.46, 0.45, 0.94],
-          delay: isAnimating ? 0.1 : 0, // Slight delay for realistic rolling
+          delay: isAnimating ? 0.1 : 0,
           type: "tween"
         }}
-        className="absolute inset-0 text-[#2176C1] font-black block text-5xl md:text-6xl flex items-center"
+        className="absolute inset-0 text-[#2176C1] font-black flex items-center justify-center text-center w-full"
         style={{
           transformOrigin: "center center",
           transformStyle: "preserve-3d",
-          backfaceVisibility: "hidden"
+          backfaceVisibility: "hidden",
+          fontSize: "inherit",
+          lineHeight: "1.1"
         }}
       >
         {nextWord}
@@ -117,45 +127,44 @@ const AnimatedText = ({ children, className = "" }) => {
     </motion.h1>
   );
 };
-
-// ✅ Icon Marquee Component
+// ✅ Responsive Icon Marquee Component
 const IconMarquee = () => {
-  const size = 48;
   const [tip, setTip] = React.useState({ show: false, x: 0, y: 0, label: "" });
   const showTip = (label, e) => setTip({ show: true, x: e.clientX, y: e.clientY + 18, label });
   const moveTip = (e) => setTip((t) => ({ ...t, x: e.clientX, y: e.clientY + 18 }));
   const hideTip = () => setTip((t) => ({ ...t, show: false }));
 
+  // Responsive icon size
   const icons = [
-    { key: "openai", label: "OpenAI", node: <SiOpenai size={size} /> },
-    { key: "tf", label: "TensorFlow", node: <SiTensorflow size={size} /> },
-    { key: "pt", label: "PyTorch", node: <SiPytorch size={size} /> },
-    { key: "keras", label: "Keras", node: <SiKeras size={size} /> },
-    { key: "sk", label: "scikit-learn", node: <SiScikitlearn size={size} /> },
-    { key: "cv", label: "OpenCV", node: <SiOpencv size={size} /> },
-    { key: "hf", label: "Hugging Face", node: <SiHuggingface size={size} /> },
-    { key: "numpy", label: "NumPy", node: <SiNumpy size={size} /> },
-    { key: "pandas", label: "Pandas", node: <SiPandas size={size} /> },
-    { key: "jupyter", label: "Jupyter", node: <SiJupyter size={size} /> },
-    { key: "anaconda", label: "Anaconda", node: <SiAnaconda size={size} /> },
-    { key: "airflow", label: "Apache Airflow", node: <SiApacheairflow size={size} /> },
-    { key: "mlflow", label: "MLflow", node: <SiMlflow size={size} /> },
-    { key: "py", label: "Python", node: <SiPython size={size} /> },
-    { key: "aws", label: "AWS", node: <SiAmazon size={size} /> },
-    { key: "gcp", label: "Google Cloud", node: <SiGooglecloud size={size} /> },
-    { key: "react", label: "React", node: <SiReact size={size} /> },
-    { key: "next", label: "Next.js", node: <SiNextdotjs size={size} /> },
-    { key: "node", label: "Node.js", node: <SiNodedotjs size={size} /> },
-    { key: "django", label: "Django", node: <SiDjango size={size} /> },
-    { key: "ts", label: "TypeScript", node: <SiTypescript size={size} /> },
-    { key: "js", label: "JavaScript", node: <SiJavascript size={size} /> },
-    { key: "tw", label: "Tailwind CSS", node: <SiTailwindcss size={size} /> },
-    { key: "mongo", label: "MongoDB", node: <SiMongodb size={size} /> },
-    { key: "pg", label: "PostgreSQL", node: <SiPostgresql size={size} /> },
-    { key: "docker", label: "Docker", node: <SiDocker size={size} /> },
-    { key: "k8s", label: "Kubernetes", node: <SiKubernetes size={size} /> },
-    { key: "gha", label: "GitHub Actions", node: <SiGithubactions size={size} /> },
-    { key: "awsa", label: "AWS Amplify", node: <SiAwsamplify size={size} /> },
+    { key: "openai", label: "OpenAI", node: <SiOpenai className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "tf", label: "TensorFlow", node: <SiTensorflow className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "pt", label: "PyTorch", node: <SiPytorch className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "keras", label: "Keras", node: <SiKeras className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "sk", label: "scikit-learn", node: <SiScikitlearn className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "cv", label: "OpenCV", node: <SiOpencv className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "hf", label: "Hugging Face", node: <SiHuggingface className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "numpy", label: "NumPy", node: <SiNumpy className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "pandas", label: "Pandas", node: <SiPandas className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "jupyter", label: "Jupyter", node: <SiJupyter className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "anaconda", label: "Anaconda", node: <SiAnaconda className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "airflow", label: "Apache Airflow", node: <SiApacheairflow className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "mlflow", label: "MLflow", node: <SiMlflow className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "py", label: "Python", node: <SiPython className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "aws", label: "AWS", node: <SiAmazon className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "gcp", label: "Google Cloud", node: <SiGooglecloud className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "react", label: "React", node: <SiReact className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "next", label: "Next.js", node: <SiNextdotjs className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "node", label: "Node.js", node: <SiNodedotjs className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "django", label: "Django", node: <SiDjango className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "ts", label: "TypeScript", node: <SiTypescript className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "js", label: "JavaScript", node: <SiJavascript className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "tw", label: "Tailwind CSS", node: <SiTailwindcss className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "mongo", label: "MongoDB", node: <SiMongodb className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "pg", label: "PostgreSQL", node: <SiPostgresql className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "docker", label: "Docker", node: <SiDocker className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "k8s", label: "Kubernetes", node: <SiKubernetes className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "gha", label: "GitHub Actions", node: <SiGithubactions className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
+    { key: "awsa", label: "AWS Amplify", node: <SiAwsamplify className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" /> },
   ];
 
   const strip = [...icons, ...icons, ...icons];
@@ -163,8 +172,8 @@ const IconMarquee = () => {
   return (
     <div className="w-full">
       <div className="mx-0">
-        <div className="overflow-hidden py-3 md:py-4 bg-transparent">
-          <div className="flex items-center gap-12 md:gap-28 animate-marquee" style={{ width: "max-content" }}>
+        <div className="overflow-hidden py-2 sm:py-3 md:py-4 bg-transparent">
+          <div className="flex items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16 xl:gap-28 animate-marquee" style={{ width: "max-content" }}>
             {strip.map((item, i) => (
               <div
                 key={`${item.key}-${i}`}
@@ -193,19 +202,75 @@ const IconMarquee = () => {
           0% { transform: translateX(0%); }
           100% { transform: translateX(-33.33%); }
         }
-        .animate-marquee { animation: marquee 100s linear infinite; }
+        .animate-marquee { animation: marquee 60s linear infinite; }
+        @media (min-width: 768px) {
+          .animate-marquee { animation: marquee 80s linear infinite; }
+        }
+        @media (min-width: 1024px) {
+          .animate-marquee { animation: marquee 100s linear infinite; }
+        }
       `}</style>
     </div>
   );
 };
 
-// ✅ Hero headline using rolling words (inline)
-const HERO_HEADLINE = (
-  <>
-    <RollingWords words={["Empower", "Enhance"]} className="mr-4" /> 
-    Your Business with Next-Gen AI &
-    <RollingWords words={["Automation", "Innovation"]} className="w-[400px] mt-2 h-[60px]" />
-  </>
+// ✅ Responsive Hero headline - matching the image layout exactly
+const ResponsiveHeroHeadline = () => (
+  <div className="flex flex-col items-center lg:items-start">
+    {/* Mobile layout - separate lines */}
+    <div className="flex flex-col items-center lg:hidden space-y-1">
+      <div className="flex items-center">
+        <RollingWords 
+          words={["Empower", "Enhance"]} 
+          className="text-3xl sm:text-3xl md:text-4xl font-black"
+        />
+        <div className="text-3xl ml-[-35px] sm:text-3xl md:text-4xl font-extrabold text-slate-800 ml-1">
+          Your Business
+        </div>
+      </div>
+{/*       
+      <div className="text-3xl sm:text-3xl md:text-4xl font-extrabold text-slate-800">
+        Business
+      </div> */}
+      
+      <div className="text-3xl sm:text-3xl md:text-4xl font-extrabold text-slate-800">
+        with Next-Gen AI &
+      </div>
+      
+      <RollingWords 
+        words={["Automation", "Innovation"]} 
+        className="text-3xl sm:text-3xl md:text-4xl font-black"
+      />
+    </div>
+    
+    {/* Desktop layout - exact match to the image */}
+    <div className="hidden lg:flex flex-col items-start space-y-0">
+      {/* First line: "Your" and rolling word on the same line */}
+      <div className="flex items-baseline">
+        <RollingWords 
+          words={["Empower", "Enhance"]} 
+          className="text-5xl xl:text-7xl ml-12 mr-12 font-black "
+        />
+        <div className="text-4xl xl:text-7xl font-extrabold text-slate-800">
+        Your 
+      </div>
+      </div>
+            
+      {/* Third line: "with Next-Gen AI &" */}
+      <div className="text-5xl xl:text-7xl font-extrabold text-slate-800">
+        Business with 
+      </div>
+      <div className="text-5xl xl:text-7xl font-extrabold text-slate-800">
+        Next-Gen AI &
+      </div>
+      
+      {/* Fourth line: Rolling words */}
+      <RollingWords 
+        words={["Automation", "Innovations"]} 
+        className="text-5xl xl:text-7xl ml-6 font-black"
+      />
+    </div>
+  </div>
 );
 
 const HERO_SUB = "AI chatbots, scalable backends and automation tailored for your growth.";
@@ -216,8 +281,8 @@ const fadeInUp = {
 };
 
 const HomePage = () => {
-  const location = useLocation();
   const [visibleElements, setVisibleElements] = useState(new Set());
+  const [isInHeroSection, setIsInHeroSection] = useState(true);
   const sectionRefs = useRef({});
   const [scrollY, setScrollY] = useState(0);
   const heroParallaxRef = useRef(null);
@@ -230,31 +295,21 @@ const HomePage = () => {
   const yRight = useTransform(heroProgress, [0, 1], [20, -20]);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      
+      // Check if we're in the hero section (first 100vh)
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        const heroHeight = heroSection.offsetHeight;
+        setIsInHeroSection(currentScrollY < heroHeight * 0.8); // 80% of hero section height
+      }
+    };
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    const headerOffset = 80;
-    const scrollToId = (id) => {
-      if (!id) return;
-      const el = document.getElementById(id);
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const targetY = (window.scrollY || window.pageYOffset) + rect.top - headerOffset;
-      window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
-    };
-
-    if (location.hash) {
-      scrollToId(location.hash.replace("#", ""));
-      return;
-    }
-    const stateTarget = location.state && location.state.scrollTo;
-    if (stateTarget) {
-      setTimeout(() => scrollToId(stateTarget), 0);
-    }
-  }, [location]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -314,51 +369,62 @@ const HomePage = () => {
       <section
         ref={(node) => addRef("hero", node)}
         id="hero"
-        className="relative w-full min-h-[620px] md:h-[780px] bg-[#c4d4f5] flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 lg:px-24 py-12 sm:py-18 md:py-24 overflow-hidden"
+        className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-[620px] lg:h-[780px] bg-[#c4d4f5] flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-8 sm:py-12 md:py-16 lg:py-24 overflow-hidden"
       >
         <div ref={heroParallaxRef}>
           <motion.div
-            className="relative z-10 flex flex-col lg:flex-row items-center w-full max-w-6xl mx-auto gap-8 md:gap-12 justify-between mt-12 sm:mt-16 md:mt-24 lg:mt-36 md:scale-105 opacity-90"
+            className="relative z-10 flex flex-col lg:flex-row items-center w-full max-w-9xl mx-auto gap-6 sm:gap-8 md:gap-10 lg:gap-12 justify-between mt-8 sm:mt-12 md:mt-16 lg:mt-24 xl:mt-36 md:scale-105 opacity-90"
             initial="hidden"
             animate="show"
             variants={fadeInUp}
           >
-            {/* Left Column */}
-            <motion.div style={{ y: yLeft }} className="flex-1 min-w-0 max-w-4xl flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
-              <AnimatedText className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-800 leading-tight mb-4 md:mb-6 px-2 sm:px-0">
-                {HERO_HEADLINE}
+            {/* Left Column - Text Content */}
+            <motion.div 
+              style={{ y: yLeft }} 
+              className="flex-[1.3] min-w-0 w-full max-w-6xl flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1"
+            >
+              <AnimatedText className="leading-tight mb-1 sm:mb-2 md:mb-3 lg:mb-5">
+                <ResponsiveHeroHeadline />
               </AnimatedText>
-              <p className="text-base sm:text-lg md:text-xl text-slate-600 mb-6 md:mb-8 font-medium max-w-xl px-4 sm:px-0">
+              
+              <motion.p 
+                className="text-xl sm:text-xl md:text-xl lg:text-xl text-slate-600 mb-4 sm:mb-5 md:mb-5 lg:mb-6 font-medium max-w-xl leading-relaxed px-2 sm:px-0"
+                variants={fadeInUp}
+              >
                 {HERO_SUB}
-              </p>
+              </motion.p>
+              
               <motion.div
                 variants={fadeInUp}
                 initial="hidden"
                 animate="show"
                 transition={{ delay: 0.2 }}
-                className=" w-[40px] sm:w-auto justify-center lg:justify-start px-4 sm:px-0"
+                className="flex justify-center lg:justify-start w-full sm:w-auto"
               >
                 <button
                   onClick={() => scrollToSection("contact")}
-                  className="bg-[#c4d4f5] text-[#2176C1] font-semibold px-4 sm:px-5 py-2 sm:py-3 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto"
+                  className="bg-[#c4d4f5] text-[#2176C1] font-semibold px-4 sm:px-5 md:px-6 py-2 sm:py-3 md:py-3.5 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-lg sm:text-lg md:text-xl w-full sm:w-auto max-w-xs sm:max-w-none"
                 >
                   Request a Demo
                 </button>
               </motion.div>
             </motion.div>
 
-            {/* Right Column */}
-            <motion.div style={{ y: yRight }} className="flex-1 w-full flex justify-center lg:justify-end order-1 lg:order-2 mb-4 lg:mb-0">
-              <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-[520px] lg:max-w-full shrink-0">
+            {/* Right Column - Robot Mosaic */}
+            <motion.div 
+              style={{ y: yRight }} 
+              className="flex-[0.7] w-full flex justify-center lg:justify-end order-1 lg:order-2 mb-4 sm:mb-6 lg:mb-0"
+            >
+              <div className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-[480px] xl:w-[520px] xl:max-w-full shrink-0">
                 <RobotMosaic />
               </div>
             </motion.div>
           </motion.div>
         </div>
 
-        {/* Icon Marquee */}
+        {/* Responsive Icon Marquee */}
         <div
-          className="relative z-10 mt-6 md:mt-10 lg:mt-12 w-full"
+          className="relative z-10 mt-8 sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 w-full"
           style={{
             width: "calc(100vw - 8px)",
             marginLeft: "calc(50% - 50vw + 4px)",
@@ -390,20 +456,22 @@ const HomePage = () => {
         </motion.section>
       ))}
 
-      {/* Scroll To Top */}
+      {/* Responsive Scroll To Top - Disabled in hero section */}
       <div
-        className="fixed bottom-6 sm:bottom-8 right-6 sm:right-8 z-50 transition-all duration-300 hover:scale-110"
+        className="fixed bottom-4 sm:bottom-6 md:bottom-8 right-4 sm:right-6 md:right-8 z-50 transition-all duration-300 hover:scale-110"
         style={{
-          opacity: visibleElements.size > 2 ? 1 : 0,
-          transform: `translateY(${visibleElements.size > 2 ? 0 : 20}px)`,
+          opacity: (visibleElements.size > 2 && !isInHeroSection) ? 1 : 0,
+          transform: `translateY(${(visibleElements.size > 2 && !isInHeroSection) ? 0 : 20}px)`,
+          pointerEvents: isInHeroSection ? 'none' : 'auto'
         }}
       >
         <button
-          className="bg-[#2176C1] text-white p-3 sm:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:rotate-12"
+          className="bg-[#2176C1] text-white p-2 sm:p-3 md:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:rotate-12 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          disabled={isInHeroSection}
         >
           <svg
-            className="w-5 h-5 sm:w-6 sm:h-6"
+            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

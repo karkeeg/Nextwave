@@ -19,7 +19,7 @@ const Blog = () => {
 
     // Reset all cards (except first)
     items.forEach((item, i) => {
-      if (i !== 0) gsap.set(item, { yPercent: 100 });
+      if (i !== 0) gsap.set(item, { yPercent: 120 });
     });
 
     const tl = gsap.timeline({
@@ -27,7 +27,7 @@ const Blog = () => {
         trigger: section,
         pin: true,
         start: "top top",
-        end: () => `+=${items.length * 100}%`,
+        end: () => `+=${items.length * 120}%`,
         scrub: 1,
         invalidateOnRefresh: true,
         // markers: true,
@@ -38,7 +38,7 @@ const Blog = () => {
     items.forEach((item, i) => {
       if (i < items.length - 1) {
         tl.to(item, { scale: 0.9, borderRadius: "20px" });
-        tl.to(items[i + 1], { yPercent: 0 }, "<");
+        tl.to(items[i + 1], { yPercent: 2 }, "<");
       }
     });
 

@@ -58,7 +58,7 @@ const Header = () => {
       if (!section) return;
       
       const headerHeight = header ? header.offsetHeight : 0;
-      const scrollPosition = section.offsetTop ;
+      const scrollPosition = section.offsetTop;
       
       window.scrollTo({
         top: scrollPosition,
@@ -104,9 +104,9 @@ const Header = () => {
         isVisible ? "translate-y-0" : "-translate-y-full"
       } bg-black/20 backdrop-blur-sm border-b border-white/20`}
     >
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-3 md:px-[24px] py-4">
-        {/* Logo */}
-        <Link to="/" className="shrink-0 flex items-center">
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 lg:px-0 py-4">
+        {/* Logo - Pushed to the left */}
+        <Link to="/" className="shrink-0 flex items-center mr-auto lg:mr-0">
           <motion.img
             src={logo}
             alt="Logo"
@@ -117,8 +117,8 @@ const Header = () => {
           />
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6 text-md text-white">
+        {/* Desktop Navigation - Pushed to the right with more gap */}
+        <nav className="hidden lg:flex items-center gap-8 text-md text-white ml-auto">
           {/* Services Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <motion.button
@@ -225,17 +225,19 @@ const Header = () => {
           </motion.button>
 
           {/* CTA */}
-          <motion.div variants={ctaButtonVariants} whileHover="hover" whileTap="tap" 
-              className=" bg-[#2176C1] text-white font-bold px-5 py-2.5 rounded  shadow-sm transition-all duration-200"
-          onClick={() => scrollToSection("contact")}
+          <motion.div 
+            variants={ctaButtonVariants} 
+            whileHover="hover" 
+            whileTap="tap" 
+            className="bg-[#2176C1] text-white font-bold px-5 py-2.5 rounded shadow-sm transition-all duration-200 ml-2"
+            onClick={() => scrollToSection("contact")}
           >
-            
-              Get a free Consultant
+            Get a free Consultant
           </motion.div>
         </nav>
 
-        {/* Mobile Hamburger */}
-        <div className="lg:hidden">
+        {/* Mobile Hamburger - Positioned to the right */}
+        <div className="lg:hidden ml-auto">
           <motion.button
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-white group-hover:text-gray-800 focus:outline-none"
@@ -362,12 +364,12 @@ const Header = () => {
           </motion.button>
 
           {/* CTA */}
-          <Link
-            to="/get-started"
+          <motion.button
+            onClick={() => scrollToSection("contact")}
             className="block w-full bg-[#2176C1] text-white text-center py-2 rounded transition-all duration-200"
           >
             Get a free Consultant
-          </Link>
+          </motion.button>
         </motion.div>
       )}
     </header>

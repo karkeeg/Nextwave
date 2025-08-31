@@ -396,11 +396,11 @@ const Services = () => {
           <div className="lg:hidden relative mb-12">
             {/* Header for mobile */}
             <div className="mb-8 px-4">
-              <h1 className="text-3xl font-bold text-gray-900">Our Services</h1>
-              <p className="mt-2 text-gray-600">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
+              <h2 className="">Our Services</h2>
+              <p className="mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
             </div>
             
-            {/* Vertical scrollable container */}
+            {/* Vertical scrollable container with desktop-style cards */}
             <div className="max-h-[70vh] overflow-y-auto no-scrollbar px-4">
               <div className="space-y-6">
                 {services.map((svc, idx) => (
@@ -412,7 +412,8 @@ const Services = () => {
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
                   >
-                    <div className="group relative rounded-2xl md:rounded-3xl overflow-hidden h-[400px] md:h-[450px] shadow-lg hover:shadow-xl transition-all duration-500">
+                    {/* Desktop-style card for mobile */}
+                    <div className="group relative rounded-2xl md:rounded-3xl overflow-hidden h-[320px] md:h-[350px] shadow-lg hover:shadow-xl transition-all duration-500">
                       {/* Full Background image */}
                       <div className="absolute inset-0">
                         <img
@@ -421,31 +422,32 @@ const Services = () => {
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
                         />
+                        <div className="absolute inset-0 bg-black/60" />
                       </div>
 
                       {/* Centered content box with glassmorphism */}
                       <div className="absolute inset-0 flex items-center justify-center p-4 z-10">
-                        <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-6 max-w-full w-full mx-4 shadow-xl relative z-10">
+                        <div className="  rounded-2xl p-5 max-w-full w-full mx-4 shadow-xl relative z-10">
                           {/* Content */}
-                          <div className="space-y-4">
+                          <div className="space-y-3">
                             {/* Title */}
-                            <h3 className="text-xl font-bold text-gray-900">
+                            <h3 className="text-lg font-bold text-white">
                               {svc.title}
                             </h3>
 
                             {/* Description */}
-                            <p className="text-gray-700 leading-relaxed">
+                            <p className="text-gray-200 text-sm leading-relaxed line-clamp-2">
                               {svc.desc}
                             </p>
 
                             {/* Features list */}
-                            <div className="space-y-2">
-                              {svc.features.slice(0, 3).map((f, i) => (
-                                <div key={i} className="flex items-start gap-3 text-sm">
-                                  <span className="text-gray-700 font-semibold flex-shrink-0 mt-0.5">
+                            <div className="space-y-1">
+                              {svc.features.slice(0, 2).map((f, i) => (
+                                <div key={i} className="flex items-start gap-2 text-xs">
+                                  <span className="text-white font-semibold flex-shrink-0 mt-0.5">
                                     {i + 1}.
                                   </span>
-                                  <span className="text-gray-700 leading-relaxed line-clamp-1">
+                                  <span className="text-gray-200 leading-relaxed line-clamp-1">
                                     {f}
                                   </span>
                                 </div>
@@ -455,12 +457,12 @@ const Services = () => {
                             {/* CTA - Fixed button */}
                             <motion.button
                               onClick={() => handleServiceClick(svc.id)}
-                              className="relative z-20 inline-flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg text-blue-600 font-semibold hover:text-blue-700 hover:bg-white transition-all duration-200 group/btn mt-3 shadow-md"
+                              className="relative z-20 inline-flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-lg text-blue-600 font-semibold hover:text-blue-700 hover:bg-white transition-all duration-200 group/btn mt-2 shadow-md text-xs"
                               whileHover={{ x: 3 }}
                               whileTap={{ scale: 0.95 }}
                             >
                               <span>Learn more</span>
-                              <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1 text-sm" />
+                              <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1 text-xs" />
                             </motion.button>
                           </div>
                         </div>
@@ -550,13 +552,13 @@ const Services = () => {
           <motion.div ref={rightPanelRef} className="min-h-0 h-full" variants={itemVariants}>
             <div
               ref={rightScrollRef}
-              className="lg:h-full lg:overflow-y-auto pr-2 pt-[25vh] space-y-[60vh] pb-[25vh] no-scrollbar"
+              className="lg:h-full  lg:overflow-y-auto pr-2 pt-[25vh] space-y-[60vh] pb-[25vh] no-scrollbar"
             >
               {services.map((svc, idx) => (
                 <motion.div
                   key={svc.id}
                   ref={(el) => (cardRefs.current[idx] = el)}
-                  className={`group relative rounded-3xl overflow-hidden transition-all duration-500 transform-gpu
+                  className={`group relative rounded-3xl  overflow-hidden transition-all duration-500 transform-gpu
                     ${idx === selectedService 
                       ? "shadow-2xl scale-[1.02] ring-2 ring-white/50" 
                       : "shadow-xl hover:shadow-2xl hover:scale-[1.01]"
@@ -568,29 +570,30 @@ const Services = () => {
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                   {/* Modern glassmorphism card with advanced gradients */}
-                  <div className="relative w-full h-[380px] md:h-[420px] overflow-hidden rounded-3xl shadow-xl">
+                  <div className="relative w-full  h-[340px] md:h-[380px] overflow-hidden rounded-3xl shadow-xl">
                     {/* Full background image */}
-                    <div className="absolute inset-0">
+                    <div className="absolute inset-0 ">
                       <img
                         src={svc.image}
                         alt={svc.title}
-                        className="w-full h-full blur-sm object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full  object-cover transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
                       />
+                        <div className="absolute inset-0 bg-black/60" />
                     </div>
 
                     {/* Centered content box */}
                     <div className="absolute inset-0 flex items-center justify-center p-6 md:p-8 z-10">
-                      <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-6 md:p-8 max-w-full w-full shadow-xl relative z-10">
+                      <div className="  p-6 md:p-8 max-w-full w-full shadow-xl relative z-10">
                         {/* Content */}
                         <div className="space-y-4 md:space-y-6">
                           {/* Title */}
-                          <h4 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 tracking-tight leading-tight">
+                          <h3 className=" font-bold text-white tracking-tight leading-tight">
                             {svc.title}
-                          </h4>
+                          </h3>
 
                           {/* Description */}
-                          <p className="text-gray-800 text-sm md:text-base leading-relaxed">
+                          <p className="text-gray-200 text-base md:text-lg leading-relaxed">
                             {svc.desc}
                           </p>
 
@@ -604,10 +607,10 @@ const Services = () => {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ delay: i * 0.1 + 0.2 }}
                               >
-                                <span className="text-gray-900 font-semibold flex-shrink-0 mt-0.5">
+                                <span className="text-white font-semibold flex-shrink-0 mt-0.5">
                                   {i + 1}.
                                 </span>
-                                <span className="text-gray-800 leading-relaxed group-hover/item:text-gray-900 transition-colors">
+                                <span className="text-gray-200 leading-relaxed group-hover/item:text-white transition-colors">
                                   {f}
                                 </span>
                               </motion.div>
@@ -617,7 +620,7 @@ const Services = () => {
                           {/* CTA - Fixed button */}
                           <motion.button
                             onClick={() => handleServiceClick(svc.id)}
-                            className="relative z-20 inline-flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg text-blue-600 font-semibold hover:text-blue-700 hover:bg-white transition-all duration-200 group/btn mt-4 shadow-md"
+                            className="relative z-20 inline-flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg text-blue-700 font-semibold hover:text-blue-800 hover:bg-white transition-all duration-200 group/btn mt-4 shadow-md"
                             whileHover={{ x: 5, scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                           >
