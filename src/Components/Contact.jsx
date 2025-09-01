@@ -87,13 +87,7 @@ const Contact = () => (
               </a>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <FaFax className="text-2xl text-[#232B36]" />
-            <div>
-              <div className="font-semibold text-[#232B36]">FAX</div>
-              <span className="text-[#2176C1] font-medium">01 2345 6789</span>
-            </div>
-          </div>
+          
           <div className="flex items-center gap-2">
             <FaEnvelope className="text-2xl text-[#232B36]" />
             <div>

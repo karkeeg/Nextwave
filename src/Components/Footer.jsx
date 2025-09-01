@@ -67,12 +67,12 @@ const Footer = () => {
           {/* Quick Link */}
           <div className="flex flex-col gap-3 min-w-[140px]">
             <p className="font-semibold text-gray-900 ">Quick Link</p>
-            <button
+            {/* <button
               onClick={() => scrollToSection("about")}
               className="hover:text-gray-300 transition text-left bg-transparent border-none cursor-pointer"
             >
               About us
-            </button>
+            </button> */}
             <button
               onClick={() => scrollToSection("services")}
               className="hover:text-gray-300 transition text-left bg-transparent border-none  cursor-pointer"

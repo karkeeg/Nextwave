@@ -72,7 +72,7 @@ const Blog = () => {
                 ref={(el) => (itemsRef.current[i] = el)}
                 role="listitem"
                 className="item cursor-pointer"
-                onClick={() => navigate(`/blog/${post.id}`)}
+                // onClick={() => navigate(`/blog/${post.id}`)}
               >
                 {/* Card Background */}
                 <div className="absolute inset-0 w-full h-full">

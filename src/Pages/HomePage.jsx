@@ -127,6 +127,60 @@ const AnimatedText = ({ children, className = "" }) => {
     </motion.h1>
   );
 };
+
+const ResponsiveHeroHeadline = () => (
+  <div className="flex flex-col items-center lg:items-start">
+    {/* Mobile layout - optimized for all small screens */}
+    <div className="flex flex-col items-center lg:hidden">
+      <div className="flex flex-col items-center justify-center text-center">
+        <div className="flex items-baseline justify-center flex-wrap">
+          <RollingWords 
+            words={["Empower", "Enhance"]} 
+            className="text-3xl xs:text-4xl sm:text-5xl font-black min-w-[140px] xs:min-w-[160px] text-center"
+          />
+          <span className="text-3xl xs:text-4xl sm:text-5xl font-extrabold text-slate-800 ml-1 whitespace-nowrap">
+            Your Business
+          </span>
+        </div>
+        
+        <div className="text-3xl xs:text-4xl sm:text-5xl font-extrabold text-slate-800 whitespace-nowrap mt-1">
+          with Next-Gen AI &
+        </div>
+        
+        <RollingWords 
+          words={["Automation", "Innovation"]} 
+          className="text-3xl xs:text-4xl sm:text-5xl font-black mt-1 min-w-[180px] xs:min-w-[200px] text-center"
+        />
+      </div>
+    </div>
+    
+    {/* Desktop layout - exact match to the image */}
+    <div className="hidden lg:flex flex-col items-start">
+      <div className="flex items-baseline">
+        <RollingWords 
+          words={["Empower", "Enhance"]} 
+          className="text-5xl xl:text-7xl 2xl:text-7xl ml-12 font-black min-w-[200px] xl:min-w-[240px]"
+        />
+        <span className="text-5xl xl:text-7xl 2xl:text-7xl font-extrabold text-slate-800 ml-12">
+          Your
+        </span>
+      </div>
+      
+      <div className="text-5xl xl:text-7xl 2xl:text-7xl font-extrabold text-slate-800">
+        Business with
+      </div>
+      
+      <div className="text-5xl xl:text-7xl 2xl:text-7xl mt-1 font-extrabold text-slate-800">
+        Next-Gen AI &
+      </div>
+      
+      <RollingWords 
+        words={["Automation", "Innovation"]} 
+        className="text-5xl xl:text-7xl 2xl:text-7xl font-black ml-12 mt-1 min-w-[240px] xl:min-w-[280px]"
+      />
+    </div>
+  </div>
+);
 // ✅ Responsive Icon Marquee Component
 const IconMarquee = () => {
   const [tip, setTip] = React.useState({ show: false, x: 0, y: 0, label: "" });
@@ -213,66 +267,6 @@ const IconMarquee = () => {
     </div>
   );
 };
-
-// ✅ Responsive Hero headline - matching the image layout exactly
-const ResponsiveHeroHeadline = () => (
-  <div className="flex flex-col items-center lg:items-start">
-    {/* Mobile layout - separate lines */}
-    <div className="flex flex-col items-center lg:hidden space-y-1">
-      <div className="flex items-center">
-        <RollingWords 
-          words={["Empower", "Enhance"]} 
-          className="text-3xl sm:text-3xl md:text-4xl font-black"
-        />
-        <div className="text-3xl ml-[-35px] sm:text-3xl md:text-4xl font-extrabold text-slate-800 ml-1">
-          Your Business
-        </div>
-      </div>
-{/*       
-      <div className="text-3xl sm:text-3xl md:text-4xl font-extrabold text-slate-800">
-        Business
-      </div> */}
-      
-      <div className="text-3xl sm:text-3xl md:text-4xl font-extrabold text-slate-800">
-        with Next-Gen AI &
-      </div>
-      
-      <RollingWords 
-        words={["Automation", "Innovation"]} 
-        className="text-3xl sm:text-3xl md:text-4xl font-black"
-      />
-    </div>
-    
-    {/* Desktop layout - exact match to the image */}
-    <div className="hidden lg:flex flex-col items-start space-y-0">
-      {/* First line: "Your" and rolling word on the same line */}
-      <div className="flex items-baseline">
-        <RollingWords 
-          words={["Empower", "Enhance"]} 
-          className="text-5xl xl:text-7xl ml-12 mr-12 font-black "
-        />
-        <div className="text-4xl xl:text-7xl font-extrabold text-slate-800">
-        Your 
-      </div>
-      </div>
-            
-      {/* Third line: "with Next-Gen AI &" */}
-      <div className="text-5xl xl:text-7xl font-extrabold text-slate-800">
-        Business with 
-      </div>
-      <div className="text-5xl xl:text-7xl font-extrabold text-slate-800">
-        Next-Gen AI &
-      </div>
-      
-      {/* Fourth line: Rolling words */}
-      <RollingWords 
-        words={["Automation", "Innovations"]} 
-        className="text-5xl xl:text-7xl ml-6 font-black"
-      />
-    </div>
-  </div>
-);
-
 const HERO_SUB = "AI chatbots, scalable backends and automation tailored for your growth.";
 
 const fadeInUp = {
@@ -366,14 +360,15 @@ const HomePage = () => {
       />
 
       {/* Hero Section */}
+  
       <section
         ref={(node) => addRef("hero", node)}
         id="hero"
-        className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-[620px] lg:h-[780px] bg-[#c4d4f5] flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-8 sm:py-12 md:py-16 lg:py-24 overflow-hidden"
+        className="relative w-full min-h-[400px] sm:min-h-[600px] md:min-h-[650px] lg:h-[800px] bg-[#c4d4f5] flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-6 sm:py-8 md:py-16 lg:py-24 overflow-hidden"
       >
         <div ref={heroParallaxRef}>
           <motion.div
-            className="relative z-10 flex flex-col lg:flex-row items-center w-full max-w-9xl mx-auto gap-6 sm:gap-8 md:gap-10 lg:gap-12 justify-between mt-8 sm:mt-12 md:mt-16 lg:mt-24 xl:mt-36 md:scale-105 opacity-90"
+            className="relative z-10 flex flex-col lg:flex-row items-center w-full max-w-9xl mx-auto gap-4 sm:gap-6 md:gap-8 lg:gap-10 justify-between mt-4 sm:mt-6 md:mt-10 lg:mt-16 xl:mt-24"
             initial="hidden"
             animate="show"
             variants={fadeInUp}
@@ -383,12 +378,12 @@ const HomePage = () => {
               style={{ y: yLeft }} 
               className="flex-[1.3] min-w-0 w-full max-w-6xl flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1"
             >
-              <AnimatedText className="leading-tight mb-1 sm:mb-2 md:mb-3 lg:mb-5">
+              <AnimatedText className="leading-tight mb-1 sm:mb-2 md:mb-3">
                 <ResponsiveHeroHeadline />
               </AnimatedText>
               
               <motion.p 
-                className="text-xl sm:text-xl md:text-xl lg:text-xl text-slate-600 mb-4 sm:mb-5 md:mb-5 lg:mb-6 font-medium max-w-xl leading-relaxed px-2 sm:px-0"
+                className="text-lg sm:text-xl md:text-xl text-slate-600 mb-4 sm:mb-5 md:mb-5 font-medium max-w-xl leading-relaxed px-2 sm:px-0"
                 variants={fadeInUp}
               >
                 {HERO_SUB}
@@ -403,12 +398,13 @@ const HomePage = () => {
               >
                 <button
                   onClick={() => scrollToSection("contact")}
-                  className="bg-[#c4d4f5] text-[#2176C1] font-semibold px-4 sm:px-5 md:px-6 py-2 sm:py-3 md:py-3.5 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-lg sm:text-lg md:text-xl w-full sm:w-auto max-w-xs sm:max-w-none"
+                  className="bg-[#c4d4f5] text-[#2176C1] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-base sm:text-lg w-full sm:w-auto max-w-xs sm:max-w-none"
                 >
                   Request a Demo
                 </button>
               </motion.div>
             </motion.div>
+
 
             {/* Right Column - Robot Mosaic */}
             <motion.div 
@@ -456,30 +452,30 @@ const HomePage = () => {
         </motion.section>
       ))}
 
-      {/* Responsive Scroll To Top - Disabled in hero section */}
-      <div
-        className="fixed bottom-4 sm:bottom-6 md:bottom-8 right-4 sm:right-6 md:right-8 z-50 transition-all duration-300 hover:scale-110"
-        style={{
-          opacity: (visibleElements.size > 2 && !isInHeroSection) ? 1 : 0,
-          transform: `translateY(${(visibleElements.size > 2 && !isInHeroSection) ? 0 : 20}px)`,
-          pointerEvents: isInHeroSection ? 'none' : 'auto'
-        }}
-      >
-        <button
-          className="bg-[#2176C1] text-white p-2 sm:p-3 md:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:rotate-12 disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          disabled={isInHeroSection}
-        >
-          <svg
-            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-          </svg>
-        </button>
-      </div>
+      {/* Responsive Scroll To Top */}
+<div
+  className="fixed bottom-4 sm:bottom-6 md:bottom-8 right-4 sm:right-6 md:right-8 z-50 transition-all duration-300 hover:scale-110"
+  style={{
+    opacity: scrollY > 300 ? 1 : 0,
+    transform: `translateY(${scrollY > 300 ? 0 : 20}px)`,
+    pointerEvents: scrollY > 300 ? 'auto' : 'none'
+  }}
+>
+  <button
+    className="bg-[#2176C1] text-white p-2 sm:p-3 md:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:rotate-12"
+    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+    aria-label="Scroll to top"
+  >
+    <svg
+      className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+</div>
     </motion.main>
   );
 };

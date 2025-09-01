@@ -15,6 +15,21 @@
   }
 }
 
+/* Extra small screen breakpoint */
+@media (max-width: 380px) {
+  .xs\:text-4xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  
+  .xs\:min-w-\[160px\] {
+    min-width: 160px;
+  }
+  
+  .xs\:min-w-\[200px\] {
+    min-width: 200px;
+  }
+}
 .animate-marquee {
   animation: marquee var(--marquee-duration, 40s) linear infinite;
   display: flex;

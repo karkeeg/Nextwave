@@ -191,7 +191,7 @@ const ServiceDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6 pt-20">
+    <div className="min-h-screen bg-gray-50 py-6 pt-24">
       <div className="max-w-6xl mx-auto px-4">
         {/* Back Button */}
         <button
@@ -211,7 +211,7 @@ const ServiceDetail = () => {
                 {service.icon}
               </div>
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold">{service.title}</h1>
+                <h2 className="text-white font-bold">{service.title}</h2>
                 <p className="text-lg text-white/80">{service.subtitle}</p>
               </div>
             </div>

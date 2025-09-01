@@ -142,7 +142,7 @@ const IndustryDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 pt-20">
+    <div className="min-h-screen bg-gray-50 py-8 pt-24">
       <div className="max-w-6xl mx-auto px-4">
         {/* Back Button */}
         <button
@@ -162,7 +162,7 @@ const IndustryDetail = () => {
                 {industry.icon}
               </div>
               <div>
-                <h1 className="text-3xl font-bold">{industry.title}</h1>
+                <h2 className="text-white font-bold">{industry.title}</h2>
                 <p className="text-white/80">{industry.subtitle}</p>
               </div>
             </div>
