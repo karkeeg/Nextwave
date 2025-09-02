@@ -125,14 +125,16 @@ const IndustryServed = () => {
         <button
           className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-[#2176C1] p-2 rounded-full hover:bg-[#E9EDF2] transition z-10"
           onClick={handlePrev}
+          aria-label="Previous industry"
         >
-          <FaChevronLeft size={24} />
+          <FaChevronLeft size={24} aria-hidden="true" />
         </button>
         <button
           className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-[#2176C1] p-2 rounded-full hover:bg-[#E9EDF2] transition z-10"
           onClick={handleNext}
+          aria-label="Next industry"
         >
-          <FaChevronRight size={24} />
+          <FaChevronRight size={24} aria-hidden="true" />
         </button>
 
         {/* Three-image carousel block with fade animation */}
@@ -222,20 +224,26 @@ const IndustryServed = () => {
                     <div className="relative flex items-center justify-center">
                       <input
                         type="radio"
+                        id={`industry-feature-${id}-${i}`}
                         name="industry-feature"
                         checked={selectedFeature === feature}
                         onChange={() => handleFeatureSelect(id, feature)}
                         className="absolute opacity-0 cursor-pointer w-2 h-2"
+                        aria-label={`Select ${feature}`}
                       />
-                      <div className={`w-2 h-2 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
-                        selectedFeature === feature 
-                          ? "border-[#2176C1] bg-slate-800" 
-                          : "border-[#1E93AB] bg-[#1E93AB] group-hover:border-[#2176C1]"
-                      }`}>
+                      <label 
+                        htmlFor={`industry-feature-${id}-${i}`}
+                        className={`w-2 h-2 rounded-full border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                          selectedFeature === feature 
+                            ? "border-[#2176C1] bg-slate-800" 
+                            : "border-[#1E93AB] bg-[#1E93AB] group-hover:border-[#2176C1]"
+                        }`}
+                        aria-hidden="true"
+                      >
                         {selectedFeature === feature && (
-                          <div className="w-2 h-2 rounded-full bg-white"></div>
+                          <span className="sr-only">Selected: {feature}</span>
                         )}
-                      </div>
+                      </label>
                     </div>
                     
                     {/* Feature text */}
@@ -254,8 +262,8 @@ const IndustryServed = () => {
         </AnimatePresence>
 
         {/* Carousel Indicators */}
-        <div className="flex justify-center items-center gap-3 mt-4">
-          {industryData.map((_, index) => (
+        <div className="flex justify-center items-center gap-3 mt-4" role="tablist" aria-label="Industry carousel indicators">
+          {industryData.map((industry, index) => (
             <motion.button
               key={index}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -270,6 +278,11 @@ const IndustryServed = () => {
                   ? "bg-[#2176C1] scale-125"
                   : "bg-gray-300 hover:bg-gray-400"
               }`}
+              role="tab"
+              aria-label={`${industry.title} industry`}
+              aria-selected={index === currentIndex}
+              aria-controls={`industry-${index}-tab`}
+              id={`industry-${index}`}
             />
           ))}
         </div>

@@ -244,6 +244,9 @@ const Header = () => {
             whileHover={{ scale: 1.1, rotate: 90 }}
             whileTap={{ scale: 0.9 }}
             transition={{ duration: 0.2 }}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
             <svg
               className="w-6 h-6 transition-transform duration-200"

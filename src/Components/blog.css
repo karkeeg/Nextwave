@@ -43,3 +43,7 @@
   justify-content: center;
   margin-bottom: 1rem;
 }
+.blog-scroll-container {
+  overflow-y: auto;
+  padding-bottom: 32px;
+}

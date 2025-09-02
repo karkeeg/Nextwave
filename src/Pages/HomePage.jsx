@@ -228,19 +228,36 @@ const IconMarquee = () => {
     <div className="w-full">
       <div className="mx-0">
         <div className="overflow-hidden py-2 sm:py-3 md:py-4 bg-transparent">
-          <div className="flex items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16 xl:gap-28 animate-marquee" style={{ width: "max-content" }}>
-            {strip.map((item, i) => (
-              <div
-                key={`${item.key}-${i}`}
-                aria-label={item.label}
-                className="text-slate-700 flex-shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer"
-                onMouseEnter={(e) => showTip(item.label, e)}
-                onMouseMove={moveTip}
-                onMouseLeave={hideTip}
-              >
-                {item.node}
-              </div>
-            ))}
+          <div 
+            className="flex items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16 xl:gap-28 animate-marquee" 
+            style={{ width: "max-content" }}
+            role="marquee"
+            aria-label="Technology stack icons"
+            aria-live="polite"
+          >
+            {strip.map((item, i) => {
+              // Clone the icon node to add accessibility props
+              const iconWithProps = React.cloneElement(item.node, {
+                'role': 'img',
+                'aria-hidden': 'false',
+                'focusable': 'false',
+                'aria-label': item.label,
+                'title': item.label
+              });
+              
+              return (
+                <div
+                  key={`${item.key}-${i}`}
+                  className="text-slate-700 flex-shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer"
+                  onMouseEnter={(e) => showTip(item.label, e)}
+                  onMouseMove={moveTip}
+                  onMouseLeave={hideTip}
+                  role="presentation"
+                >
+                  {iconWithProps}
+                </div>
+              );
+            })}
           </div>
         </div>
         {tip.show && (
@@ -419,7 +436,7 @@ const HomePage = () => {
               >
                 <button
                   onClick={() => scrollToSection("contact")}
-                  className="bg-[#c4d4f5] text-[#2176C1] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-base sm:text-lg w-full sm:w-auto max-w-xs sm:max-w-none"
+                  className="bg-[#cfdcf7] text-[#2176C1] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-base sm:text-lg w-full sm:w-auto max-w-xs sm:max-w-none"
                 >
                   Request a Demo
                 </button>

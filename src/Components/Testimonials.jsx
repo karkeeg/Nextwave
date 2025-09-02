@@ -112,7 +112,7 @@ const Testimonials = () => {
                 {/* Bottom Section: Left -> Name, title, company; Right -> See more */}
                 <div className="w-full flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
                   <div className="text-left">
-                    <h4 className="text-[#2176C1] font-semibold text-sm">{testimonial.name}</h4>
+                    <p className="text-[#2176C1] font-semibold text-sm">{testimonial.name}</p>
                     <p className="text-[#6B7280] text-xs">{testimonial.title}</p>
                     <p className="text-[#FFC043] text-xs font-medium">{testimonial.company}</p>
                   </div>
@@ -165,7 +165,7 @@ const Testimonials = () => {
                 {/* Bottom Section: Left -> Name, title, company; Right -> See more */}
                 <div className="w-full flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
                   <div className="text-left">
-                    <h4 className="text-[#2176C1] font-semibold text-sm">{testimonial.name}</h4>
+                    <p className="text-[#2176C1] font-semibold text-sm">{testimonial.name}</p>
                     <p className="text-[#6B7280] text-xs">{testimonial.title}</p>
                     <p className="text-[#FFC043] text-xs font-medium">{testimonial.company}</p>
                   </div>

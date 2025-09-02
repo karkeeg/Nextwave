@@ -34,8 +34,8 @@ const FAQs = () => {
 
   return (
     <section className="w-full min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-[#E2EAFD] via-[#E2EAFD] to-[#9DB5E8] py-14 px-3">
-      <div className="w-full max-w-4xl mx-auto">
-        <div className="text-center mb-10">
+      <div className="w-full faq-section max-w-4xl mx-auto">
+        <div className="text-center lg:mb-12 mb-2 px-4">
           <h2 >
             Frequently Asked Questions
           </h2>
