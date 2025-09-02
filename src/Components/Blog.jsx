@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaArrowRight } from "react-icons/fa";
-import blogPosts from "../blogPosts";
+import blogPosts from "../data/blogData";
 import './blog.css'
 
 gsap.registerPlugin(ScrollTrigger);
@@ -72,7 +72,7 @@ const Blog = () => {
                 ref={(el) => (itemsRef.current[i] = el)}
                 role="listitem"
                 className="item cursor-pointer"
-                // onClick={() => navigate(`/blog/${post.id}`)}
+                onClick={() => navigate(`/blog/${post.id}`)}
               >
                 {/* Card Background */}
                 <div className="absolute inset-0 w-full h-full">

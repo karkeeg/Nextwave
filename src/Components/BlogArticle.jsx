@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaCalendar, FaUser, FaTag, FaBookOpen, FaHeart, FaShare, FaTwitter, FaFacebook, FaLinkedin, FaComment, FaEye } from "react-icons/fa";
-import blogPosts from "../blogPosts";
+import blogPosts from "../data/blogData";
+import { Helmet } from "react-helmet";
 
 const BlogArticle = () => {
   const { id } = useParams();
@@ -17,38 +18,19 @@ const BlogArticle = () => {
     const foundArticle = blogPosts.find(post => post.id === parseInt(id));
     if (foundArticle) {
       setArticle(foundArticle);
+      // Update document title when article is found
+      document.title = ` NextWave AI - Blog | ${foundArticle.title}`;
     } else {
+      document.title = 'Article Not Found | NextWave AI Blog';
       navigate('/blog');
     }
+    
+    // Cleanup function to reset title when component unmounts
+    return () => {
+      document.title = 'NextWave AI';
+    };
   }, [id, navigate]);
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-    setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
-  };
-
-  const handleShare = (platform) => {
-    const url = window.location.href;
-    const title = article?.title;
-    
-    let shareUrl = '';
-    switch (platform) {
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
-        break;
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-        break;
-      case 'linkedin':
-        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-        break;
-      default:
-        navigator.clipboard.writeText(url);
-        return;
-    }
-    
-    window.open(shareUrl, '_blank', 'width=600,height=400');
-  };
 
   if (!article) {
     return (
@@ -62,6 +44,15 @@ const BlogArticle = () => {
   }
 
   return (
+    <>
+   <Helmet>
+  <title> NextWave AI Blog | {article.title} </title>
+  <meta name="description" content={article.desc} />
+  <meta name="keywords" content={`${article.category}, AI, Technology, NextWave AI`} />
+  <meta name="author" content={article.author} />
+  <link rel="canonical" href={`https://nextwaveai.com/blog/${id}`} />
+</Helmet>
+
     <section className="w-full min-h-screen bg-gradient-to-br from-gray-50 to-white relative overflow-hidden pt-20">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -193,6 +184,7 @@ const BlogArticle = () => {
         </motion.div>
       </div>
     </section>
+    </>
   );
 };
 

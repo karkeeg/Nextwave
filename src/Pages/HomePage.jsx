@@ -16,6 +16,7 @@ import Blog from "../Components/Blog";
 import FAQs from "../Components/FAQs";
 import IndustryServed from "../Components/IndustryServed";
 import RobotMosaic from "../Components/RobotMosaic";
+import { Helmet } from "react-helmet-async";
 
 // ✅ Responsive Rolling Words Component
 const RollingWords = ({ words, interval = 3000, className = "" }) => {
@@ -280,6 +281,15 @@ const HomePage = () => {
   const sectionRefs = useRef({});
   const [scrollY, setScrollY] = useState(0);
   const heroParallaxRef = useRef(null);
+  
+  // Set document title on component mount
+  useEffect(() => {
+    document.title = 'NextWave AI - Home';
+    // Cleanup function to reset title when component unmounts
+    return () => {
+      document.title = 'NextWave AI';
+    };
+  }, []);
 
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroParallaxRef,
@@ -339,6 +349,17 @@ const HomePage = () => {
   };
 
   return (
+  <>
+  <Helmet>
+    <title>NextWave AI - Home</title>
+    <meta name="description" content="NextWave AI - Empowering Your Business with Next-Gen AI & Automation Solutions. Transformative AI Chatbots, Scalable Backends, and Tailored Automation for Growth." />
+    <meta name="keywords" content="AI Solutions, AI Chatbots, Scalable Backends, Business Automation, Machine Learning, AI Development, Custom AI, AI Integration, Next-Gen AI, AI Services" />
+    <meta name="author" content="NextWave AI" />
+    <meta property="og:title" content="NextWave AI - Home" />
+    <meta property="og:description" content="Empowering Your Business with Next-Gen AI & Automation Solutions" />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://nextwaveai.com/" />
+  </Helmet>
     <motion.main
       className="w-full bg-white"
       initial={{ opacity: 0, y: 20 }}
@@ -477,6 +498,7 @@ const HomePage = () => {
   </button>
 </div>
     </motion.main>
+    </>
   );
 };
 

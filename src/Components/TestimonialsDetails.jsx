@@ -2,24 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaQuoteLeft, FaStar, FaChevronUp, FaChevronDown } from 'react-icons/fa';
-import { testimonialsData } from '../Components/Testimonials';
+import  {testimonialsData}  from '../Components/Testimonials';
+import { Helmet } from 'react-helmet-async';
 
 const TestimonialDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(parseInt(id) || 0);
   const [activeSlide, setActiveSlide] = useState(0);
-  
-  const testimonial = testimonialsData[currentIndex];
-  const otherTestimonials = testimonialsData.filter((_, i) => i !== currentIndex);
+
+  // Validate index
+  const isValidIndex = Number.isInteger(currentIndex) && currentIndex >= 0 && currentIndex < testimonialsData.length;
+  const testimonial = isValidIndex ? testimonialsData[currentIndex] : null;
+  const otherTestimonials = isValidIndex
+  ? testimonialsData
+      .map((testimonial, i) => ({ ...testimonial, originalIndex: i }))
+      .filter((_, i) => i !== currentIndex)
+  : [];
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [currentIndex]);
+    // Update document title when testimonial changes
+    if (testimonial) {
+      document.title = `${testimonial.name}'s Testimonial | NextWave AI`;
+    } else {
+      document.title = 'Testimonial | NextWave AI';
+    }
+    
+    // Cleanup function to reset title when component unmounts
+    return () => {
+      document.title = 'NextWave AI';
+    };
+  }, [currentIndex, testimonial]);
 
   const navigateToTestimonial = (index) => {
     setCurrentIndex(index);
-    navigate(`/testimonials/${index}`, { replace: true });
+    navigate(`/testimonial/${index}`, { replace: true });
   };
 
   const navigateUp = () => {
@@ -36,7 +54,32 @@ const TestimonialDetail = () => {
 
   const visibleTestimonials = otherTestimonials.slice(activeSlide, activeSlide + 3);
 
+  // Fallback if testimonial not found
+  if (!testimonial) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Testimonial Not Found</h1>
+          <button
+            onClick={() => navigate('/')}
+            className="px-4 py-2 bg-[#2176C1] text-white rounded hover:bg-[#185a96]"
+          >
+            Back to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
+    <>
+      <Helmet>
+        <title>{testimonial.name} {testimonial.title} | NextWave AI - Testimonial</title>
+        <meta name="description" content={testimonial.text} />
+        <meta name="keywords" content={`Testimonial, ${testimonial.name}, ${testimonial.company}, AI, Technology, NextWave AI`} />
+        <link rel="canonical" href={`https://nextwaveai.com/testimonials/${currentIndex}`} />
+      </Helmet>
+    
     <div className="min-h-screen bg-gradient-to-b from-[#FAFBFC] to-[#F0F9FF] py-12 px-4 mt-12 md:px-8">
       <div className="max-w-7xl mx-auto">
         <button 
@@ -112,15 +155,15 @@ const TestimonialDetail = () => {
 
                 <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
                   <AnimatePresence initial={false}>
-                    {visibleTestimonials.map((testimonial, index) => (
+                    {visibleTestimonials.map((testimonial) => (
                       <motion.div
-                        key={testimonial.name}
+                        key={testimonial.originalIndex}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
-                        onClick={() => navigateToTestimonial(testimonialsData.indexOf(testimonial))}
-                        className={`p-4 rounded-xl border cursor-pointer transition-all ${currentIndex === testimonialsData.indexOf(testimonial) ? 'border-[#2176C1] bg-blue-50' : 'border-gray-200 hover:border-[#2176C1]/50 hover:bg-blue-50/50'}`}
+                        onClick={() => navigateToTestimonial(testimonial.originalIndex)}
+                        className={`p-4 rounded-xl border cursor-pointer transition-all ${currentIndex === testimonial.originalIndex ? 'border-[#2176C1] bg-blue-50' : 'border-gray-200 hover:border-[#2176C1]/50 hover:bg-blue-50/50'}`}
                       >
                         <div className="flex items-start gap-3">
                           <img 
@@ -144,6 +187,7 @@ const TestimonialDetail = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

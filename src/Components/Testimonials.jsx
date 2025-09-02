@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const testimonials = [
   {
-    id: 0,
+    id: 1,
     name: "Sophia Turner",
     title: "Marketing Director",
     company: "BrightWave Solutions",
@@ -15,7 +15,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    id: 1,
+    id: 2,
     name: "James Miller",
     title: "Chief Technology Officer",
     company: "InnovateHub",
@@ -24,7 +24,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    id: 2,
+    id: 3,
     name: "Olivia Chen",
     title: "Senior Product Manager",
     company: "AlphaTech Industries",
@@ -33,7 +33,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    id: 3,
+    id: 4,
     name: "Ethan Roberts",
     title: "Founder & CEO",
     company: "GrowthLabs",
@@ -42,7 +42,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    id: 4,
+    id: 5,
     name: "Maria Gomez",
     title: "Chief Executive Officer",
     company: "FutureWorks Inc.",
@@ -51,7 +51,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    id: 5,
+    id: 6,
     name: "David Park",
     title: "Head of Operations",
     company: "TechVenture Labs",

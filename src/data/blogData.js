@@ -1,5 +1,5 @@
-// blogPosts.js
-const blogPosts = [
+// blogData.js
+const blogData = [
   {
     id: 1,
     author: "Rob West",
@@ -95,4 +95,4 @@ This leads to smarter strategies and better outcomes in a competitive marketplac
   },
 ];
 
-export default blogPosts;
+export default blogData;
