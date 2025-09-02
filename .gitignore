@@ -23,5 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 
-# Sitemap
-scripts/generate-sitemap.js
+
