@@ -77,7 +77,7 @@ const TestimonialDetail = () => {
         <title>{testimonial.name} {testimonial.title} | NextWave AI - Testimonial</title>
         <meta name="description" content={testimonial.text} />
         <meta name="keywords" content={`Testimonial, ${testimonial.name}, ${testimonial.company}, AI, Technology, NextWave AI`} />
-        <link rel="canonical" href={`https://nextwaveai.com/testimonials/${currentIndex}`} />
+        <link rel="canonical" href={`https://nextwaveai-8.vercel.app/testimonials/${currentIndex}`} />
       </Helmet>
     
     <div className="min-h-screen bg-gradient-to-b from-[#FAFBFC] to-[#F0F9FF] py-12 px-4 mt-12 md:px-8">

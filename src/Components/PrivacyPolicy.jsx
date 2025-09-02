@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
         <meta property="og:title" content="Privacy Policy | NextWave AI" />
         <meta property="og:description" content="Read NextWave AI's Privacy Policy to understand how we collect, use, and protect your personal information." />
         <meta property="og:type" content="website" />
-        <link rel="canonical" href="https://nextwaveai.com/privacy-policy" />
+        <link rel="canonical" href="https://nextwaveai-8.vercel.app/privacy-policy" />
       </Helmet>
       <div className="max-w-6xl mx-auto px-6 md:px-8">
 

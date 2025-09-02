@@ -50,7 +50,7 @@ const BlogArticle = () => {
   <meta name="description" content={article.desc} />
   <meta name="keywords" content={`${article.category}, AI, Technology, NextWave AI`} />
   <meta name="author" content={article.author} />
-  <link rel="canonical" href={`https://nextwaveai.com/blog/${id}`} />
+  <link rel="canonical" href={`https://nextwaveai-8.vercel.app/blog/${id}`} />
 </Helmet>
 
     <section className="w-full min-h-screen bg-gradient-to-br from-gray-50 to-white relative overflow-hidden pt-20">

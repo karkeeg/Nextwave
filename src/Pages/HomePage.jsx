@@ -358,7 +358,7 @@ const HomePage = () => {
     <meta property="og:title" content="NextWave AI - Home" />
     <meta property="og:description" content="Empowering Your Business with Next-Gen AI & Automation Solutions" />
     <meta property="og:type" content="website" />
-    <link rel="canonical" href="https://nextwaveai.com/" />
+    <link rel="canonical" href="https://nextwaveai-8.vercel.app/" />
   </Helmet>
     <motion.main
       className="w-full bg-white"

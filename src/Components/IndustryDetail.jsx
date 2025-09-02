@@ -191,7 +191,7 @@ const IndustryDetail = () => {
         <meta property="og:type" content="website" />
         <link
           rel="canonical"
-          href={`https://nextwaveai.com/industries/${industryId}`}
+          href={`https://nextwaveai-8.vercel.app/industries/${industryId}`}
         />
         <meta
           name="keywords"

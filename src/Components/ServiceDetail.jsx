@@ -62,7 +62,7 @@ const ServiceDetail = () => {
         <meta name="description" content={service.desc} />
         <meta property="og:title" content={`${service.title} | NextWave AI`} />
         <meta property="og:description" content={service.desc} />
-        <link rel="canonical" href={`https://nextwaveai.com/services/${serviceId}`} />
+        <link rel="canonical" href={`https://nextwaveai-8.vercel.app/services/${serviceId}`} />
       </Helmet>
     <div className="min-h-screen bg-gray-50 py-6 pt-24">
       <div className="max-w-6xl mx-auto px-4">
