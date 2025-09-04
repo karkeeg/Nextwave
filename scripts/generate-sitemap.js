@@ -5,7 +5,7 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const BASE_URL = 'https://nextwaveai-five.vercel.app';
+const BASE_URL = 'https://nextwave-five.vercel.app';
 const PAGES = [
   '',
   'about',
