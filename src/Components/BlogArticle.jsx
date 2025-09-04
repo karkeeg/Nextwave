@@ -86,19 +86,19 @@ const BlogArticle = () => {
           className="mb-12"
         >
           {/* Category Badge */}
-          <div className="mb-6">
+          <div className="mb-2">
             <span className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium">
               {article.category}
             </span>
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-2 leading-tight">
             {article.title}
           </h1>
 
           {/* Meta Information */}
-          <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-8">
+          <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-4">
             <div className="flex items-center gap-2">
               <FaUser className="text-blue-500" />
               <span className="font-medium">{article.author}</span>

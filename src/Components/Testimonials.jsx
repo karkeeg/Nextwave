@@ -9,17 +9,16 @@ const Testimonials = () => {
     <section className="w-full bg-gradient-to-b from-[#FAFBFC] to-[#F0F9FF] py-16 overflow-hidden relative">
       <div className="relative z-10  mb-8 mt-8 px-4">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="mb-4">
-            Testimonials
-          </h2>
+          <h2 className="mb-4">Testimonials</h2>
           <p className="">
-            Discover how leading companies achieve breakthrough results with our AI solutions
+            Discover how leading companies achieve breakthrough results with our
+            AI solutions
           </p>
         </motion.div>
 
@@ -51,37 +50,46 @@ const Testimonials = () => {
                   </p>
                 </div>
 
-                {/* Bottom Section: Left -> Name, title, company; Right -> See more */}
+                {/* Bottom Section: Left -> Name, title, company; Right -> Read {testimonial.name} */}
                 <div className="w-full flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
                   <div className="text-left">
-                    <p className="text-[#2176C1] font-semibold text-sm">{testimonial.name}</p>
-                    <p className="text-[#6B7280] text-xs">{testimonial.title}</p>
-                    <p className="text-[#FFC043] text-xs font-medium">{testimonial.company}</p>
+                    <p className="text-[#2176C1] font-semibold text-sm">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-[#6B7280] text-xs">
+                      {testimonial.title}
+                    </p>
+                    <p className="text-[#FFC043] text-xs font-medium">
+                      {testimonial.company}
+                    </p>
                   </div>
 
                   <Link
                     to={`/testimonial/${testimonial.id}`}
                     className="cursor-pointer group/btn inline-flex items-center gap-2 text-[#2176C1] hover:text-[#185a96] font-medium text-sm transition-colors duration-200"
                   >
-                    <span>See more</span>
+                    <span>Read {testimonial.name}</span>
                     <svg
                       className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </Link>
                 </div>
 
                 {/* Subtle hover overlay */}
-                <div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"
-                ></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"></div>
               </motion.div>
             ))}
-            
+
             {/* Duplicate for seamless looping */}
             {testimonials.map((testimonial, index) => (
               <motion.div
@@ -104,34 +112,43 @@ const Testimonials = () => {
                   </p>
                 </div>
 
-                {/* Bottom Section: Left -> Name, title, company; Right -> See more */}
+                {/* Bottom Section: Left -> Name, title, company; Right -> Read {testimonial.name} */}
                 <div className="w-full flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
                   <div className="text-left">
-                    <p className="text-[#2176C1] font-semibold text-sm">{testimonial.name}</p>
-                    <p className="text-[#6B7280] text-xs">{testimonial.title}</p>
-                    <p className="text-[#FFC043] text-xs font-medium">{testimonial.company}</p>
+                    <p className="text-[#2176C1] font-semibold text-sm">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-[#6B7280] text-xs">
+                      {testimonial.title}
+                    </p>
+                    <p className="text-[#FFC043] text-xs font-medium">
+                      {testimonial.company}
+                    </p>
                   </div>
 
                   <Link
                     to={`/testimonial/${testimonial.id}`}
                     className="cursor-pointer group/btn inline-flex items-center gap-2 text-[#2176C1] hover:text-[#185a96] font-medium text-sm transition-colors duration-200"
                   >
-                    <span>See more</span>
+                    <span>Read {testimonial.name}</span>
                     <svg
                       className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </Link>
                 </div>
 
                 {/* Subtle hover overlay */}
-                <div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"
-                ></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"></div>
               </motion.div>
             ))}
           </div>
@@ -147,23 +164,30 @@ const Testimonials = () => {
             transform: translateX(-50%);
           }
         }
-        
+
         .animate-marquees {
           animation: marquee 20s linear infinite;
           display: flex;
           width: max-content;
         }
-        
+
         .animation-delay-2000 {
           animation-delay: 1s;
         }
-        
+
         @keyframes blob {
-          0%, 100% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
+          0%,
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
         }
-        
+
         /* Pause animation on hover */
         .animate-marquees:hover {
           animation-play-state: paused;
