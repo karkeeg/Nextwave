@@ -3,17 +3,17 @@ import { FaPhoneAlt, FaFax, FaEnvelope } from "react-icons/fa";
 
 const Contact = () => (
   <section className="w-full min-h-screen bg-[#EFF6FF] flex flex-col justify-center">
-    <div className="w-full flex flex-col md:flex-row max-w-6xl mx-auto py-16">
+    <div className="w-full flex flex-col md:flex-row max-w-7xl mx-auto py-12">
       {/* Left: Form */}
-      <div className="flex-[2] px-8 md:px-16 py-10 flex flex-col justify-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-[#2176C1] mb-2">
+      <div className="flex-[2] px-8 md:px-12 py-2 flex flex-col justify-center">
+        <h2 >
           Contact Us
         </h2>
-        <p className="text-[#7B8591] text-base mb-8 max-w-lg">
+        <p >
           Contact us to get connected with our team of experts. We are here to
           help you with your AI and software development needs.
         </p>
-        <form className="w-full max-w-xl flex flex-col gap-4">
+        <form className="w-full max-w-xl flex flex-col gap-2">
           <div className="flex flex-col gap-1">
             <label className="text-[#232B36] font-semibold" htmlFor="name">
               Name <span className="text-red-500">*</span>
@@ -28,7 +28,7 @@ const Contact = () => (
           </div>
           <div className="flex flex-col gap-1">
             <label className="text-[#232B36] font-semibold" htmlFor="email">
-              Email
+              Email  <span className="text-red-500">*</span>
             </label>
             <input
               id="email"
@@ -87,13 +87,7 @@ const Contact = () => (
               </a>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <FaFax className="text-2xl text-[#232B36]" />
-            <div>
-              <div className="font-semibold text-[#232B36]">FAX</div>
-              <span className="text-[#2176C1] font-medium">01 2345 6789</span>
-            </div>
-          </div>
+          
           <div className="flex items-center gap-2">
             <FaEnvelope className="text-2xl text-[#232B36]" />
             <div>
@@ -111,7 +105,7 @@ const Contact = () => (
       {/* Right: Small Centered Map */}
       <div className="flex flex-col items-center justify-center flex-1 w-full py-8">
         <div className="w-full flex justify-center">
-          <div className="w-[420px] h-[360px] rounded-2xl overflow-hidden shadow-lg border border-[#E9EDF2] bg-white flex items-center justify-center">
+          <div className="w-[400px] sm:w-[420px] md:w-[450px] lg:w-[500px] h-[420px] lg:h-[500px] rounded-2xl overflow-hidden shadow-lg border border-[#E9EDF2] bg-white flex items-center justify-center">
             <iframe
               title="NextWaveAI Location"
               src="https://www.openstreetmap.org/export/embed.html?bbox=85.312329%2C27.6878%2C85.324329%2C27.6978&amp;layer=mapnik"

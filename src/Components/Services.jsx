@@ -14,7 +14,7 @@ const services = [
       "Multilingual support and sentiment analysis",
     ],
     icon: <FaBrain size={24} />,
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.unsplash.com/photo-1591453089816-0fbb971b454c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     color: "from-blue-500 to-purple-600",
     lightColor: "from-blue-100 to-purple-100",
     bgColor: "bg-blue-50"
@@ -29,7 +29,7 @@ const services = [
       "Multilingual support and sentiment analysis",
     ],
     icon: <FaLanguage size={24} />,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://www.ibm.com/content/dam/adobe-cms/firefly-generated-assets/2025/05/f8efb989-c324-4715-b7a1-f146ad3ce429.jpeg/_jcr_content/renditions/cq5dam.web.1280.1280.jpeg",
     color: "from-green-500 to-teal-600",
     lightColor: "from-green-100 to-teal-100",
     bgColor: "bg-green-50"
@@ -44,7 +44,7 @@ const services = [
       "Big data processing and machine learning pipelines",
     ],
     icon: <FaChartLine size={24} />,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.unsplash.com/photo-1599658880436-c61792e70672?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     color: "from-orange-500 to-red-600",
     lightColor: "from-orange-100 to-red-100",
     bgColor: "bg-orange-50"
@@ -59,7 +59,7 @@ const services = [
       "Integration with existing business systems",
     ],
     icon: <FaComments size={24} />,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.prismic.io/intuzwebsite/d9daef05-a416-4e84-b0f8-2d5e2e3b58d8_A+Comprehensive+Guide+to+Building+an+AI+Chatbot%402x.png?w=2400&q=80&auto=format,compress&fm=png8",
     color: "from-purple-500 to-pink-600",
     lightColor: "from-purple-100 to-pink-100",
     bgColor: "bg-purple-50"
@@ -74,7 +74,7 @@ const services = [
       "CMS and API integrations",
     ],
     icon: <FaGlobe size={24} />,
-    image: "https://images.unsplash.com/photo-1529336953121-ad5a0d43d0d2?q=80&w=2069&auto=format&fit=crop",
+    image: "https://cdn.wegic.ai/cms/seo/img/custom-web-development-service/33767F88.png?format=webp&args=pr:sharp/q:60",
     color: "from-cyan-500 to-blue-600",
     lightColor: "from-cyan-100 to-blue-100",
     bgColor: "bg-cyan-50"
@@ -82,14 +82,14 @@ const services = [
   {
     id: "app-dev",
     title: "App Development",
-    desc: "Cross-platform mobile apps with React Native and robust backends tailored to your business.",
+    desc: "Cross-platform mobile app with React Native and robust backends tailored to your business.",
     features: [
       "iOS and Android with one codebase",
       "Offline-first and push notifications",
       "Secure auth and scalable APIs",
     ],
     icon: <FaMobileAlt size={24} />,
-    image: "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?q=80&w=2069&auto=format&fit=crop",
+    image: "https://plus.unsplash.com/premium_photo-1661326248013-3107a4b2bd91?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     color: "from-rose-500 to-orange-500",
     lightColor: "from-rose-100 to-orange-100",
     bgColor: "bg-rose-50"
@@ -153,23 +153,18 @@ const Services = () => {
     };
   }, []);
 
-  // Derived positions for indicator: show overall scroll progress of right panel
-  const viewRatio = scrollMetrics.scrollHeight > 0
-    ? scrollMetrics.clientHeight / scrollMetrics.scrollHeight
-    : 0;
-  const indicatorHeight = itemMetrics.trackHeight > 0
-    ? Math.max(28, itemMetrics.trackHeight * viewRatio)
-    : 0;
-  const maxYWithinTrack = Math.max(0, itemMetrics.trackHeight - indicatorHeight);
   const progress = scrollMetrics.scrollHeight > scrollMetrics.clientHeight
     ? scrollMetrics.scrollTop / (scrollMetrics.scrollHeight - scrollMetrics.clientHeight)
     : 0;
-  const indicatorY = itemMetrics.trackTop + (maxYWithinTrack * progress);
+  // const indicatorY = itemMetrics.trackTop + (maxYWithinTrack * progress);
   const fillHeight = Math.max(0, itemMetrics.trackHeight * progress);
-  const capOffset = Math.max(0, fillHeight - 10);
+  // const capOffset = Math.max(0, fillHeight - 10);
 
   const handleServiceClick = (serviceId) => {
-    navigate(`/services/${serviceId}`);
+    console.log('Navigating to service:', serviceId);
+    const path = `/services/${serviceId}`;
+    console.log('Navigation path:', path);
+    navigate(path, { replace: false });
   };
 
   const handleLeftSelect = (idx) => {
@@ -376,7 +371,7 @@ const Services = () => {
   const currentService = services[selectedService];
 
   return (
-    <section ref={sectionRef} className="w-full bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section ref={sectionRef} className="w-full bg-gradient-to-br from-gray-50 to-white relative mb-12 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -393,76 +388,127 @@ const Services = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          {/* <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-            Our Services
-          </h1>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Specialized technical solutions that power modern businesses with cutting-edge AI and machine learning technology.
-          </p> */}
+          
         </motion.div>
 
-        {/* Mobile Timeline (stacked cards with numbered steps) */}
+        {/* Mobile/Tablet Vertical Scroll */}
         {!isDesktop && (
-          <div className="lg:hidden relative max-w-3xl mx-auto py-4">
-            <div className="absolute left-6 top-0 bottom-0 w-1 bg-blue-200 rounded-full" />
-            {services.map((svc, idx) => (
-              <div key={svc.id} className="relative pl-16 mb-10">
-                <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-white ring-2 ring-blue-400 text-blue-700 font-bold flex items-center justify-center shadow-sm">
-                  {idx + 1}
-                </div>
-                <div className="rounded-2xl border border-blue-200 bg-white shadow-sm overflow-hidden">
-                  <div className="relative w-full">
-                    <img src={svc.image} alt={svc.title} className="w-full h-48 object-cover" loading="lazy" />
-                    <div className="absolute inset-0 ring-1 ring-blue-200/50 rounded-none pointer-events-none" />
-                  </div>
-                  <div className="p-4">
-                    <h4 className="text-lg font-semibold text-slate-900">{svc.title}</h4>
-                    <p className="text-slate-600 text-sm mt-1">{svc.desc}</p>
-                    <ul className="mt-3 space-y-1">
-                      {svc.features.slice(0, 3).map((f, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
-                          <span className={`w-5 h-5 rounded-full text-[10px] font-bold text-white flex items-center justify-center bg-gradient-to-r ${svc.color}`}>{i + 1}</span>
-                          <span className="flex-1">{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <button onClick={() => handleServiceClick(svc.id)} className="mt-4 inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-700 hover:bg-blue-100">
-                      Learn more
-                      <FaArrowRight />
-                    </button>
-                  </div>
-                </div>
+          <div className="lg:hidden relative mb-12">
+            {/* Header for mobile */}
+            <div className="mb-8 px-4">
+              <h2 className="">Our Services</h2>
+              <p className="mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
+            </div>
+            
+            {/* Vertical scrollable container with desktop-style cards */}
+            <div className="max-h-[70vh] overflow-y-auto no-scrollbar px-4">
+              <div className="space-y-6">
+                {services.map((svc, idx) => (
+                  <motion.div
+                    key={svc.id}
+                    className="w-full"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  >
+                    {/* Desktop-style card for mobile */}
+                    <div className="group relative rounded-2xl md:rounded-3xl overflow-hidden h-[320px] md:h-[350px] shadow-lg hover:shadow-xl transition-all duration-500">
+                      {/* Full Background image */}
+                      <div className="absolute inset-0">
+                        <img
+                          src={svc.image}
+                          alt={svc.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-black/60" />
+                      </div>
+
+                      {/* Centered content box with glassmorphism */}
+                      <div className="absolute inset-0 flex items-center justify-center p-4 z-10">
+                        <div className="  rounded-2xl p-5 max-w-full w-full mx-4 shadow-xl relative z-10">
+                          {/* Content */}
+                          <div className="space-y-3">
+                            {/* Title */}
+                            <h3 className="text-lg font-bold text-white">
+                              {svc.title}
+                            </h3>
+
+                            {/* Description */}
+                            <p className="text-gray-200 text-sm leading-relaxed line-clamp-2">
+                              {svc.desc}
+                            </p>
+
+                            {/* Features list */}
+                            <div className="space-y-1">
+                              {svc.features.slice(0, 2).map((f, i) => (
+                                <div key={i} className="flex items-start gap-2 text-xs">
+                                  <span className="text-white font-semibold flex-shrink-0 mt-0.5">
+                                    {i + 1}.
+                                  </span>
+                                  <span className="text-gray-200 leading-relaxed line-clamp-1">
+                                    {f}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* CTA - Fixed button */}
+                            <motion.button
+                              onClick={() => handleServiceClick(svc.id)}
+                              className="relative z-20 inline-flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-lg text-blue-600 font-semibold hover:text-blue-700 hover:bg-white transition-all duration-200 group/btn mt-2 shadow-md text-xs"
+                              whileHover={{ x: 3 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <span>Learn more</span>
+                              <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1 text-xs" />
+                            </motion.button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Border */}
+                      <div className="absolute inset-0 rounded-2xl md:rounded-3xl ring-1 ring-white/20 pointer-events-none" />
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Mobile instruction */}
+            <div className="text-center mt-2 px-4">
+              <p className="text-slate-500 text-sm">Scroll to explore all services</p>
+            </div>
           </div>
         )}
 
         {/* Desktop: Left list | Middle divider | Right details */}
         {isDesktop && (
           <motion.div
-            className="grid grid-rows-[auto_1fr] lg:grid-rows-1 grid-cols-1 lg:grid-cols-[1fr_16px_1.2fr] gap-4 items-stretch h-[calc(100%-3.5rem)]"
+            className="grid grid-rows-[auto_1fr]  lg:grid-rows-1 grid-cols-1 lg:grid-cols-[1fr_16px_1.2fr] gap-4 items-stretch h-[calc(100%-3.5rem)]"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
-          {/* Left: Services list */}
+          {/* Left: Services list - RESTORED TO ORIGINAL STYLING */}
           <motion.div ref={leftPanelRef} className="rounded-2xl p-4 md:p-5 overflow-hidden" variants={itemVariants}>
             <div className="mb-8">
-              <h2 className="text-6xl font-extrabold text-[#2176C1]">Our Services</h2>
-              <p className="text-slate-600 mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
+              <h2 className="">Our Services</h2>
+              <p className="mt-2">Specialized technical solutions that power modern businesses with cutting-edge technology.</p>
             </div>
             <ul ref={listRef} className="space-y-3 relative max-h-[calc(100vh-220px)] overflow-auto pr-1 no-scrollbar">
               {services.map((s, idx) => (
                 <li key={s.id} data-service-item="true" ref={(el) => (leftItemRefs.current[idx] = el)}>
-                  <button
-                    className={`group w-full flex items-center gap-4 rounded-xl px-3 py-2 text-left transition-colors`}
+                  <div
+                    className={`group w-full flex items-center gap-4 rounded-xl px-3 py-2 text-left transition-colors cursor-pointer`}
                     onClick={() => handleLeftSelect(idx)}
                   >
                     <span className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold transition-colors duration-200 ${
-                      idx === selectedService ? "bg-slate-200 text-black" : "bg-slate-100 text-slate-700"
+                      idx === selectedService ? "bg-black text-white" : "bg-slate-100 text-slate-700"
                     }`}>{idx + 1}</span>
                     <span className={`transition-colors duration-200 ${idx === selectedService ? "font-bold text-slate-900" : "text-slate-700 group-hover:text-slate-900"}`}>{s.title}</span>
-                  </button>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -498,13 +544,7 @@ const Services = () => {
                 animate={{ height: fillHeight }}
                 transition={{ type: "spring", stiffness: 200, damping: 28 }}
               />
-              {/* Glowing cap dot at the current progress end
-              <motion.div
-                className="absolute left-1/4 -translate-x-1/2 w-[12px] h-[12px] rounded-full bg-blue-500 shadow-lg shadow-blue-400/60"
-                style={{ top: itemMetrics.trackTop - 7 }}
-                animate={{ y: capOffset }}
-                transition={{ type: "spring", stiffness: 220, damping: 26 }}
-              /> */}
+              
             </div>
           </div>
 
@@ -512,57 +552,95 @@ const Services = () => {
           <motion.div ref={rightPanelRef} className="min-h-0 h-full" variants={itemVariants}>
             <div
               ref={rightScrollRef}
-              className="lg:h-full lg:overflow-y-auto pr-2 space-y-12 md:space-y-16 lg:space-y-48 pb-16 md:pb-24 lg:pb-36 no-scrollbar"
+              className="lg:h-full  lg:overflow-y-auto pr-2 pt-[25vh] space-y-[60vh] pb-[25vh] no-scrollbar"
             >
               {services.map((svc, idx) => (
                 <motion.div
                   key={svc.id}
                   ref={(el) => (cardRefs.current[idx] = el)}
-                  className={`group relative rounded-3xl border bg-white/80 backdrop-blur shadow-lg transition-all
-                    ${idx === selectedService ? "border-blue-200 ring-2 ring-blue-100" : "border-slate-200 hover:border-slate-300"}
+                  className={`group relative rounded-3xl  overflow-hidden transition-all duration-500 transform-gpu
+                    ${idx === selectedService 
+                      ? "shadow-2xl scale-[1.02] ring-2 ring-white/50" 
+                      : "shadow-xl hover:shadow-2xl hover:scale-[1.01]"
+                    }
                   `}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: 60 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  {/* Full-image card with content overlay on top */}
-                  <div className="relative w-full h-[260px] md:h-[320px] overflow-hidden rounded-3xl">
-                    <img
-                      src={svc.image}
-                      alt={svc.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                    {/* Gradient overlay for readability */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/20" />
-                    {/* Content overlay */}
-                    <div className="absolute inset-x-0 top-0 p-4 md:p-5">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0 text-white">
-                          <h4 className="text-lg md:text-xl font-semibold">{svc.title}</h4>
-                          <p className="text-white/90 text-sm md:text-base mt-1 line-clamp-2 md:line-clamp-3">{svc.desc}</p>
-                          <ul className="mt-2 space-y-1">
+                  {/* Modern glassmorphism card with advanced gradients */}
+                  <div className="relative w-full  h-[340px] md:h-[380px] overflow-hidden rounded-3xl shadow-xl">
+                    {/* Full background image */}
+                    <div className="absolute inset-0 ">
+                      <img
+                        src={svc.image}
+                        alt={svc.title}
+                        className="w-full h-full  object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                        <div className="absolute inset-0 bg-black/60" />
+                    </div>
+
+                    {/* Centered content box */}
+                    <div className="absolute inset-0 flex items-center justify-center p-6 md:p-8 z-10">
+                      <div className="  p-6 md:p-8 max-w-full w-full shadow-xl relative z-10">
+                        {/* Content */}
+                        <div className="space-y-4 md:space-y-6">
+                          {/* Title */}
+                          <h3 className=" font-bold text-white tracking-tight leading-tight">
+                            {svc.title}
+                          </h3>
+
+                          {/* Description */}
+                          <p className="text-gray-200 text-base md:text-lg leading-relaxed">
+                            {svc.desc}
+                          </p>
+
+                          {/* Features list */}
+                          <div className="space-y-2 md:space-y-3">
                             {svc.features.slice(0, 3).map((f, i) => (
-                              <li key={i} className="flex items-center gap-2 text-sm">
-                                <span className={`w-5 h-5 rounded-full text-[10px] font-bold text-white flex items-center justify-center bg-gradient-to-r ${svc.color}`}>{i + 1}</span>
-                                <span className="truncate">{f}</span>
-                              </li>
+                              <motion.div
+                                key={i}
+                                className="flex items-start gap-3 text-sm md:text-base"
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.1 + 0.2 }}
+                              >
+                                <span className="text-white font-semibold flex-shrink-0 mt-0.5">
+                                  {i + 1}.
+                                </span>
+                                <span className="text-gray-200 leading-relaxed group-hover/item:text-white transition-colors">
+                                  {f}
+                                </span>
+                              </motion.div>
                             ))}
-                          </ul>
+                          </div>
+
+                          {/* CTA - Fixed button */}
+                          <motion.button
+                            onClick={() => handleServiceClick(svc.id)}
+                            className="relative z-20 inline-flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg text-blue-700 font-semibold hover:text-blue-800 hover:bg-white transition-all duration-200 group/btn mt-4 shadow-md"
+                            whileHover={{ x: 5, scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <span>Learn more</span>
+                            <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+                          </motion.button>
                         </div>
-                        <button
-                          onClick={() => handleServiceClick(svc.id)}
-                          className="mt-1 shrink-0 inline-flex items-center gap-2 rounded-lg border border-white/30 bg-white/20 backdrop-blur px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/30"
-                        >
-                          Learn more
-                          <FaArrowRight />
-                        </button>
                       </div>
                     </div>
-                    {/* Floating icon badge */}
-                    <div className="absolute -top-3 -right-3 w-11 h-11 rounded-xl bg-white/90 shadow-md flex items-center justify-center">
-                      <div className={`w-9 h-9 rounded-lg bg-gradient-to-r ${svc.color} text-white flex items-center justify-center`}>{svc.icon}</div>
-                    </div>
+
+                    {/* Subtle border glow effect */}
+                    <div className="absolute inset-0 rounded-3xl ring-1 ring-white/20 pointer-events-none z-0" />
+                    {idx === selectedService && (
+                      <motion.div
+                        className="absolute inset-0 rounded-3xl ring-2 ring-blue-400/50"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -570,31 +648,6 @@ const Services = () => {
           </motion.div>
         </motion.div>
         )}
-
-        {/* Bottom Stats Section */}
-        {/* <motion.div 
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          {[
-            { number: "500+", label: "Projects Completed", icon: <FaCode /> },
-            { number: "50+", label: "Expert Team", icon: <FaBrain /> },
-            { number: "99.9%", label: "Uptime", icon: <FaDatabase /> },
-            { number: "24/7", label: "Support", icon: <FaComments /> }
-          ].map((stat, idx) => (
-            <motion.div
-              key={idx}
-              className="text-center hover:bg-blue-400  cursor-pointer p-4 bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300"
-              whileHover={{ y: -3, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div className="text-2xl font-bold text-blue-600 mb-1">{stat.number}</div>
-              <div className="text-sm text-gray-600">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div> */}
       </div>
     </section>
   );

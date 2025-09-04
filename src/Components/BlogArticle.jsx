@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaCalendar, FaUser, FaTag, FaBookOpen, FaHeart, FaShare, FaTwitter, FaFacebook, FaLinkedin, FaComment, FaEye } from "react-icons/fa";
-import blogPosts from "../blogPosts";
+import blogPosts from "../data/blogData";
+import { Helmet } from "react-helmet";
 
 const BlogArticle = () => {
   const { id } = useParams();
@@ -17,38 +18,19 @@ const BlogArticle = () => {
     const foundArticle = blogPosts.find(post => post.id === parseInt(id));
     if (foundArticle) {
       setArticle(foundArticle);
+      // Update document title when article is found
+      document.title = ` NextWave AI - Blog | ${foundArticle.title}`;
     } else {
+      document.title = 'Article Not Found | NextWave AI Blog';
       navigate('/blog');
     }
+    
+    // Cleanup function to reset title when component unmounts
+    return () => {
+      document.title = 'NextWave AI';
+    };
   }, [id, navigate]);
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-    setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
-  };
-
-  const handleShare = (platform) => {
-    const url = window.location.href;
-    const title = article?.title;
-    
-    let shareUrl = '';
-    switch (platform) {
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
-        break;
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-        break;
-      case 'linkedin':
-        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-        break;
-      default:
-        navigator.clipboard.writeText(url);
-        return;
-    }
-    
-    window.open(shareUrl, '_blank', 'width=600,height=400');
-  };
 
   if (!article) {
     return (
@@ -62,6 +44,15 @@ const BlogArticle = () => {
   }
 
   return (
+    <>
+   <Helmet>
+  <title> NextWave AI Blog | {article.title} </title>
+  <meta name="description" content={article.desc} />
+  <meta name="keywords" content={`${article.category}, AI, Technology, NextWave AI`} />
+  <meta name="author" content={article.author} />
+  <link rel="canonical" href={`https://nextwaveai-8.vercel.app/blog/${id}`} />
+</Helmet>
+
     <section className="w-full min-h-screen bg-gradient-to-br from-gray-50 to-white relative overflow-hidden pt-20">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -155,64 +146,7 @@ const BlogArticle = () => {
           </div>
         </motion.div>
 
-        {/* Article Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="bg-white rounded-3xl p-8 shadow-xl mb-12"
-        >
-          <div className="flex flex-wrap items-center justify-between gap-6">
-            {/* Like and Comment */}
-            <div className="flex items-center gap-6">
-              <button
-                onClick={handleLike}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
-                  isLiked 
-                    ? 'bg-red-100 text-red-600' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600'
-                }`}
-              >
-                <FaHeart className={isLiked ? 'text-red-600' : ''} />
-                <span>{likeCount}</span>
-              </button>
-              
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-600 rounded-full">
-                <FaComment />
-                <span>{commentCount}</span>
-              </div>
-            </div>
-
-            {/* Share Buttons */}
-            <div className="flex items-center gap-3">
-              <span className="text-gray-600 font-medium">Share:</span>
-              <button
-                onClick={() => handleShare('twitter')}
-                className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300"
-              >
-                <FaTwitter />
-              </button>
-              <button
-                onClick={() => handleShare('facebook')}
-                className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-300"
-              >
-                <FaFacebook />
-              </button>
-              <button
-                onClick={() => handleShare('linkedin')}
-                className="p-2 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition-colors duration-300"
-              >
-                <FaLinkedin />
-              </button>
-              <button
-                onClick={() => handleShare('copy')}
-                className="p-2 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition-colors duration-300"
-              >
-                <FaShare />
-              </button>
-            </div>
-          </div>
-        </motion.div>
+      
 
         {/* Related Articles */}
         <motion.div
@@ -250,6 +184,7 @@ const BlogArticle = () => {
         </motion.div>
       </div>
     </section>
+    </>
   );
 };
 

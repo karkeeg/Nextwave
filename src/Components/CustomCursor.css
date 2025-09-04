@@ -1,0 +1,52 @@
+.cursor {
+  position: fixed;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: transparent;
+  box-sizing: border-box;
+  mix-blend-mode: normal;
+  transition: width 0.25s ease, height 0.25s ease, border-width 0.25s ease;
+}
+
+.cursor--hover {
+  width: 24px;
+  height: 24px;
+  border-width: 1.5px;
+  border-color: rgb(10, 10, 10);
+}
+
+/* Hide system cursor - but allow hover detection */
+* {
+  cursor: none;
+}
+
+/* Ensure interactive elements still allow proper event handling */
+button, 
+a, 
+[role="button"], 
+input[type="submit"], 
+input[type="button"],
+.cursor-pointer {
+  cursor: none;
+  /* Ensure pointer events work */
+  pointer-events: auto !important;
+}
+
+/* Make sure nested elements in buttons also work */
+button *, 
+a *, 
+[role="button"] * {
+  pointer-events: none;
+}
+
+/* Override for specific interactive content inside buttons */
+button .cursor-pointer,
+a .cursor-pointer,
+[role="button"] .cursor-pointer {
+  pointer-events: auto;
+}

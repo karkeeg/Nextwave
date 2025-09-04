@@ -1,4 +1,5 @@
 import { ParallaxProvider } from "react-scroll-parallax";
+import { HelmetProvider } from "react-helmet-async";
 import MyRoutes from "./Pages/MyRoutes";
 import { useEffect } from "react";
 
@@ -20,22 +21,13 @@ function App() {
       window.removeEventListener("load", toTop);
     };
   }, []);
-  // useEffect(() => {
-  //   function handleClick(e) {
-  //     const btn = e.target.closest("button, [role='button']");
-  //     if (btn) {
-  //       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  //     }
-  //   }
-  //   document.addEventListener("click", handleClick, { passive: true });
-  //   return () => document.removeEventListener("click", handleClick);
-  // }, []);
+
   return (
-    <>
+    <HelmetProvider>
       <ParallaxProvider>
         <MyRoutes />
       </ParallaxProvider>
-    </>
+    </HelmetProvider>
   );
 }
 

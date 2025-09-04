@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 const PrivacyPolicy = () => {
+  // Set document title directly for immediate updates
+  useEffect(() => {
+    document.title = 'Privacy Policy | NextWave AI';
+    
+    // Cleanup function to reset title when component unmounts
+    return () => {
+      document.title = 'NextWave AI';
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 pt-24 md:pt-28 pb-8">
+      <Helmet>
+        <title>Privacy Policy | NextWave AI</title>
+        <meta name="description" content="Read NextWave AI's Privacy Policy to understand how we collect, use, and protect your personal information." />
+        <meta name="keywords" content="Privacy Policy, Data Protection, Personal Information, NextWave AI, AI Technology" />
+        <meta property="og:title" content="Privacy Policy | NextWave AI" />
+        <meta property="og:description" content="Read NextWave AI's Privacy Policy to understand how we collect, use, and protect your personal information." />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://nextwaveai-8.vercel.app/privacy-policy" />
+      </Helmet>
       <div className="max-w-6xl mx-auto px-6 md:px-8">
 
         {/* Back Button */}
@@ -164,4 +184,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy; 
+export default PrivacyPolicy;
