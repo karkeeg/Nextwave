@@ -8,7 +8,6 @@ import {
   SiNumpy, SiPandas, SiJupyter, SiAnaconda, SiHuggingface, SiApacheairflow, SiMlflow
 } from "react-icons/si";
 import { SiAwsamplify } from "react-icons/si";
-// Import your actual components - replace these paths with your actual component paths
 import Services from "../Components/Services";
 import Testimonials from "../Components/Testimonials"; 
 import Contact from "../Components/Contact";
