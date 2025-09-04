@@ -9,6 +9,7 @@ import IndustryDetail from "../Components/IndustryDetail";
 import ScrollToTop from "../Components/ScrollToTop";
 import PrivacyPolicy from './../Components/PrivacyPolicy';
 import TestimonialDetail from "../Components/TestimonialsDetails";
+import NotFoundPage from './NotFoundPage';
 
 const MyRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const MyRoutes = () => {
          
           {/* <Route path="/practice" element={<Practice />} /> */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="*" element={<NotFoundPage />} />
 
         </Route>
       </Routes>
