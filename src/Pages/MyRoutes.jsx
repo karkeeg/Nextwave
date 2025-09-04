@@ -27,7 +27,7 @@ const MyRoutes = () => {
          
           {/* <Route path="/practice" element={<Practice />} /> */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/404" element={<NotFoundPage />} />
 
         </Route>
       </Routes>

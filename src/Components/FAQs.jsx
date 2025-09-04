@@ -37,7 +37,7 @@ const FAQs = () => {
       <div className="w-full faq-section max-w-4xl mx-auto">
         <div className="text-center lg:mb-12 mb-2 px-4">
           <h2 >
-            Frequently Asked Questions
+            Frequently Asked Question
           </h2>
           <p className=" mt-3 ">
             Find answers to common questions about NextWaveAI, our services, and
