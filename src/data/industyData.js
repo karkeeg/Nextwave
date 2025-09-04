@@ -1,7 +1,7 @@
 import { FaBuilding, FaGraduationCap, FaHospital, FaLaptopCode, FaIndustry } from "react-icons/fa";
 import industy101 from '../assets/files/industry1.1.avif';
 import industy102 from '../assets/files/industry1.2.avif';
-import industy103 from '../assets/files/industry1.3.avif';
+import industy103 from '../assets/files/insustry1.3.avif';
 import industy201 from '../assets/files/industry2.1.avif';
 import industy202 from '../assets/files/industry2.2.avif';
 import industy203 from '../assets/files/industry2.3.avif';
@@ -44,9 +44,8 @@ const industries = {
       "Reduced operational costs and increased efficiency",
       "Better risk management and compliance",
     ],
-    icon: <FaBuilding size={32} />,
-    image: "https://images.unsplash.com/photo-1556742400-b5da35d32d78?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-  },
+    icon: FaBuilding,
+    image: industy103,},
 
   education: {
     id: "education",
@@ -76,9 +75,8 @@ const industries = {
       "Streamlined administrative processes",
       "Better educational outcomes and performance",
     ],
-    icon: <FaGraduationCap size={32} />,
-    image: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-  },
+    icon: FaGraduationCap ,
+    image: industy203  },
 
   healthcare: {
     id: "healthcare",
@@ -108,9 +106,8 @@ const industries = {
       "Enhanced medical research and drug development",
       "Better resource allocation and cost management",
     ],
-    icon: <FaHospital size={32} />,
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-  },
+    icon: FaHospital ,
+    image: industy303 },
 
   technology: {
     id: "technology",
@@ -140,9 +137,8 @@ const industries = {
       "Streamlined development and deployment processes",
       "Improved service delivery and customer satisfaction",
     ],
-    icon: <FaLaptopCode size={32} />,
-    image: "https://images.unsplash.com/photo-1581093588401-22a9a2a60c8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-  },
+    icon: FaLaptopCode ,
+    image:industy403,  },
 
   manufacturing: {
     id: "manufacturing",
@@ -172,8 +168,8 @@ const industries = {
       "Improved product quality and consistency",
       "Better resource utilization and sustainability",
     ],
-    icon: <FaIndustry size={32} />,
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+    icon: FaIndustry,
+    image: industy503,
   },
 };
 

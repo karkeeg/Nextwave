@@ -324,7 +324,7 @@ const HomePage = () => {
       const heroSection = document.getElementById('hero');
       if (heroSection) {
         const heroHeight = heroSection.offsetHeight;
-        setIsInHeroSection(currentScrollY < heroHeight * 0.8); // 80% of hero section height
+        setIsInHeroSection(currentScrollY < heroHeight * 1.2); // 80% of hero section height
       }
     };
     
