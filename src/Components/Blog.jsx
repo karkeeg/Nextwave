@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaArrowRight } from "react-icons/fa";
 import blogPosts from "../data/blogData";
-import './blog.css'
+import "./blog.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,10 +54,7 @@ const Blog = () => {
       <div className="section">
         <div className="container-medium">
           <div className="text-center px-4 sm:px-6 lg:px-8">
-            <h1 className="bg-clip-text py-2 mb-6">
-              Insights & Stories
-            </h1>
-           
+            <h1 className="bg-clip-text py-2 mb-6">Insights & Stories</h1>
           </div>
         </div>
       </div>
@@ -92,12 +89,12 @@ const Blog = () => {
                     <div className="item_number text-white mb-3 sm:mb-4 text-sm sm:text-base md:text-lg font-bold bg-white/20 backdrop-blur-sm rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center">
                       {i + 1}
                     </div>
-                    
+
                     {/* Title - Better responsive scaling */}
                     <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-gray-100 font-bold mb-3 sm:mb-4 md:mb-6 leading-tight">
                       {post.title}
                     </h2>
-                    
+
                     {/* Description - Better mobile handling */}
                     <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-4 sm:mb-6 md:mb-8 leading-relaxed max-w-full sm:max-w-2xl">
                       {post.desc}
@@ -105,7 +102,9 @@ const Blog = () => {
 
                     {/* CTA Button - Mobile optimized */}
                     <button className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg sm:rounded-xl text-white font-semibold hover:bg-white/20 transition-all duration-300 group text-sm sm:text-base">
-                      <span className="hidden xs:inline">Read Full Article</span>
+                      <span className="hidden xs:inline">
+                        Read Full Article
+                      </span>
                       <span className="xs:hidden">Read More</span>
                       <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1 text-xs sm:text-sm" />
                     </button>
@@ -219,12 +218,12 @@ const Blog = () => {
 //                         {post.category || 'Insights'}
 //                       </div>
 //                     </div>
-                    
+
 //                     {/* Enhanced Title */}
 //                     <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-white font-bold mb-3 sm:mb-4 md:mb-6 leading-tight tracking-tight">
 //                       {post.title}
 //                     </h2>
-                    
+
 //                     {/* Enhanced Description */}
 //                     <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-4 sm:mb-6 md:mb-8 leading-relaxed max-w-full sm:max-w-2xl opacity-90">
 //                       {post.desc}
@@ -249,7 +248,7 @@ const Blog = () => {
 //                         <span className="sm:hidden">Read More</span>
 //                         <FaArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1 text-xs sm:text-sm" />
 //                       </button>
-                      
+
 //                       {/* Reading time - hidden on mobile */}
 //                       <div className="hidden md:flex items-center gap-2 text-sm text-gray-300">
 //                         <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
@@ -284,7 +283,7 @@ const Blog = () => {
 //                 {/* Progress indicator on the side - tablet and desktop only */}
 //                 <div className="hidden lg:block absolute right-6 top-1/2 transform -translate-y-1/2">
 //                   <div className="w-1 h-20 bg-white/20 rounded-full">
-//                     <div 
+//                     <div
 //                       className="w-full bg-gradient-to-t from-blue-400 to-purple-400 rounded-full transition-all duration-300"
 //                       style={{ height: `${((i + 1) / blogPosts.length) * 100}%` }}
 //                     />
