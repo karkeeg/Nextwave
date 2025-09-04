@@ -1,29 +1,31 @@
-import { FaBuilding, FaGraduationCap, FaHospital, FaLaptopCode, FaIndustry } from "react-icons/fa";
-import industy101 from '../assets/files/industry1.1.avif';
-import industy102 from '../assets/files/industry1.2.avif';
-import industy103 from '../assets/files/insustry1.3.avif';
-import industy201 from '../assets/files/industry2.1.avif';
-import industy202 from '../assets/files/industry2.2.avif';
-import industy203 from '../assets/files/industry2.3.avif';
-import industy301 from '../assets/files/industry3.1.avif';
-import industy302 from '../assets/files/industry3.2.avif';
-import industy303 from '../assets/files/industry3.3.avif';
-import industy402 from '../assets/files/industry4.2.avif';
-import industy401 from '../assets/files/industry4.1.avif';
-import industy403 from '../assets/files/industry4.3.avif';
-import industy501 from '../assets/files/industry5.1.avif';
-import industy502 from '../assets/files/industry5.2.avif';
-import industy503 from '../assets/files/industry5.3.avif';
+import {
+  FaBuilding,
+  FaGraduationCap,
+  FaHospital,
+  FaLaptopCode,
+  FaIndustry,
+} from "react-icons/fa";
+import industy101 from "../assets/files/industry1.1.avif";
+import industy102 from "../assets/files/industry1.2.avif";
+import industy103 from "../assets/files/insustry1.3.avif";
+import industy201 from "../assets/files/industry2.1.avif";
+import industy202 from "../assets/files/industry2.2.avif";
+import industy203 from "../assets/files/industry2.3.avif";
+import industy301 from "../assets/files/industry3.1.avif";
+import industy302 from "../assets/files/industry3.2.avif";
+import industy303 from "../assets/files/industry3.3.avif";
+import industy402 from "../assets/files/industry4.2.avif";
+import industy401 from "../assets/files/industry4.1.avif";
+import industy403 from "../assets/files/industry4.3.avif";
+import industy501 from "../assets/files/industry5.1.avif";
+import industy502 from "../assets/files/industry5.2.avif";
+import industy503 from "../assets/files/industry5.3.avif";
 
 const industries = {
   "financial-services": {
     id: "financial-services",
     title: "Financial Services",
-    images: [
-      industy101,
-      industy102,
-      industy103,
-    ],
+    images: [industy101, industy102, industy103],
     featuresList: [
       ["Fraud detection", "AI-driven risk assessment"],
       ["Personalized financial insights", "Automated customer support"],
@@ -45,16 +47,13 @@ const industries = {
       "Better risk management and compliance",
     ],
     icon: FaBuilding,
-    image: industy103,},
+    image: industy103,
+  },
 
   education: {
     id: "education",
     title: "Education",
-    images: [
-      industy201,
-      industy202,
-      industy203,  
-    ],
+    images: [industy201, industy202, industy203],
     featuresList: [
       ["E-learning platforms", "Virtual classrooms"],
       ["Smart assessments", "Course recommendation engines"],
@@ -75,17 +74,14 @@ const industries = {
       "Streamlined administrative processes",
       "Better educational outcomes and performance",
     ],
-    icon: FaGraduationCap ,
-    image: industy203  },
+    icon: FaGraduationCap,
+    image: industy203,
+  },
 
   healthcare: {
     id: "healthcare",
     title: "Healthcare",
-    images: [
-      industy301,
-      industy302,
-      industy303,
-    ],
+    images: [industy301, industy302, industy303],
     featuresList: [
       ["Medical image analysis", "Predictive healthcare"],
       ["Patient data management", "Telemedicine solutions"],
@@ -106,17 +102,14 @@ const industries = {
       "Enhanced medical research and drug development",
       "Better resource allocation and cost management",
     ],
-    icon: FaHospital ,
-    image: industy303 },
+    icon: FaHospital,
+    image: industy303,
+  },
 
   technology: {
     id: "technology",
     title: "Technology",
-    images: [
-      industy401,
-      industy402,
-      industy403,
-    ],
+    images: [industy401, industy402, industy403],
     featuresList: [
       ["Cloud infrastructure", "Managed IT services"],
       ["Cybersecurity solutions", "Software support"],
@@ -137,17 +130,14 @@ const industries = {
       "Streamlined development and deployment processes",
       "Improved service delivery and customer satisfaction",
     ],
-    icon: FaLaptopCode ,
-    image:industy403,  },
+    icon: FaLaptopCode,
+    image: industy403,
+  },
 
   manufacturing: {
     id: "manufacturing",
     title: "Manufacturing",
-    images: [
-      industy501,
-      industy502,
-      industy503,
-    ],
+    images: [industy501, industy502, industy503],
     featuresList: [
       ["Predictive maintenance", "Quality automation"],
       ["Supply chain optimization", "Production planning"],
