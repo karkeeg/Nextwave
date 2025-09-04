@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaChartLine, FaBrain, FaComments, FaLanguage, FaRobot, FaArrowLeft, FaGlobe, FaMobileAlt } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import {servicesData} from "../data/serviceData"; // adjust path as needed
+import services from "../data/serviceData"; 
 
 const ServiceDetail = () => {
   const { serviceId } = useParams();
@@ -10,8 +10,14 @@ const ServiceDetail = () => {
   const [service, setService] = useState(null);
 
   useEffect(() => {
-    // Get the service based on serviceId from the servicesData object
-    const foundService = servicesData[serviceId];
+    // Convert the array to an object with id as key for easier lookup
+    const servicesObject = services.reduce((obj, item) => {
+      obj[item.id] = item;
+      return obj;
+    }, {});
+    
+    // Get the service based on serviceId from the services object
+    const foundService = servicesObject[serviceId];
     setService(foundService);
     
     // Update document title directly for immediate updates
@@ -44,12 +50,12 @@ const ServiceDetail = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Service Not Found</h1>
-                     <button
-             onClick={handleBackToServices}
-             className="text-[#2176C1] hover:text-[#185a96]"
-           >
-             Back to Services
-           </button>
+          <button
+            onClick={handleBackToServices}
+            className="text-[#2176C1] hover:text-[#185a96]"
+          >
+            Back to Services
+          </button>
         </div>
       </div>
     );
@@ -81,7 +87,7 @@ const ServiceDetail = () => {
           <div className="bg-gradient-to-r from-[#2176C1] to-[#185a96] text-white p-8">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                {React.createElement(FaGlobe, { size: 24 })}
+                {React.createElement(service.icon, { size: 24 })}
               </div>
               <div>
                 <h2 className="text-white font-bold">{service.title}</h2>
@@ -165,20 +171,20 @@ const ServiceDetail = () => {
         <div className="bg-white rounded-2xl shadow-lg p-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Explore Other Services</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Object.entries(servicesData)
-              .filter(([id]) => id !== serviceId)
-              .map(([id, relatedService]) => (
-                                 <button
-                   key={id}
-                   onClick={() => {
-                     navigate(`/services/${id}`);
-                     window.scrollTo(0, 0);
-                   }}
-                   className="text-left p-4 rounded-lg border border-gray-200 hover:border-[#2176C1] hover:bg-blue-50 transition-all duration-300 group"
-                 >
+            {services
+              .filter((serviceItem) => serviceItem.id !== serviceId)
+              .map((relatedService) => (
+                <button
+                  key={relatedService.id}
+                  onClick={() => {
+                    navigate(`/services/${relatedService.id}`);
+                    window.scrollTo(0, 0);
+                  }}
+                  className="text-left p-4 rounded-lg border border-gray-200 hover:border-[#2176C1] hover:bg-blue-50 transition-all duration-300 group"
+                >
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 bg-[#2176C1] rounded-lg flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
-                      {React.createElement(FaGlobe, { size: 16 })}
+                      {React.createElement(relatedService.icon, { size: 16 })}
                     </div>
                     <h3 className="font-semibold text-gray-900 group-hover:text-[#2176C1] transition-colors duration-300">
                       {relatedService.title}

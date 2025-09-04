@@ -1,5 +1,14 @@
-export const servicesData = {
-  "data-science": {
+import { FaChartLine, FaBrain, FaLanguage, FaComments, FaRobot, FaGlobe, FaMobileAlt } from "react-icons/fa";
+import service1 from '../assets/files/service1.avif';
+import service2 from '../assets/files/service2.avif';
+import service3 from '../assets/files/service3.avif';
+import service4 from '../assets/files/service4.webp';
+import service5 from '../assets/files/service5.avif';
+import service6 from '../assets/files/service6.avif';
+
+const services = [
+  {
+    id: "data-science",
     title: "Data Science & Predictive Analytics",
     subtitle: "Transform your data into actionable insights",
     desc: "Our data science and predictive analytics services help businesses unlock the full potential of their data. We combine advanced statistical methods, machine learning algorithms, and cutting-edge tools to deliver insights that drive strategic decision-making.",
@@ -18,10 +27,11 @@ export const servicesData = {
       "Optimized business processes and efficiency",
       "Competitive advantage through predictive capabilities"
     ],
-    icon: '<FaChartLine size={32} />',
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    icon: FaChartLine,
+    image: service1,
   },
-  "machine-learning": {
+  {
+    id: "machine-learning",
     title: "Machine Learning Engineering",
     subtitle: "Build intelligent systems that learn and adapt",
     desc: "Our machine learning engineering services focus on developing robust, scalable, and production-ready ML systems. We help organizations implement AI solutions that continuously learn and improve from data.",
@@ -40,10 +50,11 @@ export const servicesData = {
       "Reduced operational costs through automation",
       "Enhanced product personalization"
     ],
-    icon: '<FaBrain size={32} />',
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    icon: FaBrain,
+    image: service2,
   },
-  "nlp": {
+  {
+    id: "nlp",
     title: "Natural Language Processing (NLP)",
     subtitle: "Enable machines to understand human language",
     desc: "Our NLP services help businesses process, analyze, and generate human language at scale. From sentiment analysis to language translation, we build systems that understand context and meaning.",
@@ -62,10 +73,11 @@ export const servicesData = {
       "Global reach through multilingual capabilities",
       "Enhanced content understanding and categorization"
     ],
-    icon: '<FaLanguage size={32} />',
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    icon: FaLanguage,
+    image: service3,
   },
-  "ai-chat": {
+  {
+    id: "ai-chat",
     title: "AI Chat Development",
     subtitle: "Create intelligent conversational experiences",
     desc: "Our AI chat development services create intelligent conversational agents that provide personalized, context-aware interactions. We build chatbots and virtual assistants that enhance customer engagement.",
@@ -84,10 +96,11 @@ export const servicesData = {
       "Scalable customer service operations",
       "Consistent and personalized interactions"
     ],
-    icon: '<FaComments size={32} />',
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    icon: FaComments,
+    image: service4,
   },
-  "ai-robotics": {
+  {
+    id: "ai-robotics",
     title: "AI Robotics & Automation",
     subtitle: "Intelligent automation for the future",
     desc: "Our AI robotics and automation services combine artificial intelligence with robotic systems to create intelligent automation solutions. We help businesses optimize operations and increase efficiency.",
@@ -106,10 +119,11 @@ export const servicesData = {
       "Cost savings through automation",
       "Enhanced safety in hazardous environments"
     ],
-    icon: '<FaRobot size={32} />',
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    icon: FaRobot,
+    image: service5,
   },
-  "web-dev": {
+  {
+    id: "web-dev",
     title: "Website Development",
     subtitle: "Modern, fast, and SEO-friendly websites",
     desc: "We build responsive, performant websites using React/Next.js, with accessibility and Core Web Vitals baked in.",
@@ -127,10 +141,11 @@ export const servicesData = {
       "Faster iteration with modular components",
       "Maintainable, scalable architecture",
     ],
-    icon: '<FaGlobe size={32} />',
-    image: "https://images.unsplash.com/photo-1529336953121-ad5a0d43d0d2?q=80&w=2069&auto=format&fit=crop"
+    icon: FaGlobe,
+    image: service5,
   },
-  "app-dev": {
+  {
+    id: "app-dev",
     title: "App Development",
     subtitle: "Cross‑platform mobile apps that scale",
     desc: "Build and ship high-quality iOS and Android apps with React Native and robust backend services.",
@@ -148,7 +163,9 @@ export const servicesData = {
       "Consistent UX across platforms",
       "Observability and crash analytics",
     ],
-    icon: '<FaMobileAlt size={32} />',
-    image: "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?q=80&w=2069&auto=format&fit=crop"
-  }
-};
+    icon: FaMobileAlt,
+    image: service6,
+  },
+];
+
+export default services;

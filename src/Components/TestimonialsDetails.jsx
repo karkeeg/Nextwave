@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaQuoteLeft, FaStar, FaChevronUp, FaChevronDown } from 'react-icons/fa';
-import  {testimonialsData}  from '../Components/Testimonials';
+import  testimonials  from '../data/testimonials';
 import { Helmet } from 'react-helmet-async';
 
 const TestimonialDetail = () => {
@@ -12,10 +12,10 @@ const TestimonialDetail = () => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   // Validate index
-  const isValidIndex = Number.isInteger(currentIndex) && currentIndex >= 0 && currentIndex < testimonialsData.length;
-  const testimonial = isValidIndex ? testimonialsData[currentIndex] : null;
+  const isValidIndex = Number.isInteger(currentIndex) && currentIndex >= 0 && currentIndex < testimonials.length;
+  const testimonial = isValidIndex ? testimonials[currentIndex] : null;
   const otherTestimonials = isValidIndex
-  ? testimonialsData
+  ? testimonials
       .map((testimonial, i) => ({ ...testimonial, originalIndex: i }))
       .filter((_, i) => i !== currentIndex)
   : [];
@@ -52,6 +52,15 @@ const TestimonialDetail = () => {
     }
   };
 
+  const handleBackToTestimonials=()=>{
+     navigate("/");
+    setTimeout(() => {
+      const testimonailsSection = document.getElementById("testimonials");
+      if (testimonailsSection) {
+        testimonailsSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+  }
   const visibleTestimonials = otherTestimonials.slice(activeSlide, activeSlide + 3);
 
   // Fallback if testimonial not found
@@ -80,10 +89,10 @@ const TestimonialDetail = () => {
         <link rel="canonical" href={`https://nextwaveai-8.vercel.app/testimonials/${currentIndex}`} />
       </Helmet>
     
-    <div className="min-h-screen bg-gradient-to-b from-[#FAFBFC] to-[#F0F9FF] py-12 px-4 mt-12 md:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#FAFBFC] to-[#F0F9FF] py-24 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         <button 
-          // onClick={() => navigate('#testimonials')}
+          onClick={() => handleBackToTestimonials()}
           className="flex items-center text-[#2176C1] hover:text-[#185a96] mb-8 transition-colors"
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

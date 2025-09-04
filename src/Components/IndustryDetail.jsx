@@ -199,6 +199,7 @@ const IndustryDetail = () => {
         />
       </Helmet>
 
+<div className="min-h-screen bg-gray-50 p-6 lg:p-20">
       {/* Back Button */}
       <button
         onClick={handleBackToIndustries}
@@ -209,7 +210,7 @@ const IndustryDetail = () => {
       </button>
 
       {/* Main Content */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-7xl mx-auto mb-12">
         {/* Header */}
         <div className="bg-gradient-to-r from-[#2176C1] to-[#185a96] text-white p-6">
           <div className="flex items-center gap-4 mb-3">
@@ -284,6 +285,8 @@ const IndustryDetail = () => {
           </div>
         </div>
       </div>
+
+    </div>
     </>
   );
 };
