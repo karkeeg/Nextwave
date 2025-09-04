@@ -5,57 +5,57 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   
     <url>
-      <loc>https://nextwaveai-8.vercel.app/</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://nextwaveai-five.vercel.app/</loc>
+      <lastmod>2025-09-04</lastmod>
       <changefreq>weekly</changefreq>
       <priority>1.0</priority>
     </url>
   
     <url>
-      <loc>https://nextwaveai-8.vercel.app/about</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://nextwaveai-five.vercel.app/about</loc>
+      <lastmod>2025-09-04</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
   
     <url>
-      <loc>https://nextwaveai-8.vercel.app/services</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://nextwaveai-five.vercel.app/services</loc>
+      <lastmod>2025-09-04</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
   
     <url>
-      <loc>https://nextwaveai-8.vercel.app/blog</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://nextwaveai-five.vercel.app/blog</loc>
+      <lastmod>2025-09-04</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
   
     <url>
-      <loc>https://nextwaveai-8.vercel.app/contact</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://nextwaveai-five.vercel.app/contact</loc>
+      <lastmod>2025-09-04</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
   
     <url>
-      <loc>https://nextwaveai-8.vercel.app/privacy-policy</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://nextwaveai-five.vercel.app/privacy-policy</loc>
+      <lastmod>2025-09-04</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
   
     <url>
-      <loc>https://nextwaveai-8.vercel.app/terms-of-service</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://nextwaveai-five.vercel.app/terms-of-service</loc>
+      <lastmod>2025-09-04</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
   
     <url>
-      <loc>https://nextwaveai-8.vercel.app/testimonials</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://nextwaveai-five.vercel.app/testimonials</loc>
+      <lastmod>2025-09-04</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
