@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 
-import F69 from "../assets/Frames for robot/Rectangle 69.png";
-import F70 from "../assets/Frames for robot/Rectangle 70.png";
-import F71 from "../assets/Frames for robot/Rectangle 71.png";
-import F72 from "../assets/Frames for robot/Rectangle 72.png";
-import F75 from "../assets/Frames for robot/Rectangle 75.png";
-
+import F69 from "../assets/Frames for robot/Rectangle 69.webp";
+import F70 from "../assets/Frames for robot/Rectangle 70.webp";
+import F71 from "../assets/Frames for robot/Rectangle 71.webp";
+import F72 from "../assets/Frames for robot/Rectangle 72.webp";
+import F75 from "../assets/Frames for robot/Rectangle 75.webp";
 
 const RobotMosaic = () => {
   // Timing
@@ -49,9 +48,13 @@ const RobotMosaic = () => {
   const withKey = (key) => {
     const idx = order.indexOf(key);
     return {
-      initial: { opacity: 0, y: 24, scale: 0.9, filter: 'blur(10px)' },
-      animate: { opacity: 1, y: 0, scale: [0.9, 1.03, 1], filter: 'blur(0px)' },
-      transition: { delay: BASE + idx * STEP, duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+      initial: { opacity: 0, y: 24, scale: 0.9, filter: "blur(10px)" },
+      animate: { opacity: 1, y: 0, scale: [0.9, 1.03, 1], filter: "blur(0px)" },
+      transition: {
+        delay: BASE + idx * STEP,
+        duration: 0.9,
+        ease: [0.16, 1, 0.3, 1],
+      },
     };
   };
 
@@ -60,28 +63,59 @@ const RobotMosaic = () => {
       <div className="scale-30 sm:scale-40 md:scale-60 lg:scale-100 origin-center">
         <div
           style={{
-            width: '100%',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
+            width: "100%",
+            justifyContent: "flex-start",
+            alignItems: "center",
             gap: 3,
-            display: 'inline-flex',
+            display: "inline-flex",
           }}
         >
           {/* Left column */}
           <div
             style={{
-              flex: '1 1 0',
+              flex: "1 1 0",
               height: 398,
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-end',
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              alignItems: "flex-end",
               gap: 1,
-              display: 'inline-flex',
+              display: "inline-flex",
             }}
           >
-            <motion.img {...withKey('L1')} style={{ width: 114, paddingTop: 66, height: 260, borderRadius: 10, objectFit: 'cover' }} src={F69} alt="left-1" />
-            <motion.img {...withKey('L2')} style={{ width: 140, height: 120, borderRadius: 8, objectFit: 'cover' }} src={F71} alt="left3" />
-            <motion.img {...withKey('L3')} style={{ width: 120, height: 120, borderRadius: 8, objectFit: 'cover' }} src={F71} alt="left-3" />
+            <motion.img
+              {...withKey("L1")}
+              style={{
+                width: 114,
+                paddingTop: 66,
+                height: 260,
+                borderRadius: 10,
+                objectFit: "cover",
+              }}
+              src={F69}
+              alt="left-1"
+            />
+            <motion.img
+              {...withKey("L2")}
+              style={{
+                width: 140,
+                height: 120,
+                borderRadius: 8,
+                objectFit: "cover",
+              }}
+              src={F71}
+              alt="left3"
+            />
+            <motion.img
+              {...withKey("L3")}
+              style={{
+                width: 120,
+                height: 120,
+                borderRadius: 8,
+                objectFit: "cover",
+              }}
+              src={F71}
+              alt="left-3"
+            />
           </div>
 
           {/* Middle column */}
@@ -90,35 +124,90 @@ const RobotMosaic = () => {
               width: 135,
               height: 410,
               borderRadius: 8,
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
               gap: 2,
-              display: 'inline-flex',
+              display: "inline-flex",
             }}
           >
-            <motion.img {...withKey('C1')} style={{ alignSelf: 'stretch', flex: '1 1 0', borderRadius: 8, objectFit: 'cover' }} src={F70} alt="center-1" />
-            <motion.img {...withKey('C2')} style={{ alignSelf: 'stretch', height: 100, borderRadius: 8, objectFit: 'cover' }} src={F71} alt="center-2" />
+            <motion.img
+              {...withKey("C1")}
+              style={{
+                alignSelf: "stretch",
+                flex: "1 1 0",
+                borderRadius: 8,
+                objectFit: "cover",
+              }}
+              src={F70}
+              alt="center-1"
+            />
+            <motion.img
+              {...withKey("C2")}
+              style={{
+                alignSelf: "stretch",
+                height: 100,
+                borderRadius: 8,
+                objectFit: "cover",
+              }}
+              src={F71}
+              alt="center-2"
+            />
           </div>
 
           {/* Right column */}
           <div
             style={{
-              flex: '1 1 0',
+              flex: "1 1 0",
               width: 512,
               height: 352,
-              flexDirection: 'column',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-start',
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "flex-start",
               gap: 1,
               paddingTop: 46,
-              display: 'inline-flex',
+              display: "inline-flex",
             }}
           >
-            <motion.img {...withKey('R1')} style={{ height: 76, borderRadius: 8, objectFit: 'cover' }} src={F71} alt="right-1" />
-            <motion.img {...withKey('R2')} style={{ width: 220, height: 70, borderRadius: 8, objectFit: 'cover' }} src={F72} alt="right2" />
-            <motion.img {...withKey('R3')} style={{ width: 106, height: 108, borderRadius: 8, objectFit: 'cover' }} src={F75} alt="right-4" />
-            <motion.img {...withKey('R4')} style={{ width: 140, height: 112, borderRadius: 8, objectFit: 'cover' }} src={F71} alt="right-3" />
+            <motion.img
+              {...withKey("R1")}
+              style={{ height: 76, borderRadius: 8, objectFit: "cover" }}
+              src={F71}
+              alt="right-1"
+            />
+            <motion.img
+              {...withKey("R2")}
+              style={{
+                width: 220,
+                height: 70,
+                borderRadius: 8,
+                objectFit: "cover",
+              }}
+              src={F72}
+              alt="right2"
+            />
+            <motion.img
+              {...withKey("R3")}
+              style={{
+                width: 106,
+                height: 108,
+                borderRadius: 8,
+                objectFit: "cover",
+              }}
+              src={F75}
+              alt="right-4"
+            />
+            <motion.img
+              {...withKey("R4")}
+              style={{
+                width: 140,
+                height: 112,
+                borderRadius: 8,
+                objectFit: "cover",
+              }}
+              src={F71}
+              alt="right-3"
+            />
           </div>
         </div>
       </div>
