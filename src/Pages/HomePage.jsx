@@ -38,9 +38,9 @@ import Contact from "../Components/Contact";
 import Blog from "../Components/Blog";
 import FAQs from "../Components/FAQs";
 import IndustryServed from "../Components/IndustryServed";
-import RobotMosaic from "../Components/RobotMosaic";
 import { Helmet } from "react-helmet-async";
 
+const RobotMosaic = React.lazy(() => import("../Components/RobotMosaic"));
 // ✅ Responsive Rolling Words Component
 const RollingWords = ({ words, interval = 3000, className = "" }) => {
   const [index, setIndex] = useState(0);
@@ -631,7 +631,7 @@ const HomePage = () => {
                 >
                   <button
                     onClick={() => scrollToSection("contact")}
-                    className="bg-[#cfdcf7] text-[#2176C1] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#2176C1] hover:text-white hover:scale-105 transition-all duration-300 text-base sm:text-lg w-full sm:w-auto max-w-xs sm:max-w-none"
+                    className="bg-[#2176C1] text-white font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#17548a] hover:border-[#17548a] hover:scale-105 transition-all duration-300 text-base sm:text-lg w-full sm:w-auto max-w-xs sm:max-w-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:outline-none"
                   >
                     Request a Demo
                   </button>
