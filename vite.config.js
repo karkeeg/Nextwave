@@ -4,7 +4,8 @@ import { createHtmlPlugin } from "vite-plugin-html";
 import compress from "vite-plugin-compression";
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command, mode }) => ({
+  base: mode === 'development' ? '/' : './',
   plugins: [
     react({
       // Enable Fast Refresh
@@ -12,8 +13,8 @@ export default defineConfig({
       // Use React 17+ automatic JSX transform
       jsxRuntime: "automatic",
     }),
-    // HTML minification and optimization
-    createHtmlPlugin({
+    // HTML minification and optimization - only in production
+    mode === 'production' && createHtmlPlugin({
       minify: true,
       inject: {
         data: {
@@ -22,18 +23,18 @@ export default defineConfig({
         },
       },
     }),
-    // Gzip and Brotli compression
-    compress({
+    // Gzip and Brotli compression - only in production
+    mode === 'production' && compress({
       ext: ".gz",
       algorithm: "gzip",
       deleteOriginFile: false,
     }),
-    compress({
+    mode === 'production' && compress({
       ext: ".br",
       algorithm: "brotliCompress",
       deleteOriginFile: true,
     }),
-  ],
+  ].filter(Boolean),
   build: {
     sourcemap: false, // Disable source maps in production
     minify: "terser",
@@ -117,7 +118,7 @@ export default defineConfig({
   },
   // CSS optimization
   css: {
-    devSourcemap: false,
+    devSourcemap: mode === 'development',
     modules: {
       localsConvention: "camelCaseOnly",
     },
@@ -127,4 +128,16 @@ export default defineConfig({
       },
     },
   },
-});
+  // Development server configuration
+  server: {
+    port: 3000,
+    open: true,
+    headers: {
+      "Cache-Control": "no-cache",
+      "X-Content-Type-Options": "nosniff",
+      "X-Frame-Options": "DENY",
+      "X-XSS-Protection": "1; mode=block",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+    },
+  },
+}));
