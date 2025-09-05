@@ -5,6 +5,6 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   build: {
-    cssCodeSplit: true,
+    cssCodeSplit: true, // ensure CSS is split out
   },
 });
