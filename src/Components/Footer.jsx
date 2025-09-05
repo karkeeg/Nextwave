@@ -31,7 +31,7 @@ const Footer = () => {
     <footer className="w-full bg-[#2870B5] text-white px-6 md:px-12 xl:px-[72px] pt-[80px] pb-[32px]">
       <div className="max-w-[1440px] mx-auto flex flex-col xl:flex-row gap-[48px] xl:gap-[108px]">
         {/* Left Section */}
-        <div className="w-full max-w-[342px] bg-[#F4F6F8] text-[#1a1a1a] rounded-[8px] px-6 py-6 flex flex-col gap-6">
+        <div className="w-full max-w-[342px] bg-[#F4F6F8] text-[#111111] rounded-[8px] px-6 py-6 flex flex-col gap-6">
           <div
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -86,7 +86,7 @@ const Footer = () => {
         <div className="flex flex-wrap justify-between flex-1 gap-8 text-sm">
           {/* Quick Link */}
           <div className="flex flex-col gap-3 min-w-[140px]">
-            <p className="font-semibold text-[#1a1a1a] ">Quick Link</p>
+            <p className="font-semibold text-[#0d47a1]">Quick Link</p>
             {/* <button
               onClick={() => scrollToSection("about")}
               className="hover:text-gray-300 transition text-left bg-transparent border-none cursor-pointer"
@@ -127,7 +127,7 @@ const Footer = () => {
 
           {/* Customer Service */}
           <div className="flex flex-col gap-3 min-w-[140px]">
-            <p className="font-semibold text-[#1a1a1a]">Customer Service</p>
+            <p className="font-semibold text-[#0d47a1]">Customer Service</p>
             <button
               onClick={() => scrollToSection("faqs")}
               className="hover:text-gray-300 transition text-left bg-transparent border-none  cursor-pointer"
@@ -144,7 +144,7 @@ const Footer = () => {
 
           {/* Contact Us */}
           <div className="flex flex-col gap-3 min-w-[200px]">
-            <p className="font-semibold text-[#1a1a1a] ">Contact Us</p>
+            <p className="font-semibold text-[#0d47a1]">Contact Us</p>
             <div className="flex items-start gap-2">
               <MdLocationOn className="mt-0.5" />{" "}
               <span>123 Street, Kathmandu Nepal</span>
