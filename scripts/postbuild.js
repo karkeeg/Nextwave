@@ -1,20 +1,25 @@
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
+
+// Get current directory in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 console.log('Running post-build optimization...');
 
-const distPath = path.join(__dirname, '..', 'dist');
+const distPath = join(__dirname, '..', 'dist');
 
 // Function to minify HTML files
 function minifyHTML() {
   try {
     // Find all HTML files in the dist directory
-    const files = fs.readdirSync(distPath).filter(file => file.endsWith('.html'));
+    const files = readdirSync(distPath).filter(file => file.endsWith('.html'));
     
     files.forEach(file => {
-      const filePath = path.join(distPath, file);
-      let content = fs.readFileSync(filePath, 'utf8');
+      const filePath = join(distPath, file);
+      let content = readFileSync(filePath, 'utf8');
       
       // Basic HTML minification (remove comments, extra whitespace, etc.)
       content = content
@@ -24,7 +29,7 @@ function minifyHTML() {
         .replace(/>\s+</g, '><')             // Remove whitespace between tags
         .trim();
       
-      fs.writeFileSync(filePath, content, 'utf8');
+      writeFileSync(filePath, content, 'utf8');
       console.log(`Minified: ${file}`);
     });
   } catch (error) {
@@ -41,7 +46,7 @@ function optimizeImages() {
       console.log('ImageMagick found, optimizing images...');
       
       // Optimize all images in the dist directory
-      execSync(`magick mogrify -strip -interlace Plane -gaussian-blur 0.05 -quality 85% ${path.join(distPath, '**/*.{jpg,jpeg,png}')}`, { stdio: 'inherit' });
+      execSync(`magick mogrify -strip -interlace Plane -gaussian-blur 0.05 -quality 85% ${join(distPath, '**/*.{jpg,jpeg,png}')}`, { stdio: 'inherit' });
     } catch (e) {
       console.warn('ImageMagick not found, skipping image optimization');
     }
@@ -57,4 +62,5 @@ function runOptimizations() {
   console.log('Post-build optimizations complete!');
 }
 
+// Run the optimizations
 runOptimizations();

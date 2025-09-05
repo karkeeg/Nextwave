@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, Suspense } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   SiOpenai,
@@ -644,7 +644,9 @@ const HomePage = () => {
                 className="flex-[0.7] w-full flex justify-center lg:justify-end order-1 lg:order-2 mb-4 sm:mb-6 lg:mb-0"
               >
                 <div className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-[480px] xl:w-[520px] xl:max-w-full shrink-0">
-                  <RobotMosaic />
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <RobotMosaic />
+                  </Suspense>
                 </div>
               </motion.div>
             </motion.div>
