@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  Suspense,
-  lazy,
-} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   SiOpenai,
@@ -39,45 +32,29 @@ import {
   SiMlflow,
 } from "react-icons/si";
 import { SiAwsamplify } from "react-icons/si";
+import Services from "../Components/Services";
+import Testimonials from "../Components/Testimonials";
+import Contact from "../Components/Contact";
+import Blog from "../Components/Blog";
+import FAQs from "../Components/FAQs";
+import IndustryServed from "../Components/IndustryServed";
+import RobotMosaic from "../Components/RobotMosaic";
 import { Helmet } from "react-helmet-async";
-
-// Lazy load components
-const Services = lazy(() => import("../Components/Services"));
-const Testimonials = lazy(() => import("../Components/Testimonials"));
-const Contact = lazy(() => import("../Components/Contact"));
-const Blog = lazy(() => import("../Components/Blog"));
-const FAQs = lazy(() => import("../Components/FAQs"));
-const IndustryServed = lazy(() => import("../Components/IndustryServed"));
-const RobotMosaic = lazy(() => import("../Components/RobotMosaic"));
-
-// Loading component for Suspense fallback
-const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-[200px] w-full">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#2176C1]"></div>
-  </div>
-);
 
 // ✅ Responsive Rolling Words Component
 const RollingWords = ({ words, interval = 3000, className = "" }) => {
   const [index, setIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const timeoutRef = useRef();
 
   useEffect(() => {
     const id = setInterval(() => {
-      requestAnimationFrame(() => {
-        setIsAnimating(true);
-        timeoutRef.current = setTimeout(() => {
-          setIndex((prev) => (prev + 1) % words.length);
-          setIsAnimating(false);
-        }, 800);
-      });
+      setIsAnimating(true);
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % words.length);
+        setIsAnimating(false);
+      }, 800);
     }, interval);
-
-    return () => {
-      clearInterval(id);
-      clearTimeout(timeoutRef.current);
-    };
+    return () => clearInterval(id);
   }, [words, interval]);
 
   const currentWord = words[index];
@@ -502,7 +479,6 @@ const HomePage = () => {
   const sectionRefs = useRef({});
   const [scrollY, setScrollY] = useState(0);
   const heroParallaxRef = useRef(null);
-  const heroHeightRef = useRef(0);
 
   // Set document title on component mount
   useEffect(() => {
@@ -520,60 +496,37 @@ const HomePage = () => {
   const yLeft = useTransform(heroProgress, [0, 1], [10, -10]);
   const yRight = useTransform(heroProgress, [0, 1], [20, -20]);
 
-  // Cache hero section height
   useEffect(() => {
-    // Measure hero section height once on mount
-    const heroSection = document.getElementById("hero");
-    if (heroSection) {
-      heroHeightRef.current = heroSection.offsetHeight;
-    }
-  }, []);
-
-  // Optimized scroll handler
-  useEffect(() => {
-    let ticking = false;
-
     const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-          setScrollY(currentScrollY);
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
 
-          // Use cached hero height
-          setIsInHeroSection(currentScrollY < heroHeightRef.current * 1.2);
-
-          ticking = false;
-        });
-        ticking = true;
+      // Check if we're in the hero section (first 100vh)
+      const heroSection = document.getElementById("hero");
+      if (heroSection) {
+        const heroHeight = heroSection.offsetHeight;
+        setIsInHeroSection(currentScrollY < heroHeight * 1.2); // 80% of hero section height
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Optimized Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        requestAnimationFrame(() => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setVisibleElements((prev) => new Set([...prev, entry.target.id]));
-            }
-          });
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleElements((prev) => new Set([...prev, entry.target.id]));
+          }
         });
       },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
-
     Object.values(sectionRefs.current).forEach(
       (ref) => ref && observer.observe(ref)
     );
-
     return () => observer.disconnect();
   }, []);
 
@@ -582,27 +535,21 @@ const HomePage = () => {
   };
   const isVisible = (id) => visibleElements.has(id);
 
-  // Optimized scrollToSection function
-  const scrollToSection = useCallback((sectionId) => {
-    requestAnimationFrame(() => {
-      const headerOffset = 80;
-      const el = document.getElementById(sectionId);
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        const targetY = window.scrollY + rect.top - headerOffset;
-
-        window.scrollTo({
-          top: Math.max(0, targetY),
-          behavior: "smooth",
-        });
-      }
-    });
-  }, []);
-
   const scrollProgress =
     typeof window !== "undefined"
       ? (scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
       : 0;
+
+  const scrollToSection = (sectionId) => {
+    const headerOffset = 80;
+    const el = document.getElementById(sectionId);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      const targetY =
+        (window.scrollY || window.pageYOffset) + rect.top - headerOffset;
+      window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
+    }
+  };
 
   return (
     <>
@@ -697,9 +644,7 @@ const HomePage = () => {
                 className="flex-[0.7] w-full flex justify-center lg:justify-end order-1 lg:order-2 mb-4 sm:mb-6 lg:mb-0"
               >
                 <div className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-[480px] xl:w-[520px] xl:max-w-full shrink-0">
-                  <Suspense fallback={<div className="h-[300px] w-full"></div>}>
-                    <RobotMosaic />
-                  </Suspense>
+                  <RobotMosaic />
                 </div>
               </motion.div>
             </motion.div>
@@ -718,28 +663,26 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Lazy loaded sections */}
-        <Suspense fallback={null}>
-          {[
-            ["services", <Services key="services" />],
-            ["industries", <IndustryServed key="industries" />],
-            ["research", <Blog key="blog" />],
-            ["testimonials", <Testimonials key="testimonials" />],
-            ["faqs", <FAQs key="faqs" />],
-            ["contact", <Contact key="contact" />],
-          ].map(([id, component]) => (
-            <motion.section
-              key={id}
-              ref={(ref) => addRef(id, ref)}
-              id={id}
-              variants={fadeInUp}
-              initial="hidden"
-              animate={isVisible(id) ? "show" : "hidden"}
-            >
-              <Suspense fallback={<LoadingFallback />}>{component}</Suspense>
-            </motion.section>
-          ))}
-        </Suspense>
+        {/* Sections */}
+        {[
+          ["services", <Services />],
+          ["industries", <IndustryServed />],
+          ["research", <Blog />],
+          ["testimonials", <Testimonials />],
+          ["faqs", <FAQs />],
+          ["contact", <Contact />],
+        ].map(([id, component]) => (
+          <motion.section
+            key={id}
+            ref={(ref) => addRef(id, ref)}
+            id={id}
+            variants={fadeInUp}
+            initial="hidden"
+            animate={isVisible(id) ? "show" : "hidden"}
+          >
+            {component}
+          </motion.section>
+        ))}
 
         {/* Responsive Scroll To Top */}
         <div
