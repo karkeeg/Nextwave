@@ -2,13 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="preconnect" href="https://fonts.cdnfonts.com">
-    <link rel="preload" as="style" href="https://fonts.cdnfonts.com/css/cabinet-grotesk">
-    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cabinet-grotesk" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cabinet-grotesk"></noscript>
-    <link rel="icon" type="image/svg+xml" href="/src/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>NextWaveAI</title>
+    <meta name="description" content="NextWaveAI - AI solutions for your business">
+    <title>NextWaveAI</title>
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.cdnfonts.com">
+    
+    <!-- Inline critical CSS -->
+    <style id="critical-css">
+      :root{--primary-color:#2176C1;--primary-dark:#17548a;--text-color:#1a1a1a;--background-color:#ffffff}html{scroll-behavior:smooth;font-size:16px;line-height:1.5}body{margin:0;padding:0;font-family:'Cabinet Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;color:var(--text-color);background-color:var(--background-color);overflow-x:hidden}#root{min-height:100vh;display:flex;flex-direction:column}button,.button{cursor:pointer;font-family:inherit;transition:all .3s ease}header{position:relative;z-index:50}.hero-section{position:relative;overflow:hidden}@font-face{font-family:'Cabinet Grotesk';font-style:normal;font-weight:400;font-display:swap;src:local('Cabinet Grotesk'),url('https://fonts.cdnfonts.com/css/cabinet-grotesk') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    </style>
+    
+    <!-- Preload non-critical CSS -->
+    <link rel="preload" href="/src/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/src/index.css"></noscript>
+    
+    <!-- Preload fonts with font-display: swap -->
+    <link rel="preload" href="https://fonts.cdnfonts.com/css/cabinet-grotesk" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cabinet-grotesk"></noscript>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" as="image" href="/src/assets/logo.png" type="image/png" fetchpriority="high">
+    <link rel="icon" type="image/png" href="/src/assets/logo.png" />
+    
+    <!-- Preload scripts with low priority -->
+    <link rel="preload" as="script" href="/src/main.jsx" fetchpriority="low">
+    
+    <!-- Load non-critical CSS after page load -->
+    <script>
+      /* Load non-critical CSS */
+      function loadCSS(href, before, media, callback) {
+        var ss = window.document.createElement('link');
+        var ref = before || window.document.getElementsByTagName('script')[0];
+        ss.rel = 'stylesheet';
+        ss.href = href;
+        ss.media = 'only x';
+        if (callback) ss.onload = callback;
+        ref.parentNode.insertBefore(ss, ref);
+        setTimeout(function() { ss.media = media || 'all'; });
+        return ss;
+      }
+      
+      // Load non-critical CSS after page load
+      window.addEventListener('load', function() {
+        loadCSS('https://fonts.cdnfonts.com/css/cabinet-grotesk');
+      });
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -26,6 +67,12 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/main.jsx" defer></script>
+    <script>
+      // Load non-critical CSS after page load
+      window.addEventListener('load', function() {
+        // Load any non-critical stylesheets here
+      });
+    </script>
   </body>
 </html>
