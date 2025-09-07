@@ -670,7 +670,7 @@ const HomePage = () => {
           ["services", <Services />],
           ["industries", <IndustryServed />],
           ["research", <Blog />],
-          ["testimonials", <Testimonials />],
+          // ["testimonials", <Testimonials />],
           ["faqs", <FAQs />],
           ["contact", <Contact />],
         ].map(([id, component]) => (
