@@ -130,7 +130,7 @@ const IndustryServed = () => {
           className="w-full"
         >
           <AnimatePresence mode="wait">
-            {/* Three-image carousel block with fade animation */}
+            {/* Industry images - single on mobile, multiple on desktop */}
             <motion.div
               key={title + "-images"}
               initial={{ opacity: 0 }}
@@ -149,7 +149,11 @@ const IndustryServed = () => {
                   : hoveredIndex !== null
                   ? "scale-90"
                   : "scale-100";
-                return (
+                
+                // Only show the center image on mobile, all on larger screens
+                const isVisibleOnMobile = window.innerWidth < 768 ? isCenter : true;
+                
+                return isVisibleOnMobile && (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
@@ -158,7 +162,7 @@ const IndustryServed = () => {
                     onClick={() => handleIndustryClick(id)}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    className={`relative w-44 sm:w-40 md:w-62 lg:w-72 aspect-[4/3] rounded-xl overflow-hidden shadow-lg cursor-pointer transform transition-all duration-300 ease-in-out ${scale}`}
+                    className={`relative w-full max-w-xs mx-auto md:mx-0 md:w-40 lg:w-62 xl:w-72 aspect-[4/3] rounded-xl overflow-hidden shadow-lg cursor-pointer transform transition-all duration-300 ease-in-out ${window.innerWidth >= 768 ? scale : 'scale-100'}`}
                   >
                     <img
                       src={img}

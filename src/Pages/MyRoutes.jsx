@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LayoutPage from "./LayoutPage";
 import ScrollToTop from "../Components/ScrollToTop";
+import ClockInsights from "../Components/clockinsight/ClockInsights";
 
 // Lazy-loaded pages
 const HomePage = lazy(() => import("./HomePage"));
@@ -34,6 +35,7 @@ const MyRoutes = () => {
 
             {/* <Route path="/practice" element={<Practice />} /> */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/clock" element={<ClockInsights />} />
             <Route path="/404" element={<NotFoundPage />} />
           </Route>
         </Routes>

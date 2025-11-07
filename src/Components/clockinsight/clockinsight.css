@@ -1,0 +1,169 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #eaf2ff 0%, #d6e4ff 100%);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.head h1 {
+  font-size: 2.8rem;
+  color: #1a73e8;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+/* ------------------------------------------------- */
+.layout {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* ---- LEFT: curved numbers ---- */
+.numbers {
+  position: relative;
+  width: 130px;
+  height: 500px;
+}
+
+/* Curved on LEFT semicircle only */
+.num {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #bbb;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+  user-select: none;
+
+  /* semicircle on left side */
+  --r: 250px;
+  --a: calc(180deg - var(--i) * (180deg / 4)); /* distribute across 180° */
+  --x: calc(var(--r) * cos(var(--a)));
+  --y: calc(var(--r) * sin(var(--a)));
+  left: calc(50% + var(--x));
+  top: calc(50% + var(--y));
+  transform: translate(-50%, -50%);
+}
+.num.active {
+  color: #1a73e8;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+.num:hover {
+  color: #0d5bc6;
+}
+
+/* ---- CENTER: circle + pointer ---- */
+.circleBox {
+  position: relative;
+  width: 500px;
+  height: 500px;
+}
+
+.circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  transition: transform 1s ease;
+}
+.circle:hover {
+  transform: scale(1.02);
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Pointer starts from center */
+.line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 250px; /* half radius */
+  background: #1a73e8;
+  transform-origin: bottom center; /* rotate around center bottom */
+  transform: translate(-50%, -100%) rotate(var(--rot));
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(26, 115, 232, 0.5);
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---- RIGHT: text ---- */
+.textBox {
+  flex: 1;
+  min-height: 180px;
+  position: relative;
+}
+.text {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.text.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.text h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+  color: #1a73e8;
+}
+.text p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  background: #1a73e8;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.btn:hover {
+  background: #0d5bc6;
+}
+
+/* ------------------------------------------------- */
+@media (max-width: 960px) {
+  .layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .numbers {
+    order: 1;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .num {
+    position: static;
+    transform: none !important;
+  }
+  .circleBox {
+    order: 2;
+  }
+  .textBox {
+    order: 3;
+    text-align: center;
+  }
+}

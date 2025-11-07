@@ -52,17 +52,17 @@ const Header = () => {
     };
 
     const scrollToElement = () => {
-      const header = document.querySelector('header');
+      const header = document.querySelector("header");
       const section = document.getElementById(sectionId);
-      
+
       if (!section) return;
-      
+
       const headerHeight = header ? header.offsetHeight : 0;
       const scrollPosition = section.offsetTop;
-      
+
       window.scrollTo({
         top: scrollPosition,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     };
 
@@ -85,14 +85,13 @@ const Header = () => {
   };
 
   const navItemVariants = {
-    hover: { scale: 1.05, y: -2, transition: { duration: 0.2, ease: "easeOut" } },
+    hover: { scale: 1.02, transition: { duration: 0.2, ease: "easeOut" } },
     tap: { scale: 0.98, transition: { duration: 0.1 } },
   };
 
   const ctaButtonVariants = {
     hover: {
       scale: 1.05,
-      boxShadow: "0 8px 25px rgba(33, 118, 193, 0.4)",
       transition: { duration: 0.2, ease: "easeOut" },
     },
     tap: { scale: 0.95, transition: { duration: 0.1 } },
@@ -100,13 +99,13 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed w-full top-0 left-0 right-0 z-50 transition-all duration-300 hover:bg-[#c4d4f5] group overflow-visible ${
+      className={`fixed w-full top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
-      } bg-black/20 backdrop-blur-sm border-b border-white/20`}
+      } bg-[#B8D4F1]`}
     >
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 lg:px-0 py-4">
-        {/* Logo - Pushed to the left */}
-        <Link to="/" className="shrink-0 flex items-center mr-auto lg:mr-0">
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 lg:px-8 py-3">
+        {/* Logo */}
+        <Link to="/" className="shrink-0 flex items-center">
           <motion.img
             src={logo}
             alt="Logo"
@@ -117,41 +116,41 @@ const Header = () => {
           />
         </Link>
 
-        {/* Desktop Navigation - Pushed to the right with more gap */}
-        <nav className="hidden lg:flex items-center gap-8 text-md text-white ml-auto">
+        {/* Desktop Navigation - Centered */}
+        <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-[#2C3E50]">
           {/* Services Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <motion.button
               onClick={() => toggleDropdown(0)}
-              className="font-medium group-hover:text-gray-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+              className="hover:text-[#2176C1] transition-colors duration-200"
               variants={navItemVariants}
               whileHover="hover"
               whileTap="tap"
             >
-              Services ▾
+              Services
             </motion.button>
             {dropdownOpen === 0 && (
               <motion.div
-                className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-[#c4d4f5] border border-slate-200 shadow-lg ring-1 ring-black/5 z-[60] overflow-hidden"
+                className="absolute left-0 top-full mt-2 w-56 rounded-lg bg-white border border-slate-200 shadow-lg z-[60] overflow-hidden"
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
               >
                 <motion.button
                   onClick={() => scrollToSection("services")}
-                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  className="block w-full text-left px-4 py-2.5 text-[#2C3E50] hover:bg-slate-50 transition-all duration-200"
                 >
                   Our Services
                 </motion.button>
                 <motion.button
                   onClick={() => scrollToSection("testimonials")}
-                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  className="block w-full text-left px-4 py-2.5 text-[#2C3E50] hover:bg-slate-50 transition-all duration-200"
                 >
                   Testimonials
                 </motion.button>
                 <motion.button
                   onClick={() => scrollToSection("faqs")}
-                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  className="block w-full text-left px-4 py-2.5 text-[#2C3E50] hover:bg-slate-50 transition-all duration-200"
                 >
                   FAQs
                 </motion.button>
@@ -162,89 +161,106 @@ const Header = () => {
           {/* Industries Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <motion.button
-              onClick={() => toggleDropdown(1)}
-              className="font-medium group-hover:text-gray-800 hover:text-blue-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+              onClick={() => scrollToSection("industries")}
+              className="hover:text-[#2176C1] transition-colors duration-200"
               variants={navItemVariants}
               whileHover="hover"
               whileTap="tap"
             >
-              Industries ▾
+              Industries
             </motion.button>
-            {dropdownOpen === 1 && (
+            {/* {dropdownOpen === 1 && (
               <motion.div
-                className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-[#c4d4f5] border border-slate-200 shadow-lg ring-1 ring-black/5 z-[60] overflow-hidden"
+                className="absolute left-0 top-full mt-2 w-56 rounded-lg bg-white border border-slate-200 shadow-lg z-[60] overflow-hidden"
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
               >
                 <motion.button
                   onClick={() => scrollToSection("industries")}
-                  className="block w-full text-left px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  className="block w-full text-left px-4 py-2.5 text-[#2C3E50] hover:bg-slate-50 transition-all duration-200"
                 >
                   Industries We Serve
                 </motion.button>
-                <Link
+                {/* <Link
                   to="/industry-served"
-                  className="block px-4 py-2 text-[#232B36] hover:bg-slate-50 transition-all duration-200"
+                  className="block px-4 py-2.5 text-[#2C3E50] hover:bg-slate-50 transition-all duration-200"
                 >
                   Industry Details
-                </Link>
-              </motion.div>
-            )}
+                </Link> */}
+            {/* </motion.div>
+            )} */}
           </div>
 
-          {/* Static Nav Items */}
+          {/* Case Studies */}
           <motion.button
-            onClick={() => scrollToSection("about")}
-            className="font-medium group-hover:text-gray-800 hover:text-blue-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+            onClick={() => scrollToSection("case-studies")}
+            className="hover:text-[#2176C1] transition-colors duration-200"
             variants={navItemVariants}
             whileHover="hover"
             whileTap="tap"
           >
-            About Us
+            Case Studies
           </motion.button>
 
+          {/* Research & Insights */}
           <motion.button
             onClick={() => scrollToSection("research")}
-            className="font-medium group-hover:text-gray-800 hover:text-blue-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+            className="hover:text-[#2176C1] transition-colors duration-200"
             variants={navItemVariants}
             whileHover="hover"
             whileTap="tap"
           >
             Research & Insights
           </motion.button>
+        </nav>
 
+        {/* CTA Button with Phone Icon */}
+        <div className="hidden lg:flex items-center gap-3">
+          {/* Phone Icon Button - Black Background */}
           <motion.button
             onClick={() => scrollToSection("contact")}
-            className="font-medium group-hover:text-gray-800 hover:text-blue-800 transition-all duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
-            variants={navItemVariants}
+            className="flex items-center justify-center bg-black text-white p-2.5 rounded-lg shadow-sm transition-all duration-200"
+            variants={ctaButtonVariants}
             whileHover="hover"
             whileTap="tap"
           >
-            Contact
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
           </motion.button>
 
-          {/* CTA */}
-          <motion.div 
-            variants={ctaButtonVariants} 
-            whileHover="hover" 
-            whileTap="tap" 
-            className="bg-[#2176C1] text-white font-bold px-5 py-2.5 rounded shadow-sm transition-all duration-200 ml-2"
+          {/* Free Consultation Button */}
+          <motion.button
             onClick={() => scrollToSection("contact")}
+            className="bg-[#2176C1] text-white font-medium px-5 py-2.5 rounded-lg shadow-sm transition-all duration-200"
+            variants={ctaButtonVariants}
+            whileHover="hover"
+            whileTap="tap"
           >
-            Get a free Consultant
-          </motion.div>
-        </nav>
+            Free Consultation
+          </motion.button>
+        </div>
 
-        {/* Mobile Hamburger - Positioned to the right */}
+        {/* Mobile Hamburger */}
         <div className="lg:hidden ml-auto">
           <motion.button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="text-white group-hover:text-gray-800 focus:outline-none"
-            whileHover={{ scale: 1.1, rotate: 90 }}
+            className="text-[#2C3E50] focus:outline-none"
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             transition={{ duration: 0.2 }}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
           >
@@ -256,9 +272,17 @@ const Header = () => {
               viewBox="0 0 24 24"
             >
               {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </motion.button>
@@ -268,7 +292,7 @@ const Header = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <motion.div
-          className="lg:hidden px-6 pb-4 space-y-3 bg-[#c4d4f5] backdrop-blur-sm overflow-visible border-t border-white/20 text-gray-900 text-base"
+          className="lg:hidden px-6 pb-4 space-y-3 bg-white text-[#2C3E50] text-base"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
@@ -278,9 +302,12 @@ const Header = () => {
           <div>
             <motion.button
               onClick={() =>
-                setMobileDropdown((prev) => ({ ...prev, services: !prev.services }))
+                setMobileDropdown((prev) => ({
+                  ...prev,
+                  services: !prev.services,
+                }))
               }
-              className="w-full text-left font-medium hover:text-blue-800 transition-colors duration-200"
+              className="w-full text-left font-medium hover:text-[#2176C1] transition-colors duration-200"
             >
               Services ▾
             </motion.button>
@@ -293,19 +320,19 @@ const Header = () => {
               >
                 <motion.button
                   onClick={() => scrollToSection("services")}
-                  className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+                  className="block w-full text-left hover:text-[#2176C1] transition-colors duration-200"
                 >
                   Our Services
                 </motion.button>
                 <motion.button
                   onClick={() => scrollToSection("testimonials")}
-                  className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+                  className="block w-full text-left hover:text-[#2176C1] transition-colors duration-200"
                 >
                   Testimonials
                 </motion.button>
                 <motion.button
                   onClick={() => scrollToSection("faqs")}
-                  className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+                  className="block w-full text-left hover:text-[#2176C1] transition-colors duration-200"
                 >
                   FAQs
                 </motion.button>
@@ -317,9 +344,12 @@ const Header = () => {
           <div>
             <motion.button
               onClick={() =>
-                setMobileDropdown((prev) => ({ ...prev, industries: !prev.industries }))
+                setMobileDropdown((prev) => ({
+                  ...prev,
+                  industries: !prev.industries,
+                }))
               }
-              className="w-full text-left font-medium hover:text-blue-800 transition-colors duration-200"
+              className="w-full text-left font-medium hover:text-[#2176C1] transition-colors duration-200"
             >
               Industries ▾
             </motion.button>
@@ -332,13 +362,13 @@ const Header = () => {
               >
                 <motion.button
                   onClick={() => scrollToSection("industries")}
-                  className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+                  className="block w-full text-left hover:text-[#2176C1] transition-colors duration-200"
                 >
                   Industries We Serve
                 </motion.button>
                 <Link
                   to="/industry-served"
-                  className="block hover:text-blue-800 transition-colors duration-200"
+                  className="block hover:text-[#2176C1] transition-colors duration-200"
                 >
                   Industry Details
                 </Link>
@@ -346,32 +376,41 @@ const Header = () => {
             )}
           </div>
 
-          {/* Static Items */}
+          {/* Case Studies */}
           <motion.button
-            onClick={() => scrollToSection("about")}
-            className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+            onClick={() => scrollToSection("case-studies")}
+            className="block w-full text-left hover:text-[#2176C1] transition-colors duration-200"
           >
-            About Us
+            Case Studies
           </motion.button>
+
+          {/* Research & Insights */}
           <motion.button
             onClick={() => scrollToSection("research")}
-            className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
+            className="block w-full text-left hover:text-[#2176C1] transition-colors duration-200"
           >
             Research & Insights
-          </motion.button>
-          <motion.button
-            onClick={() => scrollToSection("contact")}
-            className="block w-full text-left hover:text-blue-800 transition-colors duration-200"
-          >
-            Contact
           </motion.button>
 
           {/* CTA */}
           <motion.button
             onClick={() => scrollToSection("contact")}
-            className="block w-full bg-[#2176C1] text-white text-center py-2 rounded transition-all duration-200"
+            className="flex items-center justify-center gap-2 w-full bg-[#2176C1] text-white py-2.5 rounded-lg transition-all duration-200"
           >
-            Get a free Consultant
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+            Free Consultation
           </motion.button>
         </motion.div>
       )}
