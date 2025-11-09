@@ -22,7 +22,7 @@ const Footer = () => {
     const el = document.getElementById(sectionId);
     if (el) {
       const rect = el.getBoundingClientRect();
-      const targetY = (window.scrollY || window.pageYOffset) + rect.top ;
+      const targetY = (window.scrollY || window.pageYOffset) + rect.top;
       window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
     }
   };
@@ -47,33 +47,33 @@ const Footer = () => {
             new service alerts
           </p>
           <div className="flex items-center gap-4 text-xl text-black">
-            <Link 
-              to="https://twitter.com/nextwaveai" 
-              target="_blank" 
+            <Link
+              to="https://twitter.com/nextwaveai"
+              target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit our Twitter profile (opens in new tab)"
             >
               <FaXTwitter className="cursor-pointer text-[#1DA1F2] hover:text-[#1a8cd8] transition duration-200" />
             </Link>
-            <Link 
-              to="https://www.linkedin.com/company/nxt-wave-ai/posts/?feedView=all" 
-              target="_blank" 
+            <Link
+              to="https://www.linkedin.com/company/nxt-wave-ai/posts/?feedView=all"
+              target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit our LinkedIn page (opens in new tab)"
             >
               <FaLinkedin className="cursor-pointer text-[#0A66C2] hover:text-[#084d96] transition duration-200" />
             </Link>
-            <Link 
-              to="https://www.instagram.com/nextwaveai/"  
-              target="_blank" 
+            <Link
+              to="https://www.instagram.com/nextwaveai/"
+              target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit our Instagram profile (opens in new tab)"
             >
               <FaInstagram className="cursor-pointer text-[#E4405F] hover:text-[#d42d4d] transition duration-200" />
             </Link>
-            <Link 
-              to="https://www.youtube.com/@nextwaveai" 
-              target="_blank" 
+            <Link
+              to="https://www.youtube.com/@nextwaveai"
+              target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit our YouTube channel (opens in new tab)"
             >
@@ -99,12 +99,12 @@ const Footer = () => {
             >
               Services
             </button>
-            <button
+            {/* <button
               onClick={() => scrollToSection("testimonials")}
               className="hover:text-white transition text-left bg-transparent border-none cursor-pointer text-[#e2e8f0]"
             >
               Testimonials
-            </button>
+            </button> */}
             <button
               onClick={() => scrollToSection("industries")}
               className="hover:text-white transition text-left bg-transparent border-none cursor-pointer text-[#e2e8f0]"

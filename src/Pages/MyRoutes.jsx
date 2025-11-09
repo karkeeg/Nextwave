@@ -20,7 +20,11 @@ const MyRoutes = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      {/* <Suspense fallback={<div className="text-center py-20">Loading...</div>}> */}
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="animate-pulse text-xl text-gray-600">Loading...</div>
+        </div>
+      }>
       <Routes>
         <Route path="/" element={<LayoutPage />}>
           <Route index element={<HomePage />} />
@@ -36,7 +40,7 @@ const MyRoutes = () => {
           <Route path="/404" element={<NotFoundPage />} />
         </Route>
       </Routes>
-      {/* </Suspense> */}
+      </Suspense>
     </BrowserRouter>
   );
 };

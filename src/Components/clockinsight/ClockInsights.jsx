@@ -24,8 +24,15 @@ const Clockinsights = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-6">
       <div className="max-w-7xl w-full">
+        <div className="section">
+          <div className="container-medium">
+            <div className="text-center px-4 sm:px-6 lg:px-8">
+              <h2 className=" py-2 mb-6">Insights & Stories</h2>
+            </div>
+          </div>
+        </div>
         <div className="flex items-center justify-between gap-24">
           {/* CLOCK SECTION */}
           <div
@@ -61,7 +68,7 @@ const Clockinsights = () => {
               </div>
 
               {/* CLOCK HAND */}
-              <div
+              {/* <div
                 className="absolute top-1/2 left-1/2 bg-gray-600 origin-bottom z-10"
                 style={{
                   width: "2px",
@@ -69,7 +76,7 @@ const Clockinsights = () => {
                   transform: `translate(-50%, -100%) rotate(${rotation}deg)`,
                   transition: "transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
                 }}
-              />
+              /> */}
 
               {/* OUTER RING */}
               <div

@@ -429,12 +429,12 @@ const HomePage = () => {
           className="relative min-h-screen w-full bg-[#c4d4f5]"
         >
           {/* Hero Content */}
-          <div className="min-h-[70vh] sm:min-h-[70vh] flex flex-col justify-center ">
+          <div className="min-h-[60vh] sm:min-h-[65vh] flex flex-col justify-center ">
             <Hero />
 
             {/* Icon Marquee - Part of Hero */}
             <motion.div
-              className="relative z-10 w-full mt-4 lg:mt-8 mb-6 sm:mb-8 md:mb-10"
+              className="relative z-10 w-full mt-2 lg:mt-6 mb-2 sm:mb-6 md:mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={
                 heroAnimationComplete

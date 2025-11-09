@@ -5,9 +5,9 @@ import { Button } from "./ui/button";
 
 const Hero = () => {
   return (
-    <section className="relative mt-12 lg:mt-8 flex flex-col justify-center items-center overflow-hidden bg-[#c4d4f5] min-h-screen">
+    <section className="relative flex flex-col justify-center items-center overflow-hidden bg-[#c4d4f5]">
       {/* Decorative Hands */}
-      <div className="absolute top-[-4%] left-0 w-[35%] sm:w-[30%] md:w-[28%] lg:w-[25%] xl:w-[35%] pointer-events-none z-20">
+      <div className="absolute top-[1%] left-0 w-[35%] sm:w-[30%] md:w-[28%] lg:w-[25%] xl:w-[35%] pointer-events-none z-20">
         <img
           src={humanHand}
           alt="Human hand"
@@ -15,7 +15,7 @@ const Hero = () => {
         />
       </div>
 
-      <div className="absolute bottom-[-15%] lg:bottom-[-4%] right-0 w-[35%] sm:w-[30%] md:w-[28%] lg:w-[25%] xl:w-[34%] pointer-events-none z-20">
+      <div className="absolute bottom-[-11%] lg:bottom-[-1%] right-0 w-[35%] sm:w-[30%] md:w-[28%] lg:w-[25%] xl:w-[34%] pointer-events-none z-20">
         <img
           src={robotHand}
           alt="Robot hand"
