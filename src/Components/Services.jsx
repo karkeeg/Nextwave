@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
+import React, { useState, useRef, useLayoutEffect, useEffect, startTransition } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import services from "../data/serviceData"; // adjust path as needed
@@ -72,7 +72,9 @@ const Services = () => {
     console.log('Navigating to service:', serviceId);
     const path = `/services/${serviceId}`;
     console.log('Navigation path:', path);
-    navigate(path, { replace: false });
+    startTransition(() => {
+      navigate(path, { replace: false });
+    });
   };
 
   const handleLeftSelect = (idx) => {
