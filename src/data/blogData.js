@@ -13,8 +13,7 @@ const blogData = [
     date: "2025-07-01",
     title: "Introducing NextWaveAI: The Future of Intelligent Solutions",
     desc: "Discover how NextWaveAI is revolutionizing industries with cutting-edge AI technology and innovative solutions.",
-    image:
-      blog1,
+    image: blog1,
     content: `NextWaveAI is leading the way in intelligent solutions.
 
 Our mission is to provide innovative AI tools that empower businesses worldwide to harness data like never before.

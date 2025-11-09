@@ -1,45 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, startTransition } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import blogData from "../../data/blogData";
 
 const Clockinsights = () => {
+  const navigate = useNavigate();
   const [activeSlide, setActiveSlide] = useState(0);
   const [rotation, setRotation] = useState(0);
 
-  const slides = [
-    {
-      id: 1,
-      number: "01",
-      title: "Introducing NextWaveAI:",
-      subtitle: "The Future of Intelligent Solutions",
-      image:
-        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=600&fit=crop",
-    },
-    {
-      id: 2,
-      number: "02",
-      title: "Transform Your Business:",
-      subtitle: "AI-Powered Analytics & Insights",
-      image:
-        "https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=600&fit=crop",
-    },
-    {
-      id: 3,
-      number: "03",
-      title: "Innovation at Scale:",
-      subtitle: "Building Tomorrow's Technology Today",
-      image:
-        "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=600&fit=crop",
-    },
-    {
-      id: 4,
-      number: "04",
-      title: "Seamless Integration:",
-      subtitle: "Connect, Automate, and Grow",
-      image:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=600&fit=crop",
-    },
-  ];
+  const slides = blogData;
 
-  // smoothly rotate instead of resetting
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length);
@@ -90,7 +60,7 @@ const Clockinsights = () => {
                 ))}
               </div>
 
-              {/* CLOCK HAND (smooth continuous rotation) */}
+              {/* CLOCK HAND */}
               <div
                 className="absolute top-1/2 left-1/2 bg-gray-600 origin-bottom z-10"
                 style={{
@@ -108,17 +78,13 @@ const Clockinsights = () => {
               />
             </div>
 
-            {/* NUMBERS — moved slightly LEFT and tighter curve */}
+            {/* NUMBERS */}
             {slides.map((slide, index) => {
               const totalArc = 60;
               const angleStart = 240;
               const angleStep = totalArc / (slides.length - 1);
               const angle = angleStart + index * angleStep;
-
-              // ✅ smaller radius (closer to circle)
-              const radius = 300; // was 300
-
-              // ✅ shift left slightly (-20px more)
+              const radius = 300;
               const x = radius * Math.cos(((angle - 90) * Math.PI) / 180) - 20;
               const y = radius * Math.sin(((angle - 90) * Math.PI) / 180);
 
@@ -144,35 +110,57 @@ const Clockinsights = () => {
                         : "bg-white text-gray-400 border-2 border-gray-300 shadow-md"
                     }`}
                   >
-                    {slide.number}
+                    {slide.id}
                   </div>
                 </button>
               );
             })}
           </div>
 
-          {/* TEXT CONTENT */}
-          <div className="flex-1 max-w-xl ml-12 relative">
-            {slides.map((slide, index) => (
-              <div
-                key={slide.id}
-                className={`${
-                  index === activeSlide
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 translate-x-12 absolute pointer-events-none"
-                }`}
-                style={{
-                  transition:
-                    "opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
+          {/* TEXT SECTION */}
+          <div className="flex-1 max-w-xl ml-12 relative min-h-[220px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={slides[activeSlide].id}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{
+                  duration: 1.2,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
+                className="absolute top-0 left-0 right-0"
               >
-                <h2 className="text-4xl font-bold text-gray-800 mb-4 leading-tight">
-                  {slide.title}
-                </h2>
-                <p className="text-2xl text-gray-600 mb-8 leading-relaxed">
-                  {slide.subtitle}
-                </p>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-lg flex items-center gap-3 group">
+                <motion.h2
+                  className="text-4xl font-bold text-gray-800 mb-4 leading-tight"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15, duration: 0.8 }}
+                >
+                  {slides[activeSlide].title}
+                </motion.h2>
+
+                <motion.p
+                  className="text-2xl text-gray-600 mb-8 leading-relaxed"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35, duration: 0.8 }}
+                >
+                  {slides[activeSlide].desc}
+                </motion.p>
+
+                <motion.button
+                  onClick={() => {
+                    startTransition(() => {
+                      navigate(`/blog/${slides[activeSlide].id}`);
+                    });
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg flex items-center gap-3 group"
+                  whileHover={{ scale: 1.05 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.55, duration: 0.8 }}
+                >
                   Read More
                   <svg
                     className="w-6 h-6 transform group-hover:translate-x-1 transition-transform"
@@ -187,9 +175,9 @@ const Clockinsights = () => {
                       d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
                   </svg>
-                </button>
-              </div>
-            ))}
+                </motion.button>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
