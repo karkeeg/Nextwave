@@ -1,5 +1,10 @@
 import React, { useEffect, useState, useRef, Suspense } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import {
   SiOpenai,
   SiTensorflow,
@@ -39,172 +44,8 @@ import Blog from "../Components/Blog";
 import FAQs from "../Components/FAQs";
 import IndustryServed from "../Components/IndustryServed";
 import { Helmet } from "react-helmet-async";
+import Hero from "../Components/Hero";
 
-const RobotMosaic = React.lazy(() => import("../Components/RobotMosaic"));
-// ✅ Responsive Rolling Words Component
-const RollingWords = ({ words, interval = 3000, className = "" }) => {
-  const [index, setIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setIndex((prev) => (prev + 1) % words.length);
-        setIsAnimating(false);
-      }, 800);
-    }, interval);
-    return () => clearInterval(id);
-  }, [words, interval]);
-
-  const currentWord = words[index];
-  const nextWord = words[(index + 1) % words.length];
-
-  // Calculate responsive width based on word length and screen size
-  const maxWordLength = Math.max(...words.map((word) => word.length));
-  const baseWidth = maxWordLength * 30; // Increased base character width
-
-  return (
-    <span
-      className={`inline-block relative overflow-visible ${className}`}
-      style={{
-        minWidth: `${baseWidth}px`,
-        maxWidth: "100%",
-        height: "0.7em",
-        perspective: "1000px",
-      }}
-    >
-      {/* Current word with 3D cylinder roll effect */}
-      <motion.span
-        key={`current-${currentWord}`}
-        initial={{ rotateX: 0, y: 0, opacity: 1 }}
-        animate={{
-          rotateX: isAnimating ? 90 : 0,
-          y: isAnimating ? "-0.5em" : 0, // Use em for responsive movement
-          opacity: isAnimating ? 1 : 1,
-        }}
-        transition={{
-          duration: 0.8,
-          ease: [0.25, 0.46, 0.45, 0.94],
-          type: "tween",
-        }}
-        className="absolute inset-0 text-[#2176C1] font-black flex items-center justify-center text-center w-full"
-        style={{
-          transformOrigin: "center center",
-          transformStyle: "preserve-3d",
-          backfaceVisibility: "hidden",
-          fontSize: "inherit", // Inherit font size from parent
-          lineHeight: "1.1",
-        }}
-      >
-        {currentWord}
-      </motion.span>
-
-      {/* Next word rolling in from bottom */}
-      <motion.span
-        key={`next-${nextWord}`}
-        initial={{ rotateX: -90, y: "0.5em", opacity: 0 }}
-        animate={{
-          rotateX: isAnimating ? 0 : -90,
-          y: isAnimating ? 0 : "0.5em",
-          opacity: isAnimating ? 1 : 0,
-        }}
-        transition={{
-          duration: 0.8,
-          ease: [0.25, 0.46, 0.45, 0.94],
-          delay: isAnimating ? 0.1 : 0,
-          type: "tween",
-        }}
-        className="absolute inset-0 text-[#2176C1] font-black flex items-center justify-center text-center w-full"
-        style={{
-          transformOrigin: "center center",
-          transformStyle: "preserve-3d",
-          backfaceVisibility: "hidden",
-          fontSize: "inherit",
-          lineHeight: "1.1",
-        }}
-      >
-        {nextWord}
-      </motion.span>
-    </span>
-  );
-};
-
-// ✅ Animated Text Component
-const AnimatedText = ({ children, className = "" }) => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  };
-
-  return (
-    <motion.h1
-      className={className}
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
-      {children}
-    </motion.h1>
-  );
-};
-
-const ResponsiveHeroHeadline = () => (
-  <div className="flex flex-col items-center lg:items-start">
-    {/* Mobile layout - optimized for all small screens */}
-    <div className="flex flex-col items-center lg:hidden">
-      <div className="flex flex-col items-center justify-center text-center">
-        <div className="flex items-baseline justify-center flex-wrap">
-          <RollingWords
-            words={["Empower", "Enhance"]}
-            className="text-3xl xs:text-4xl sm:text-5xl font-black min-w-[140px] xs:min-w-[160px] text-center"
-          />
-          <span className="text-3xl xs:text-4xl sm:text-5xl font-extrabold text-slate-800 ml-1 whitespace-nowrap">
-            Your Business
-          </span>
-        </div>
-
-        <div className="text-3xl xs:text-4xl sm:text-5xl font-extrabold text-slate-800 whitespace-nowrap mt-1">
-          with Next-Gen AI &
-        </div>
-
-        <RollingWords
-          words={["Automation", "Innovation"]}
-          className="text-3xl xs:text-4xl sm:text-5xl font-black mt-1 min-w-[180px] xs:min-w-[200px] text-center"
-        />
-      </div>
-    </div>
-
-    {/* Desktop layout - exact match to the image */}
-    <div className="hidden lg:flex flex-col items-start">
-      <div className="flex items-baseline">
-        <RollingWords
-          words={["Empower", "Enhance"]}
-          className="text-5xl xl:text-7xl 2xl:text-7xl ml-12 font-black min-w-[200px] xl:min-w-[240px]"
-        />
-        <span className="text-5xl xl:text-7xl 2xl:text-7xl font-extrabold text-slate-800 ml-12">
-          Your
-        </span>
-      </div>
-
-      <div className="text-5xl xl:text-7xl 2xl:text-7xl font-extrabold text-slate-800">
-        Business with
-      </div>
-
-      <div className="text-5xl xl:text-7xl 2xl:text-7xl mt-1 font-extrabold text-slate-800">
-        Next-Gen AI &
-      </div>
-
-      <RollingWords
-        words={["Automation", "Innovation"]}
-        className="text-5xl xl:text-7xl 2xl:text-7xl font-black ml-12 mt-1 min-w-[240px] xl:min-w-[280px]"
-      />
-    </div>
-  </div>
-);
 // ✅ Responsive Icon Marquee Component
 const IconMarquee = () => {
   const [tip, setTip] = React.useState({ show: false, x: 0, y: 0, label: "" });
@@ -465,8 +306,6 @@ const IconMarquee = () => {
     </div>
   );
 };
-const HERO_SUB =
-  "AI chatbots, scalable backends and automation tailored for your growth.";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -476,16 +315,21 @@ const fadeInUp = {
 const HomePage = () => {
   const [visibleElements, setVisibleElements] = useState(new Set());
   const [isInHeroSection, setIsInHeroSection] = useState(true);
+  const [heroAnimationComplete, setHeroAnimationComplete] = useState(false);
   const sectionRefs = useRef({});
   const [scrollY, setScrollY] = useState(0);
   const heroParallaxRef = useRef(null);
 
-  // Set document title on component mount
   useEffect(() => {
     document.title = "NextWave AI - Home";
-    // Cleanup function to reset title when component unmounts
+
+    const timer = setTimeout(() => {
+      setHeroAnimationComplete(true);
+    }, 2500);
+
     return () => {
       document.title = "NextWave AI";
+      clearTimeout(timer);
     };
   }, []);
 
@@ -493,19 +337,16 @@ const HomePage = () => {
     target: heroParallaxRef,
     offset: ["start end", "end start"],
   });
-  const yLeft = useTransform(heroProgress, [0, 1], [10, -10]);
-  const yRight = useTransform(heroProgress, [0, 1], [20, -20]);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setScrollY(currentScrollY);
 
-      // Check if we're in the hero section (first 100vh)
       const heroSection = document.getElementById("hero");
       if (heroSection) {
         const heroHeight = heroSection.offsetHeight;
-        setIsInHeroSection(currentScrollY < heroHeight * 1.2); // 80% of hero section height
+        setIsInHeroSection(currentScrollY < heroHeight * 1.2);
       }
     };
 
@@ -540,17 +381,6 @@ const HomePage = () => {
       ? (scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
       : 0;
 
-  const scrollToSection = (sectionId) => {
-    const headerOffset = 80;
-    const el = document.getElementById(sectionId);
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      const targetY =
-        (window.scrollY || window.pageYOffset) + rect.top - headerOffset;
-      window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
-    }
-  };
-
   return (
     <>
       <Helmet>
@@ -574,9 +404,9 @@ const HomePage = () => {
       </Helmet>
       <motion.main
         className="w-full bg-white"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
         {/* Progress bar */}
         <div
@@ -592,101 +422,59 @@ const HomePage = () => {
           }}
         />
 
-        {/* Hero Section */}
-
+        {/* Full Width Hero Section */}
         <section
           ref={(node) => addRef("hero", node)}
           id="hero"
-          className="relative w-full min-h-[400px] sm:min-h-[600px] md:min-h-[650px] lg:h-[800px] bg-[#c4d4f5] flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-6 sm:py-8 md:py-16 lg:py-24 overflow-hidden"
+          className="relative min-h-screen w-full bg-[#c4d4f5]"
         >
-          <div ref={heroParallaxRef}>
+          {/* Hero Content */}
+          <div className="min-h-[70vh] sm:min-h-[70vh] flex flex-col justify-center ">
+            <Hero />
+
+            {/* Icon Marquee - Part of Hero */}
             <motion.div
-              className="relative z-10 flex flex-col lg:flex-row items-center w-full max-w-9xl mx-auto gap-4 sm:gap-6 md:gap-8 lg:gap-10 justify-between mt-4 sm:mt-6 md:mt-10 lg:mt-16 xl:mt-24"
-              initial="hidden"
-              animate="show"
-              variants={fadeInUp}
+              className="relative z-10 w-full mt-4 lg:mt-8 mb-6 sm:mb-8 md:mb-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={
+                heroAnimationComplete
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 20 }
+              }
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              {/* Left Column - Text Content */}
-              <motion.div
-                style={{ y: yLeft }}
-                className="flex-[1.3] min-w-0 w-full max-w-6xl flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1"
-              >
-                <AnimatedText className="leading-tight mb-1 sm:mb-2 md:mb-3">
-                  <ResponsiveHeroHeadline />
-                </AnimatedText>
-
-                <motion.p
-                  className="text-lg sm:text-xl md:text-xl text-slate-600 mb-4 sm:mb-5 md:mb-5 font-medium max-w-xl leading-relaxed px-2 sm:px-0"
-                  variants={fadeInUp}
-                >
-                  {HERO_SUB}
-                </motion.p>
-
-                <motion.div
-                  variants={fadeInUp}
-                  initial="hidden"
-                  animate="show"
-                  transition={{ delay: 0.2 }}
-                  className="flex justify-center lg:justify-start w-full sm:w-auto"
-                >
-                  <button
-                    onClick={() => scrollToSection("contact")}
-                    className="bg-[#2176C1] text-white font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[#2176C1] shadow hover:bg-[#17548a] hover:border-[#17548a] hover:scale-105 transition-all duration-300 text-base sm:text-lg w-full sm:w-auto max-w-xs sm:max-w-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:outline-none"
-                  >
-                    Request a Demo
-                  </button>
-                </motion.div>
-              </motion.div>
-
-              {/* Right Column - Robot Mosaic */}
-              <motion.div
-                style={{ y: yRight }}
-                className="flex-[0.7] w-full flex justify-center lg:justify-end order-1 lg:order-2 mb-4 sm:mb-6 lg:mb-0"
-              >
-                <div className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-[480px] xl:w-[520px] xl:max-w-full shrink-0">
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <RobotMosaic />
-                  </Suspense>
-                </div>
-              </motion.div>
+              <IconMarquee />
             </motion.div>
-          </div>
-
-          {/* Responsive Icon Marquee */}
-          <div
-            className="relative z-10 mt-8 sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 w-full"
-            style={{
-              width: "calc(100vw - 8px)",
-              marginLeft: "calc(50% - 50vw + 4px)",
-              marginRight: "calc(50% - 50vw + 4px)",
-            }}
-          >
-            <IconMarquee />
           </div>
         </section>
 
-        {/* Sections */}
-        {[
-          ["services", <Services />],
-          ["industries", <IndustryServed />],
-          ["research", <Blog />],
-          // ["testimonials", <Testimonials />],
-          ["faqs", <FAQs />],
-          ["contact", <Contact />],
-        ].map(([id, component]) => (
-          <motion.section
-            key={id}
-            ref={(ref) => addRef(id, ref)}
-            id={id}
-            variants={fadeInUp}
-            initial="hidden"
-            animate={isVisible(id) ? "show" : "hidden"}
-          >
-            {component}
-          </motion.section>
-        ))}
+        {/* Other Sections */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={heroAnimationComplete ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          {[
+            ["services", <Services />],
+            ["industries", <IndustryServed />],
+            ["research", <Blog />],
+            ["faqs", <FAQs />],
+            ["contact", <Contact />],
+          ].map(([id, component]) => (
+            <motion.section
+              key={id}
+              ref={(ref) => addRef(id, ref)}
+              id={id}
+              variants={fadeInUp}
+              initial="hidden"
+              animate={isVisible(id) ? "show" : "hidden"}
+            >
+              {component}
+            </motion.section>
+          ))}
+        </motion.div>
 
-        {/* Responsive Scroll To Top */}
+        {/* Scroll To Top */}
         <div
           className="fixed bottom-4 sm:bottom-6 md:bottom-8 right-4 sm:right-6 md:right-8 z-50 transition-all duration-300 hover:scale-110"
           style={{

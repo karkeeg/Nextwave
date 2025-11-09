@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LayoutPage from "./LayoutPage";
 import ScrollToTop from "../Components/ScrollToTop";
+import ClockInsights from "../Components/clockinsight/ClockInsights";
 
 // Lazy-loaded pages
 const HomePage = lazy(() => import("./HomePage"));
@@ -19,25 +20,23 @@ const MyRoutes = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Suspense fallback={<div className="text-center py-20">Loading...</div>}>
-        <Routes>
-          <Route path="/" element={<LayoutPage />}>
-            <Route index element={<HomePage />} />
+      {/* <Suspense fallback={<div className="text-center py-20">Loading...</div>}> */}
+      <Routes>
+        <Route path="/" element={<LayoutPage />}>
+          <Route index element={<HomePage />} />
 
-            <Route path="/blog/:id" element={<BlogArticle />} />
-            <Route path="/services/:serviceId" element={<ServiceDetail />} />
-            <Route
-              path="/industries/:industryId"
-              element={<IndustryDetail />}
-            />
-            <Route path="/testimonial/:id" element={<TestimonialDetail />} />
+          <Route path="/blog/:id" element={<BlogArticle />} />
+          <Route path="/services/:serviceId" element={<ServiceDetail />} />
+          <Route path="/industries/:industryId" element={<IndustryDetail />} />
+          <Route path="/testimonial/:id" element={<TestimonialDetail />} />
 
-            {/* <Route path="/practice" element={<Practice />} /> */}
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/404" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      </Suspense>
+          {/* <Route path="/practice" element={<Practice />} /> */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/clock" element={<ClockInsights />} />
+          <Route path="/404" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+      {/* </Suspense> */}
     </BrowserRouter>
   );
 };

@@ -5,6 +5,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaArrowRight } from "react-icons/fa";
 import blogPosts from "../data/blogData";
 import "./blog.css";
+import { Clock } from "lucide-react";
+import Clockinsights from "./clockinsight/ClockInsights";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,69 +61,7 @@ const Blog = () => {
         </div>
       </div>
 
-      {/* ========= STACKING SECTION ========= */}
-      <div ref={sectionRef} className="scroll-section vertical-section">
-        <div className="wrapper">
-          <div role="list" className="list">
-            {blogPosts.map((post, i) => (
-              <div
-                key={post.id}
-                ref={(el) => (itemsRef.current[i] = el)}
-                role="listitem"
-                className="item cursor-pointer"
-                onClick={() => navigate(`/blog/${post.id}`)}
-              >
-                {/* Card Background */}
-                <div className="absolute inset-0 w-full h-full">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Dark overlay - stronger on mobile for better text readability */}
-                  <div className="absolute inset-0 bg-black/70 sm:bg-black/60"></div>
-                </div>
-
-                {/* Card Content */}
-                <div className="relative z-10 flex h-full items-center px-4 sm:px-6 md:px-8 lg:px-16">
-                  <div className="max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl text-white w-full">
-                    {/* Post Number - Responsive sizing */}
-                    <div className="item_number text-white mb-3 sm:mb-4 text-sm sm:text-base md:text-lg font-bold bg-white/20 backdrop-blur-sm rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center">
-                      {i + 1}
-                    </div>
-
-                    {/* Title - Better responsive scaling */}
-                    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-gray-100 font-bold mb-3 sm:mb-4 md:mb-6 leading-tight">
-                      {post.title}
-                    </h2>
-
-                    {/* Description - Better mobile handling */}
-                    <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-4 sm:mb-6 md:mb-8 leading-relaxed max-w-full sm:max-w-2xl">
-                      {post.desc}
-                    </p>
-
-                    {/* CTA Button - Mobile optimized */}
-                    <button className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg sm:rounded-xl text-white font-semibold hover:bg-white/20 transition-all duration-300 group text-sm sm:text-base">
-                      <span className="hidden xs:inline">
-                        Read Full Article
-                      </span>
-                      <span className="xs:hidden">Read More</span>
-                      <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1 text-xs sm:text-sm" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Mobile-specific elements */}
-                <div className="absolute top-4 right-4 sm:hidden">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg px-2 py-1 text-xs text-white font-medium">
-                    {i + 1} / {blogPosts.length}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <Clockinsights />
     </main>
   );
 };

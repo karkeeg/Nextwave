@@ -219,6 +219,59 @@
     font-family: var(--font-sans);
     font-style: italic;
   }
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 }
 
 /* Prevent horizontal overflow on full-bleed sections */
@@ -260,6 +313,62 @@ body {
   background: linear-gradient(-45deg, #2176c1, #ffc043, #ff6b6b, #6bcb77);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
+}
+
+/* Hero Section Animations */
+@keyframes slideInLeftHand {
+  0% {
+    transform: translateX(-100%) rotate(-15deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRightHand {
+  0% {
+    transform: translateX(100%) rotate(15deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply animations to hero elements */
+.animate-slide-in-left-hand {
+  animation: slideInLeftHand 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: bottom right;
+}
+
+.animate-slide-in-right-hand {
+  animation: slideInRightHand 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+  transform-origin: bottom left;
+  opacity: 0;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.8s;
+  opacity: 0;
+}
+
+.animate-fade-in-up-delay {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 1s;
+  opacity: 0;
 }
 
 @keyframes blob {
@@ -505,4 +614,59 @@ body {
     grid-column: 1 / -1;
     grid-row: auto;
   }
+}
+/* --- HAND ANIMATIONS --- */
+@keyframes slideInLeftSlow {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRightSlow {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left-slow {
+  animation: slideInLeftSlow 1.8s ease-out forwards;
+}
+
+.animate-slide-in-right-slow {
+  animation: slideInRightSlow 1.8s ease-out forwards;
+}
+
+/* --- TEXT FADE-UP --- */
+@keyframes fadeUpSmooth {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ✨ Keep hidden during delay using "both" fill mode */
+.animate-fade-up-after-hands {
+  animation: fadeUpSmooth 1s ease-out 1.8s both;
+}
+
+.animate-fade-up-after-hands-more {
+  animation: fadeUpSmooth 1s ease-out 2s both;
+}
+.watermark-logo {
+  opacity: 0.1; /* subtle but visible */
+  pointer-events: none; /* still not interactive */
 }

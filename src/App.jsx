@@ -2,6 +2,7 @@ import { ParallaxProvider } from "react-scroll-parallax";
 import { HelmetProvider } from "react-helmet-async";
 import MyRoutes from "./Pages/MyRoutes";
 import { useEffect } from "react";
+import CustomCursor from "./Components/CustomCursor";
 
 function App() {
   // Force top on initial load/reload
@@ -25,6 +26,7 @@ function App() {
   return (
     <HelmetProvider>
       <ParallaxProvider>
+        <CustomCursor />
         <MyRoutes />
       </ParallaxProvider>
     </HelmetProvider>

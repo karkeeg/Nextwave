@@ -1,95 +1,124 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import "./CustomCursor.css";
 
+// Memoize the component to prevent unnecessary re-renders
 const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const isDesktop = useRef(false);
+  const requestRef = useRef();
+  const lastX = useRef(0);
+  const lastY = useRef(0);
+  const targetX = useRef(0);
+  const targetY = useRef(0);
+  
+  // Use transform for better performance than left/top
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
 
-  // motion values for position
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  // Check if device supports hover (desktop)
+  const checkIfDesktop = useCallback(() => {
+    isDesktop.current = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    return isDesktop.current;
+  }, []);
 
-  // spring values for smoothing
-  const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
-  const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
+  // Handle mouse movement with requestAnimationFrame for better performance
+  const handleMouseMove = useCallback((e) => {
+    if (!isDesktop.current) return;
+    
+    targetX.current = e.clientX;
+    targetY.current = e.clientY;
+    
+    if (!requestRef.current) {
+      requestRef.current = requestAnimationFrame(updateCursor);
+    }
+  }, []);
+
+  // Update cursor position with spring effect
+  const updateCursor = useCallback(() => {
+    if (!isDesktop.current) return;
+    
+    // Simple easing function for smooth movement
+    const ease = 0.15;
+    const dx = (targetX.current - lastX.current) * ease;
+    const dy = (targetY.current - lastY.current) * ease;
+    
+    lastX.current += dx;
+    lastY.current += dy;
+    
+    setCoords({ x: lastX.current, y: lastY.current });
+    
+    // Continue the animation loop if we're still moving
+    if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+      requestRef.current = requestAnimationFrame(updateCursor);
+    } else {
+      requestRef.current = null;
+    }
+  }, []);
+
+  // Check for hover state
+  const checkHoverState = useCallback((e) => {
+    if (!isDesktop.current) return;
+    
+    const target = e.target;
+    const isInteractive = target.matches('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer') ||
+                         target.closest('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer');
+    
+    setIsHovering(!!isInteractive);
+  }, []);
 
   useEffect(() => {
-    const moveCursor = (e) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-
-    const handleHover = (e) => {
-      // More specific check to ensure we're actually hovering over an interactive element
-      const target = e.target;
-      const isInteractive = target.matches('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer') ||
-                           target.closest('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer');
+    // Initial setup
+    const isDesktopDevice = checkIfDesktop();
+    
+    if (isDesktopDevice) {
+      // Set initial position
+      const initialX = window.innerWidth / 2;
+      const initialY = window.innerHeight / 2;
+      lastX.current = initialX;
+      lastY.current = initialY;
+      targetX.current = initialX;
+      targetY.current = initialY;
+      setCoords({ x: initialX, y: initialY });
       
-      if (isInteractive) {
-        setIsHovering(true);
+      // Show cursor after a short delay
+      const timer = setTimeout(() => setIsVisible(true), 50);
+      
+      // Add event listeners
+      window.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseover', checkHoverState);
+      
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseover', checkHoverState);
+        if (requestRef.current) {
+          cancelAnimationFrame(requestRef.current);
+        }
+      };
+    }
+    
+    return () => {
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
       }
     };
+  }, [checkIfDesktop, handleMouseMove, checkHoverState]);
 
-    const handleHoverEnd = (e) => {
-      // Add a small delay to prevent flicker
-      setTimeout(() => {
-        const elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
-        if (elementUnderCursor) {
-          const isStillOverInteractive = elementUnderCursor.matches('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer') ||
-                                        elementUnderCursor.closest('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer');
-          
-          if (!isStillOverInteractive) {
-            setIsHovering(false);
-          }
-        } else {
-          setIsHovering(false);
-        }
-      }, 10);
-    };
-
-    // Use mouseover/mouseout instead of mouseenter/mouseleave for better detection
-    const handleDocumentMouseOver = (e) => {
-      const target = e.target;
-      const isInteractive = target.matches('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer') ||
-                           target.closest('button, a, [role="button"], input[type="submit"], input[type="button"], .cursor-pointer');
-      
-      setIsHovering(isInteractive);
-    };
-
-    window.addEventListener("mousemove", moveCursor);
-    document.addEventListener("mouseover", handleDocumentMouseOver);
-
-    // Also keep the individual element listeners as backup
-    const interactiveElements = document.querySelectorAll(
-      "button, a, [role='button'], input[type='submit'], input[type='button'], .cursor-pointer"
-    );
-    
-    interactiveElements.forEach((el) => {
-      el.addEventListener("mouseenter", handleHover);
-      el.addEventListener("mouseleave", handleHoverEnd);
-    });
-
-    return () => {
-      window.removeEventListener("mousemove", moveCursor);
-      document.removeEventListener("mouseover", handleDocumentMouseOver);
-      interactiveElements.forEach((el) => {
-        el.removeEventListener("mouseenter", handleHover);
-        el.removeEventListener("mouseleave", handleHoverEnd);
-      });
-    };
-  }, [mouseX, mouseY]);
-
+  // Don't render cursor on mobile devices or if not visible
+  if (!isDesktop.current || !isVisible) return null;
+  
   return (
-    <motion.div
+    <div 
       className={`cursor ${isHovering ? "cursor--hover" : ""}`}
       style={{
-        translateX: springX,
-        translateY: springY,
-      }}
-      animate={{
+        transform: `translate3d(${coords.x}px, ${coords.y}px, 0) translate(-50%, -50%)`,
+        opacity: 1,
         scale: isHovering ? 1.5 : 1,
+        transition: isHovering 
+          ? 'scale 0.2s ease-out, background-color 0.2s ease-out' 
+          : 'scale 0.3s ease-out, background-color 0.3s ease-out'
       }}
-      transition={{ type: "spring", stiffness: 250, damping: 20 }}
     />
   );
 };
