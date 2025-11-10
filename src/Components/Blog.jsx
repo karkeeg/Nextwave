@@ -44,9 +44,15 @@ const Blog = () => {
       }
     });
 
+    // Refresh ScrollTrigger after initialization to fix positioning
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
     return () => {
       ScrollTrigger.getAll().forEach((st) => st.kill());
       tl.kill();
+      clearTimeout(refreshTimer);
     };
   }, []);
 

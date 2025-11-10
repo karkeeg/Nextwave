@@ -22,13 +22,7 @@ const IndustryDetail = () => {
   }, [industry]);
 
   const handleBackToIndustries = () => {
-    navigate("/");
-    setTimeout(() => {
-      const industriesSection = document.getElementById("industries");
-      if (industriesSection) {
-        industriesSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100);
+    navigate("/", { state: { scrollTo: "industries" } });
   };
 
   if (!industry) {
@@ -159,7 +153,12 @@ const IndustryDetail = () => {
                     Let's discuss how our AI solutions can transform your{" "}
                     {industry.title} operations.
                   </p>
-                  <button className="w-full bg-[#2176C1] text-white py-2 px-4 rounded-lg font-semibold hover:bg-[#185a96] transition-colors duration-300">
+                  <button
+                    onClick={() =>
+                      navigate("/", { state: { scrollTo: "contact" } })
+                    }
+                    className="w-full bg-[#2176C1] text-white py-2 px-4 rounded-lg font-semibold hover:bg-[#185a96] transition-colors duration-300"
+                  >
                     Contact Us
                   </button>
                 </div>
