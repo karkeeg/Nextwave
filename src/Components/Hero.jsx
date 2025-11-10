@@ -5,9 +5,9 @@ import { Button } from "./ui/button";
 
 const Hero = () => {
   return (
-    <section className="relative flex flex-col justify-center items-center overflow-hidden bg-[#c4d4f5]">
+    <section className="relative flex flex-col justify-center items-center overflow-hidden bg-[#c4d4f5] lg:mt-20">
       {/* Decorative Hands */}
-      <div className="absolute top-[1%] left-0 w-[35%] sm:w-[30%] md:w-[28%] lg:w-[25%] xl:w-[35%] pointer-events-none z-20">
+      <div className="absolute top-[38%] sm:top-[-20%] md:top-[-20%] lg:top-[3%] left-0 w-[30%] sm:w-[30%] md:w-[28%] lg:w-[25%] xl:w-[35%] pointer-events-none z-20">
         <img
           src={humanHand}
           alt="Human hand"
@@ -15,7 +15,7 @@ const Hero = () => {
         />
       </div>
 
-      <div className="absolute bottom-[-11%] lg:bottom-[-1%] right-0 w-[35%] sm:w-[30%] md:w-[28%] lg:w-[25%] xl:w-[34%] pointer-events-none z-20">
+      <div className="absolute bottom-[20%] sm:bottom-[20%] lg:bottom-[-1%] right-0 w-[30%] sm:w-[30%] md:w-[28%] lg:w-[25%] xl:w-[34%] pointer-events-none z-20">
         <img
           src={robotHand}
           alt="Robot hand"
@@ -34,7 +34,7 @@ const Hero = () => {
       </div>
 
       {/* Text Content */}
-      <div className="relative mt-[220px] lg:mt-[180px] z-30 text-center max-w-5xl px-4 sm:px-6 md:px-8">
+      <div className="relative mt-[220px] lg:mt-[200px] z-30 text-center max-w-5xl px-4 sm:px-6 md:px-8">
         <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight text-gray-800 animate-fade-up-after-hands">
           Empower Your Business
           <br />
@@ -67,19 +67,23 @@ const Hero = () => {
         </h1>
       </div>
 
-      {/* Paragraph and Button */}
+      {/* Paragraph and Button - Centered on mobile, left-aligned on desktop */}
       <div
-        className="relative max-w-[230px] z-30 self-start ml-10 sm:ml-16 md:ml-18 lg:ml-26 mt-[-2%] sm:mt-[-1%] md:mt-[-2%] lg:mt-[1%] animate-fade-up-after-hands-more"
+        className="relative max-w-[280px] sm:max-w-md z-30 
+                   mx-auto lg:mx-0 lg:self-start lg:ml-26 
+                   mt-6 sm:mt-8 lg:mt-[2%] 
+                   text-center lg:text-left px-4
+                   animate-fade-up-after-hands-more"
         style={{ opacity: 0 }}
       >
-        <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-2 leading-relaxed max-w-md">
+        <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-4 sm:mb-6 leading-relaxed">
           AI Chatbots, Scalable Backends and Automation for Every Industry.
         </p>
 
         <Button
           size="lg"
           variant="outline"
-          className="px-4 py-4 text-base bg-[#c4d4f5] border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-all rounded-lg group"
+          className="px-4 py-4 text-base bg-[#c4d4f5] border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-all rounded-lg group mx-auto lg:mx-0"
         >
           Request a Demo
           <svg

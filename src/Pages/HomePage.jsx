@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, Suspense } from "react";
+import { useLocation } from "react-router-dom";
 import {
   motion,
   useScroll,
@@ -313,6 +314,7 @@ const fadeInUp = {
 };
 
 const HomePage = () => {
+  const location = useLocation();
   const [visibleElements, setVisibleElements] = useState(new Set());
   const [isInHeroSection, setIsInHeroSection] = useState(true);
   const [heroAnimationComplete, setHeroAnimationComplete] = useState(false);
@@ -320,11 +322,68 @@ const HomePage = () => {
   const [scrollY, setScrollY] = useState(0);
   const heroParallaxRef = useRef(null);
 
+  // Debug: Log navigation state
+  useEffect(() => {
+    console.log("HomePage mounted/updated");
+    console.log("location.state:", location.state);
+    console.log("scrollTo:", location.state?.scrollTo);
+  }, [location.state]);
+
+  // Combined scroll handling - navigation state OR scroll to top
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      console.log("Navigation state detected:", location.state.scrollTo);
+
+      // Handle navigation from other pages
+      const scrollToSection = () => {
+        const targetSection = document.getElementById(location.state.scrollTo);
+        console.log("Target section:", targetSection);
+
+        if (targetSection) {
+          setTimeout(() => {
+            const yOffset = -20; // Offset for spacing from top
+            const y =
+              targetSection.getBoundingClientRect().top +
+              window.pageYOffset +
+              yOffset;
+
+            console.log("Scrolling to position:", y);
+            window.scrollTo({ top: y, behavior: "smooth" });
+
+            // Clear the state after scrolling
+            window.history.replaceState({}, document.title);
+            console.log("Scroll complete, state cleared");
+          }, 500);
+        } else {
+          console.warn("Target section not found!");
+        }
+      };
+
+      // Wait for hero animation to complete
+      if (heroAnimationComplete) {
+        console.log("Hero animation complete, scrolling now");
+        scrollToSection();
+      } else {
+        console.log("Waiting for hero animation...");
+        const timer = setTimeout(() => {
+          console.log("Timer fired, scrolling now");
+          scrollToSection();
+        }, 2600);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      // No navigation state - scroll to top on page load/reload
+      console.log("No navigation state, scrolling to top");
+      window.scrollTo(0, 0);
+    }
+  }, [location.state, heroAnimationComplete]);
+
   useEffect(() => {
     document.title = "NextWave AI - Home";
 
     const timer = setTimeout(() => {
       setHeroAnimationComplete(true);
+      console.log("Hero animation complete flag set");
     }, 2500);
 
     return () => {
@@ -434,7 +493,7 @@ const HomePage = () => {
 
             {/* Icon Marquee - Part of Hero */}
             <motion.div
-              className="relative z-10 w-full mt-2 lg:mt-6 mb-2 sm:mb-6 md:mb-8"
+              className="relative z-10 w-full mt-32 sm:mt-24 lg:mt-20 mb-2 sm:mb-6 md:mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={
                 heroAnimationComplete
@@ -455,11 +514,11 @@ const HomePage = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           {[
-            ["services", <Services />],
-            ["industries", <IndustryServed />],
-            ["research", <Blog />],
-            ["faqs", <FAQs />],
-            ["contact", <Contact />],
+            ["services", <Services key="services" />],
+            ["industries", <IndustryServed key="industries" />],
+            ["research", <Blog key="research" />],
+            ["faqs", <FAQs key="faqs" />],
+            ["contact", <Contact key="contact" />],
           ].map(([id, component]) => (
             <motion.section
               key={id}

@@ -171,7 +171,7 @@ const Header = () => {
             whileHover="hover"
             whileTap="tap"
           >
-            Research & Insights
+            Insights and Stories
           </motion.button>
         </nav>
 

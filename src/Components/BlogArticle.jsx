@@ -137,19 +137,13 @@ const BlogArticle = () => {
           >
             <button
               onClick={() => {
-                navigate("/");
-                // Scroll to blog section after navigation
-                setTimeout(() => {
-                  const blogSection = document.getElementById("research");
-                  if (blogSection) {
-                    blogSection.scrollIntoView({ behavior: "smooth" });
-                  }
-                }, 100);
+                // Navigate with state to trigger scroll
+                navigate("/", { state: { scrollTo: "research" } });
               }}
               className="inline-flex items-center gap-3 px-6 py-3 bg-white/90 backdrop-blur-sm text-blue-600 hover:text-blue-700 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-200"
             >
               <FaArrowLeft className="transition-transform duration-300 group-hover:-translate-x-1" />
-              Back to Blog
+              Back to Insights
             </button>
           </motion.div>
 
