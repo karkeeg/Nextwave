@@ -68,7 +68,7 @@ const Hero = () => {
       </div>
 
       {/* Paragraph and Button - Centered on mobile, left-aligned on desktop */}
-      <div
+      {/* <div
         className="relative max-w-[280px] sm:max-w-md z-30 
                    mx-auto lg:mx-0 lg:self-start lg:ml-26 
                    mt-6 sm:mt-8 lg:mt-[2%] 
@@ -100,7 +100,7 @@ const Hero = () => {
             />
           </svg>
         </Button>
-      </div>
+      </div> */}
     </section>
   );
 };

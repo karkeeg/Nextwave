@@ -176,10 +176,6 @@ const Clockinsights = () => {
       </div>
       {/* ---------------- MOBILE VIEW ---------------- */}
       <div className="flex flex-col items-center justify-center md:hidden mt-4">
-        <h2 className="text-xl font-semibold text-blue-700 mb-4">
-          Insights & Stories
-        </h2>
-
         {/* Circle image */}
         <div className="w-56 h-56 rounded-full overflow-hidden shadow-lg border-8 border-white mb-4">
           <img
